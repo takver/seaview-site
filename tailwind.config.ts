@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,17 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+        // Add custom colors that match the Sifnos Seaview site
+        sifnos: {
+          'blue': '#1a75bc',
+          'blue-dark': '#135a91',
+          'blue-light': '#75b3e3', 
+          'cyan': '#97cdeb',
+          'white': '#ffffff',
+          'gray': '#f5f5f5',
+          'gray-dark': '#333333'
+        }
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -89,7 +100,11 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+			},
+      fontFamily: {
+        sans: ['Open Sans', 'sans-serif'],
+        serif: ['Georgia', 'serif']
+      }
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
