@@ -12,7 +12,7 @@ const Footer = () => {
           {/* About Us Column */}
           <div className="md:col-span-5">
             <div className="flex items-center gap-3 mb-4">
-              <img src="/images/rouster.webp" alt="Sifnos Seaview Icon" className="w-8 h-8" />
+              <img src="/images/seaview-logo-394x394.png" alt="Sifnos Seaview Logo" className="w-8 h-8" />
               <h3 className="text-xl font-light">About Us</h3>
             </div>
             <p className="text-gray-300 mb-4">
