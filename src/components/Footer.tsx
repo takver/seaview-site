@@ -28,7 +28,7 @@ const Footer = () => {
               the soul of Sifnos.
             </p>
             <img 
-              src="/lovable-uploads/f848c797-ec17-494f-992d-7031bc4b27a1.png" 
+              src="/images/travel_proud.png" 
               alt="Travel Proud" 
               className="h-8 mb-6"
             />
@@ -80,6 +80,13 @@ const Footer = () => {
                   <div className="bg-yellow-400 text-blue-800 w-8 h-8 flex items-center justify-center rounded-sm">
                     E
                   </div>
+                </a>
+                <a href="#" aria-label="Book on Home Exchange">
+                  <img 
+                    src="/images/homeexchangelogo.svg" 
+                    alt="Home Exchange" 
+                    className="w-8 h-8 bg-white p-1 rounded-sm"
+                  />
                 </a>
               </div>
             </div>

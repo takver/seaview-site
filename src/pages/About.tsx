@@ -68,7 +68,7 @@ const About = () => {
             <h2 className="text-2xl font-light mb-4">Our Commitment to Inclusivity</h2>
             <div className="flex items-center gap-4 mb-6">
               <img 
-                src="/lovable-uploads/f848c797-ec17-494f-992d-7031bc4b27a1.png" 
+                src="/images/travel_proud.png" 
                 alt="Travel Proud" 
                 className="h-10"
               />
