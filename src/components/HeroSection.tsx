@@ -19,39 +19,70 @@ const images = [
 
 const HeroSection = () => {
   const [currentImage, setCurrentImage] = useState(0);
+  const [nextImage, setNextImage] = useState(0);
+  const [transitioning, setTransitioning] = useState(false);
 
-  // Auto-rotate images
+  // Auto-rotate images with smoother transition
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+      // Prepare the next image
+      const next = (currentImage + 1) % images.length;
+      setNextImage(next);
+      setTransitioning(true);
+      
+      // After a short delay, complete the transition
+      setTimeout(() => {
+        setCurrentImage(next);
+        setTransitioning(false);
+      }, 1000); // 1s transition time
+    }, 5000); // 5s display time
+    
+    return () => {
+      clearInterval(interval);
+    };
+  }, [currentImage]);
+
+  const handleIndicatorClick = (index: number) => {
+    if (index !== currentImage) {
+      setNextImage(index);
+      setTransitioning(true);
+      
+      setTimeout(() => {
+        setCurrentImage(index);
+        setTransitioning(false);
+      }, 1000);
+    }
+  };
 
   return (
     <div className="relative h-[500px] md:h-[600px] lg:h-[700px] w-full overflow-hidden">
       {/* Image Carousel */}
-      {images.map((image, index) => (
-        <div
-          key={index}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentImage ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <div className="w-full h-full overflow-hidden">
-            <img
-              src={image}
-              alt={`Sifnos Seaview property ${index + 1}`}
-              className={`object-cover w-full h-full ${
-                index === currentImage ? "animate-slow-zoom" : ""
-              }`}
-            />
+      {images.map((image, index) => {
+        // Show current image and next image during transition
+        const isVisible = index === currentImage || (transitioning && index === nextImage);
+        
+        return (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              isVisible ? "opacity-100" : "opacity-0"
+            } ${index === nextImage && transitioning ? "z-10" : "z-0"}`}
+          >
+            <div className="w-full h-full overflow-hidden">
+              <img
+                src={image}
+                alt={`Sifnos Seaview property ${index + 1}`}
+                className={`object-cover w-full h-full ${
+                  isVisible ? "animate-slow-zoom" : ""
+                }`}
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
 
       {/* Content Overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 bg-black/40">
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 bg-black/40 z-20">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
           Welcome to Sifnos Seaview
         </h1>
@@ -64,14 +95,14 @@ const HeroSection = () => {
       </div>
 
       {/* Carousel Indicators */}
-      <div className="absolute bottom-6 left-0 right-0 flex justify-center space-x-2 overflow-x-auto px-4">
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center space-x-2 overflow-x-auto px-4 z-20">
         {images.map((_, index) => (
           <button
             key={index}
             className={`w-3 h-3 rounded-full ${
               index === currentImage ? "bg-white" : "bg-white/50"
             }`}
-            onClick={() => setCurrentImage(index)}
+            onClick={() => handleIndicatorClick(index)}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
