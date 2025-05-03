@@ -21,6 +21,19 @@ const HeroSection = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [nextImage, setNextImage] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
+  const [panDirections, setPanDirections] = useState<{x: number, y: number}[]>([]);
+
+  // Generate random pan directions for each image
+  useEffect(() => {
+    const directions = images.map(() => {
+      // Generate random values between -1 and 1 for x and y directions
+      return {
+        x: (Math.random() * 2 - 1) * 0.05, // Scale down to subtle movement
+        y: (Math.random() * 2 - 1) * 0.05  // Scale down to subtle movement
+      };
+    });
+    setPanDirections(directions);
+  }, []);
 
   // Auto-rotate images with smoother transition
   useEffect(() => {
@@ -35,7 +48,7 @@ const HeroSection = () => {
         setCurrentImage(next);
         setTransitioning(false);
       }, 1000); // 1s transition time
-    }, 5000); // 5s display time
+    }, 12000); // 12s display time
     
     return () => {
       clearInterval(interval);
@@ -61,6 +74,9 @@ const HeroSection = () => {
         // Show current image and next image during transition
         const isVisible = index === currentImage || (transitioning && index === nextImage);
         
+        // Get this image's pan directions or default to no pan
+        const panDirection = panDirections[index] || { x: 0, y: 0 };
+        
         return (
           <div
             key={index}
@@ -72,9 +88,12 @@ const HeroSection = () => {
               <img
                 src={image}
                 alt={`Sifnos Seaview property ${index + 1}`}
-                className={`object-cover w-full h-full ${
-                  isVisible ? "animate-slow-zoom" : ""
+                className={`object-cover w-full h-full transform-gpu ${
+                  isVisible ? "animate-slow-zoom-pan" : ""
                 }`}
+                style={{
+                  transformOrigin: `${50 + panDirection.x * 100}% ${50 + panDirection.y * 100}%`
+                }}
               />
             </div>
           </div>
