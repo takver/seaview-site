@@ -78,11 +78,6 @@ const Footer = () => {
                     <BookingIcon size={24} className="text-white" />
                   </div>
                 </a>
-                <a href="#" aria-label="Book on Expedia">
-                  <div className="bg-yellow-400 text-blue-800 w-10 h-10 flex items-center justify-center rounded-sm">
-                    E
-                  </div>
-                </a>
                 <a href="#" aria-label="Book on Home Exchange">
                   <div className="bg-black w-10 h-10 flex items-center justify-center rounded-sm border border-gray-700">
                     <img 
