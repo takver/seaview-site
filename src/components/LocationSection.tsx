@@ -1,29 +1,31 @@
 
+import { MapPin } from "lucide-react";
+import { Button } from "./ui/button";
+
 const LocationSection = () => {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">Our Location</h2>
-        <p className="text-center text-gray-600 max-w-2xl mx-auto mb-10">
-          Perfectly situated on the beautiful island of Sifnos, our property offers easy access to beaches, restaurants, and local attractions
+        <h2 className="text-4xl font-light text-center mb-8 text-gray-800">Cycladic home in Sifnos, Greece</h2>
+        <p className="text-center text-gray-600 max-w-4xl mx-auto mb-12 leading-relaxed font-light text-lg">
+          Nestled on a hilltop with a stunning view of the ocean and the surrounding villages, this
+          peaceful retreat is surrounded by a beautiful Mediterranean garden of cypresses, olive trees
+          and fig trees. Located on the outskirts of a quiet village, and accessible only by foot, it is still
+          within a short hiking distance from the artsy coffee shops and galleries of Artemonas and the
+          trendy restaurants and bars of Apollonia village.
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="flex justify-center mt-10">
+          <Button variant="outline" className="flex items-center gap-2 px-6 py-5 rounded-full border-2">
+            <MapPin size={24} strokeWidth={1.5} className="text-gray-600" />
+            <span className="text-base font-medium">See Map</span>
+          </Button>
+        </div>
+        
+        {/* We'll replace this with a real map implementation later */}
+        <div className="mt-16 hidden">
           <div className="rounded-lg overflow-hidden shadow-lg">
-            {/* Placeholder for map image - we'll replace with real map */}
             <div className="bg-gray-300 h-80 w-full"></div>
-          </div>
-          <div className="flex flex-col justify-center">
-            <h3 className="text-xl font-semibold mb-4">Find Us Here</h3>
-            <p className="text-gray-600 mb-6">
-              Located in the picturesque village of Kamares, Sifnos, our property offers stunning sea views and is just a short walk from the beach.
-            </p>
-            <ul className="space-y-2 text-gray-600">
-              <li>• 10 minute walk to Kamares Beach</li>
-              <li>• 5 minutes to local restaurants and shops</li>
-              <li>• 15 minutes drive to Apollonia (main town)</li>
-              <li>• 20 minutes to Platis Gialos Beach</li>
-            </ul>
           </div>
         </div>
       </div>
