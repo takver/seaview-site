@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail } from "lucide-react";
 import AirbnbIcon from "./icons/AirbnbIcon";
@@ -68,26 +69,28 @@ const Footer = () => {
               <h3 className="text-xl font-light mb-6">Reserve Your Stay...</h3>
               <div className="flex gap-6">
                 <a href="#" aria-label="Book on Airbnb">
-                  <div className="bg-white w-8 h-8 flex items-center justify-center rounded-sm">
-                    <AirbnbIcon size={20} className="text-[#ff5a5f]" />
+                  <div className="bg-black w-10 h-10 flex items-center justify-center rounded-sm border border-gray-700">
+                    <AirbnbIcon size={24} className="text-white" />
                   </div>
                 </a>
                 <a href="#" aria-label="Book on Booking.com">
-                  <div className="bg-white w-8 h-8 flex items-center justify-center rounded-sm">
-                    <BookingIcon size={20} className="text-[#003580]" />
+                  <div className="bg-black w-10 h-10 flex items-center justify-center rounded-sm border border-gray-700">
+                    <BookingIcon size={24} className="text-white" />
                   </div>
                 </a>
                 <a href="#" aria-label="Book on Expedia">
-                  <div className="bg-yellow-400 text-blue-800 w-8 h-8 flex items-center justify-center rounded-sm">
+                  <div className="bg-yellow-400 text-blue-800 w-10 h-10 flex items-center justify-center rounded-sm">
                     E
                   </div>
                 </a>
                 <a href="#" aria-label="Book on Home Exchange">
-                  <img 
-                    src="/images/homeexchangelogo.svg" 
-                    alt="Home Exchange" 
-                    className="w-8 h-8 bg-white p-1 rounded-sm"
-                  />
+                  <div className="bg-black w-10 h-10 flex items-center justify-center rounded-sm border border-gray-700">
+                    <img 
+                      src="/images/homeexchangelogo.svg" 
+                      alt="Home Exchange" 
+                      className="w-8 h-8"
+                    />
+                  </div>
                 </a>
               </div>
             </div>
