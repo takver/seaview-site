@@ -17,26 +17,13 @@ const images = [
   "/images/GA1-IMG_0393-E-scaled.webp"
 ];
 
-// Define different pan/zoom effects for variety
-const panZoomEffects = [
-  "scale(1.1) translate(-1%, -1%)",
-  "scale(1.1) translate(1%, 1%)",
-  "scale(1.1) translate(-1%, 1%)",
-  "scale(1.1) translate(1%, -1%)"
-];
-
 const HeroSection = () => {
   const [currentImage, setCurrentImage] = useState(0);
-  const [currentEffect, setCurrentEffect] = useState(0);
 
   // Auto-rotate images
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImage((prev) => {
-        // When changing image, also change effect
-        setCurrentEffect((prevEffect) => (prevEffect + 1) % panZoomEffects.length);
-        return (prev + 1) % images.length;
-      });
+      setCurrentImage((prev) => (prev + 1) % images.length);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
@@ -55,12 +42,9 @@ const HeroSection = () => {
             <img
               src={image}
               alt={`Sifnos Seaview property ${index + 1}`}
-              className="object-cover w-full h-full transition-transform duration-5000 ease-out"
-              style={{
-                transform: index === currentImage 
-                  ? panZoomEffects[currentEffect]
-                  : "scale(1) translate(0, 0)"
-              }}
+              className={`object-cover w-full h-full ${
+                index === currentImage ? "animate-slow-zoom" : ""
+              }`}
             />
           </div>
         </div>
