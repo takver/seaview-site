@@ -2,19 +2,20 @@
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 
+// Updated images array to match the order in the reference image
 const images = [
-  "/images/DSC09508-scaled.webp",
-  "/images/DSC09522-scaled.webp",
-  "/images/DSC09537-scaled.webp",
-  "/images/IMG_0330-scaled.webp",
-  "/images/IMG_0379.webp",
-  "/images/IMG_0380-scaled.webp",
-  "/images/IMG_0383-scaled.webp",
-  "/images/IMG_0389-scaled.webp",
-  "/images/474913028.webp",
-  "/images/474913331.webp",
-  "/images/BLD-E1.webp",
-  "/images/GA1-IMG_0393-E-scaled.webp"
+  "/images/DSC09508-scaled.webp",     // Path with trees and greenery (top-left)
+  "/images/IMG_0379.webp",            // Indoor dining area with hanging lights (top-second)
+  "/images/IMG_0383-scaled.webp",     // Bedroom with white bedding (top-third)
+  "/images/474913331.webp",           // View from terrace with sea (top-right)
+  "/images/474913028.webp",           // Sea view with white building (second row-left)
+  "/images/GA1-IMG_0393-E-scaled.webp", // White building exterior (second row-second)
+  "/images/BLD-E1.webp",              // Night landscape (second row-third)
+  "/images/IMG_0389-scaled.webp",     // Garden view with greenery (second row-right)
+  "/images/DSC09522-scaled.webp",     // Stone garden feature (third row-left)
+  "/images/IMG_0330-scaled.webp",     // Stone pathway (third row-second)
+  "/images/DSC09537-scaled.webp",     // White building corner (third row-third)
+  "/images/IMG_0380-scaled.webp"      // Interior with hanging lights (third row-right)
 ];
 
 const HeroSection = () => {
