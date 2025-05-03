@@ -3,9 +3,18 @@ import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 
 const images = [
-  "/placeholder.svg", // We'll replace these with your actual images once uploaded
-  "/placeholder.svg",
-  "/placeholder.svg"
+  "/images/DSC09508-scaled.webp",
+  "/images/DSC09522-scaled.webp",
+  "/images/DSC09537-scaled.webp",
+  "/images/IMG_0330-scaled.webp",
+  "/images/IMG_0379.webp",
+  "/images/IMG_0380-scaled.webp",
+  "/images/IMG_0383-scaled.webp",
+  "/images/IMG_0389-scaled.webp",
+  "/images/474913028.webp",
+  "/images/474913331.webp",
+  "/images/BLD-E1.webp",
+  "/images/GA1-IMG_0393-E-scaled.webp"
 ];
 
 const HeroSection = () => {
@@ -20,7 +29,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <div className="relative h-[500px] md:h-[600px] w-full overflow-hidden">
+    <div className="relative h-[500px] md:h-[600px] lg:h-[700px] w-full overflow-hidden">
       {/* Image Carousel */}
       {images.map((image, index) => (
         <div
@@ -38,7 +47,7 @@ const HeroSection = () => {
       ))}
 
       {/* Content Overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 bg-black/30">
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 bg-black/40">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
           Welcome to Sifnos Seaview
         </h1>
@@ -51,7 +60,7 @@ const HeroSection = () => {
       </div>
 
       {/* Carousel Indicators */}
-      <div className="absolute bottom-6 left-0 right-0 flex justify-center space-x-2">
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center space-x-2 overflow-x-auto px-4">
         {images.map((_, index) => (
           <button
             key={index}
