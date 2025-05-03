@@ -44,7 +44,7 @@ const PropertyHighlights = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           {highlights.slice(0, 4).map((highlight, index) => (
-            <Card key={index} className="border-2 shadow-md hover:shadow-lg transition-shadow">
+            <Card key={index} className="border-2 border-gray-300 shadow-md hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
                 <div className="text-center mb-4">
                   <h3 className="text-xl font-normal text-[#6E59A5]">{highlight.title}</h3>
@@ -59,7 +59,7 @@ const PropertyHighlights = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {highlights.slice(4).map((highlight, index) => (
-            <Card key={index} className="border-2 shadow-md hover:shadow-lg transition-shadow">
+            <Card key={index} className="border-2 border-gray-300 shadow-md hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
                 <div className="text-center mb-4">
                   <h3 className="text-xl font-normal text-[#6E59A5]">{highlight.title}</h3>
