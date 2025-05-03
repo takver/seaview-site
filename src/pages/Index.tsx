@@ -1,6 +1,7 @@
 
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
+import PropertyFeaturesBanner from "@/components/PropertyFeaturesBanner";
 import PropertyFeatures from "@/components/PropertyFeatures";
 import GallerySection from "@/components/GallerySection";
 import LocationSection from "@/components/LocationSection";
@@ -13,6 +14,7 @@ const Index = () => {
       <Header />
       <main className="flex-grow pt-20">
         <HeroSection />
+        <PropertyFeaturesBanner />
         <PropertyFeatures />
         <GallerySection />
         <LocationSection />
