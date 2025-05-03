@@ -108,7 +108,11 @@ const HeroSection = () => {
         <p className="text-lg md:text-xl text-white mb-6">
           An Exceptional Sanctuary in Ano Petali Village
         </p>
-        <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+        <Button 
+          size="lg" 
+          variant="outline" 
+          className="bg-[#0000001a] text-white border-white hover:bg-[#ffffff33] hover:text-white rounded-full px-8"
+        >
           Check Availability
         </Button>
       </div>
