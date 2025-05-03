@@ -1,7 +1,7 @@
-
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail } from "lucide-react";
 import AirbnbIcon from "./icons/AirbnbIcon";
+import BookingIcon from "./icons/BookingIcon";
 
 const Footer = () => {
   return (
@@ -73,8 +73,8 @@ const Footer = () => {
                   </div>
                 </a>
                 <a href="#" aria-label="Book on Booking.com">
-                  <div className="bg-white text-blue-800 w-8 h-8 flex items-center justify-center font-bold rounded-sm">
-                    B
+                  <div className="bg-white w-8 h-8 flex items-center justify-center rounded-sm">
+                    <BookingIcon size={20} className="text-[#003580]" />
                   </div>
                 </a>
                 <a href="#" aria-label="Book on Expedia">
