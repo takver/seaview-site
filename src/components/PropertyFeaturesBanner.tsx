@@ -1,5 +1,5 @@
 
-import { Users, Bed, Bath, Utensils, Sofa } from "lucide-react";
+import { Users, Bed, ShowerHead, Utensils, Sofa } from "lucide-react";
 
 const PropertyFeaturesBanner = () => {
   return (
@@ -17,7 +17,7 @@ const PropertyFeaturesBanner = () => {
           </div>
           
           <div className="flex items-center gap-2">
-            <Bath size={24} className="text-white opacity-90" />
+            <ShowerHead size={24} className="text-white opacity-90" />
             <span className="text-sm md:text-base">3 Bathrooms</span>
           </div>
           
