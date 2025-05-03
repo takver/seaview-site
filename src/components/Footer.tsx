@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail, Airbnb, Booking } from "lucide-react";
+import { MapPin, Phone, Mail } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -67,7 +67,9 @@ const Footer = () => {
               <h3 className="text-xl font-light mb-6">Reserve Your Stay...</h3>
               <div className="flex gap-6">
                 <a href="#" aria-label="Book on Airbnb">
-                  <Airbnb className="w-8 h-8" />
+                  <div className="bg-white text-black w-8 h-8 flex items-center justify-center font-bold rounded-sm">
+                    A
+                  </div>
                 </a>
                 <a href="#" aria-label="Book on Booking.com">
                   <div className="bg-white text-blue-800 w-8 h-8 flex items-center justify-center font-bold rounded-sm">
@@ -82,7 +84,7 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Quick Links Section (Kept from original) */}
+            {/* Quick Links Section */}
             <div className="mt-8">
               <h3 className="text-lg font-medium mb-4">Quick Links</h3>
               <ul className="space-y-2">
