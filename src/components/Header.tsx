@@ -1,7 +1,5 @@
 
 import { Link } from "react-router-dom";
-import { NavigationMenu, NavigationMenuList, NavigationMenuItem } from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useState } from "react";
 import { Menu, X, Mail, Map, Phone } from "lucide-react";
@@ -10,15 +8,6 @@ import { Button } from "./ui/button";
 const Header = () => {
   const isMobile = useIsMobile();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const navItems = [
-    { name: "Home", path: "/" },
-    { name: "Facilities", path: "/facilities" },
-    { name: "Gallery", path: "/gallery" },
-    { name: "Location", path: "/location" },
-    { name: "Contact", path: "/contact" },
-    { name: "Book Now", path: "/book", highlight: true }
-  ];
 
   const contactItems = [
     { 
@@ -66,23 +55,6 @@ const Header = () => {
             
             {mobileMenuOpen && (
               <div className="absolute top-full left-0 right-0 bg-black p-4">
-                <nav className="flex flex-col space-y-3 mb-6">
-                  {navItems.map((item) => (
-                    <Link 
-                      key={item.name}
-                      to={item.path}
-                      className={cn(
-                        "px-3 py-2 text-sm font-medium rounded-md",
-                        item.highlight 
-                          ? "bg-white text-black hover:bg-gray-200" 
-                          : "text-white hover:bg-white/10"
-                      )}
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </nav>
                 <div className="flex flex-col space-y-3">
                   {contactItems.map((item, index) => (
                     <a
@@ -100,40 +72,18 @@ const Header = () => {
             )}
           </>
         ) : (
-          <div className="flex items-center space-x-4">
-            <NavigationMenu>
-              <NavigationMenuList className="flex space-x-1">
-                {navItems.map((item) => (
-                  <NavigationMenuItem key={item.name}>
-                    <Link
-                      to={item.path}
-                      className={cn(
-                        "px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                        item.highlight 
-                          ? "bg-white text-black hover:bg-gray-200" 
-                          : "text-white hover:bg-white/10"
-                      )}
-                    >
-                      {item.name}
-                    </Link>
-                  </NavigationMenuItem>
-                ))}
-              </NavigationMenuList>
-            </NavigationMenu>
-
-            <div className="flex items-center space-x-4 ml-6">
-              {contactItems.map((item, index) => (
-                <a
-                  key={index}
-                  href={item.href}
-                  target={item.target}
-                  className="flex items-center text-white hover:text-gray-300"
-                >
-                  {item.icon}
-                  <span className="ml-2 hidden lg:inline">{item.text}</span>
-                </a>
-              ))}
-            </div>
+          <div className="flex items-center space-x-6">
+            {contactItems.map((item, index) => (
+              <a
+                key={index}
+                href={item.href}
+                target={item.target}
+                className="flex items-center text-white hover:text-gray-300"
+              >
+                {item.icon}
+                <span className="ml-2">{item.text}</span>
+              </a>
+            ))}
           </div>
         )}
       </div>
