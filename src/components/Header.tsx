@@ -44,7 +44,7 @@ const Header = () => {
       <div className="container mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
         <Link to="/" className="flex items-center">
           <img 
-            src="https://sifnos-seaview.com/wp-content/uploads/2023/12/Untitled-drawing-394x394.png" 
+            src="/images/seaview-logo.png" 
             alt="Sifnos Seaview Logo" 
             className="h-12 w-auto mr-3"
           />
