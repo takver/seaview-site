@@ -100,9 +100,9 @@ const HeroSection = () => {
         );
       })}
 
-      {/* Content Overlay - Now a square on the left side */}
-      <div className="absolute left-8 md:left-16 lg:left-24 top-1/2 transform -translate-y-1/2 max-w-md p-8 bg-black/40 backdrop-blur-sm z-20">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+      {/* Content Overlay - Now a square on the left side with lighter background */}
+      <div className="absolute left-8 md:left-16 lg:left-24 top-1/2 transform -translate-y-1/2 max-w-md p-8 bg-white/30 backdrop-blur-sm z-20">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-white mb-4">
           Eco-Luxury Retreat With Sea View
         </h1>
         <p className="text-lg md:text-xl text-white mb-6">
