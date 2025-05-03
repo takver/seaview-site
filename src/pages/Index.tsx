@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import PropertyFeaturesBanner from "@/components/PropertyFeaturesBanner";
 import LocationSection from "@/components/LocationSection";
-import PropertyFeatures from "@/components/PropertyFeatures";
+import PropertyHighlights from "@/components/PropertyHighlights";
 import GallerySection from "@/components/GallerySection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
@@ -16,7 +16,7 @@ const Index = () => {
         <HeroSection />
         <PropertyFeaturesBanner />
         <LocationSection />
-        <PropertyFeatures />
+        <PropertyHighlights />
         <GallerySection />
         <ContactSection />
       </main>
