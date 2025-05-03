@@ -100,16 +100,16 @@ const HeroSection = () => {
         );
       })}
 
-      {/* Content Overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 bg-black/40 z-20">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-          Welcome to Sifnos Seaview
+      {/* Content Overlay - Now a square on the left side */}
+      <div className="absolute left-8 md:left-16 lg:left-24 top-1/2 transform -translate-y-1/2 max-w-md p-8 bg-black/40 backdrop-blur-sm z-20">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+          Eco-Luxury Retreat With Sea View
         </h1>
-        <p className="text-xl md:text-2xl text-white mb-8 max-w-3xl">
-          Experience the beauty of Sifnos from our beautiful property with stunning sea views
+        <p className="text-lg md:text-xl text-white mb-6">
+          An Exceptional Sanctuary in Ano Petali Village
         </p>
         <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
-          Book Your Stay
+          Check Availability
         </Button>
       </div>
 
