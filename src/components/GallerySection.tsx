@@ -15,7 +15,7 @@ const GallerySection = () => {
     <section className="py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-light text-center mb-12 text-[#1A1F2C]">
-          <span className="border-b-2 border-[#6E59A5] pb-1">Gallery</span>
+          Gallery
         </h2>
         <p className="text-gray-600 text-center font-light leading-relaxed max-w-2xl mx-auto mb-10">
           Take a glimpse at our beautiful property and the stunning views of Sifnos

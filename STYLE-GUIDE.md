@@ -26,7 +26,6 @@ This document serves as the definitive reference for all styling decisions acros
   - Size: `text-4xl` (desktop) / `text-3xl` (mobile)
   - Weight: `font-light`
   - Color: `text-[#1A1F2C]` or `text-gray-800`
-  - Optional Decoration: Bottom border `border-b-2 border-[#6E59A5] pb-1`
   - Center aligned: `text-center`
   - Margin bottom: `mb-12` or `mb-8` (varies by section)
   - Example: "What Sets This Place Apart"

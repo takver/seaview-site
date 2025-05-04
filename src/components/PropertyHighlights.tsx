@@ -41,7 +41,7 @@ const PropertyHighlights = () => {
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-light text-center mb-12 text-[#1A1F2C]">
-          <span className="border-b-2 border-[#6E59A5] pb-1">What Sets This Place Apart</span>
+          What Sets This Place Apart
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
