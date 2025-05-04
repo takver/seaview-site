@@ -19,32 +19,32 @@ const PropertyDetailsSection = () => {
             <TabsList className="flex flex-row md:flex-col h-auto md:self-start space-x-2 md:space-x-0 md:space-y-2 md:min-w-[200px] bg-transparent p-0">
               <TabsTrigger
                 value="place"
-                className="flex items-center gap-2 justify-start w-full px-5 py-3 data-[state=active]:bg-[#284B81] data-[state=active]:text-white text-left"
+                className="flex items-center gap-2 justify-start w-full px-5 py-3 data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white text-left data-[state=active]:rounded-md"
               >
                 <Home size={20} />
                 <span>The Place</span>
               </TabsTrigger>
               <TabsTrigger
                 value="gardens"
-                className="flex items-center gap-2 justify-start w-full px-5 py-3 data-[state=active]:bg-[#284B81] data-[state=active]:text-white text-left"
+                className="flex items-center gap-2 justify-start w-full px-5 py-3 data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white text-left data-[state=active]:rounded-md"
               >
                 <Leaf size={20} />
                 <span>Gardens</span>
               </TabsTrigger>
               <TabsTrigger
                 value="sustainability"
-                className="flex items-center gap-2 justify-start w-full px-5 py-3 data-[state=active]:bg-[#284B81] data-[state=active]:text-white text-left"
+                className="flex items-center gap-2 justify-start w-full px-5 py-3 data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white text-left data-[state=active]:rounded-md"
               >
                 <Recycle size={20} />
                 <span>Sustainability</span>
               </TabsTrigger>
             </TabsList>
 
-            <div className="flex-1 mt-6 md:mt-0">
+            <div className="flex-1 mt-6 md:mt-0 min-h-[500px]">
               {/* The Place Tab Content */}
               <TabsContent
                 value="place"
-                className="border-none p-0 m-0 data-[state=active]:block"
+                className="border-none p-0 m-0 data-[state=active]:block h-full"
               >
                 <div>
                   <h3 className="text-2xl font-light mb-6 text-[#1A1F2C]">
@@ -74,7 +74,7 @@ const PropertyDetailsSection = () => {
               {/* Gardens Tab Content */}
               <TabsContent
                 value="gardens"
-                className="border-none p-0 m-0 data-[state=active]:block"
+                className="border-none p-0 m-0 data-[state=active]:block h-full"
               >
                 <div>
                   <h3 className="text-2xl font-light mb-6 text-[#1A1F2C]">
@@ -104,7 +104,7 @@ const PropertyDetailsSection = () => {
               {/* Sustainability Tab Content */}
               <TabsContent
                 value="sustainability"
-                className="border-none p-0 m-0 data-[state=active]:block"
+                className="border-none p-0 m-0 data-[state=active]:block h-full"
               >
                 <div>
                   <h3 className="text-2xl font-light mb-6 text-[#1A1F2C]">

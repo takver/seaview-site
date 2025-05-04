@@ -18,8 +18,8 @@ const Index = () => {
         <PropertyFeaturesBanner />
         <LocationSection />
         <PropertyHighlights />
-        <PropertyDetailsSection />
         <GallerySection />
+        <PropertyDetailsSection />
         <ContactSection />
       </main>
       <Footer />
