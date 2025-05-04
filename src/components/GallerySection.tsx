@@ -21,27 +21,28 @@ const GallerySection = () => {
           Take a glimpse at our beautiful property and the stunning views of Sifnos
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-          {/* Large left image - spans 3 columns and full height */}
-          <div className="md:col-span-3 aspect-[4/3] rounded-lg overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
+          {/* Large left image - spans 7 columns */}
+          <div className="md:col-span-7 h-full rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
             <img
               src={galleryImages[0]}
               alt="Villa exterior with olive trees"
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              style={{ height: "100%", minHeight: "100%" }}
             />
           </div>
           
-          {/* Right side grid - spans 2 columns */}
-          <div className="md:col-span-2 grid grid-cols-2 gap-4">
+          {/* Right side grid - spans 5 columns */}
+          <div className="md:col-span-5 grid grid-cols-2 gap-3 h-full">
             {/* Top row - 2 images */}
-            <div className="aspect-square rounded-lg overflow-hidden">
+            <div className="aspect-square rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
               <img
                 src={galleryImages[1]}
                 alt="Villa entrance with blue door"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
               />
             </div>
-            <div className="aspect-square rounded-lg overflow-hidden">
+            <div className="aspect-square rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
               <img
                 src={galleryImages[2]}
                 alt="Villa interior living room"
@@ -50,14 +51,14 @@ const GallerySection = () => {
             </div>
             
             {/* Bottom row - 2 images */}
-            <div className="aspect-square rounded-lg overflow-hidden">
+            <div className="aspect-square rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
               <img
                 src={galleryImages[3]}
                 alt="Garden view with sea in background"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
               />
             </div>
-            <div className="aspect-square rounded-lg overflow-hidden">
+            <div className="aspect-square rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
               <img
                 src={galleryImages[4]}
                 alt="Villa interior with traditional ceiling"
