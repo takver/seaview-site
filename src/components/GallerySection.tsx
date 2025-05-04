@@ -7,7 +7,8 @@ const galleryImages = [
   "/images/IMG_0380-scaled.webp", // Top right
   "/images/DSC09508-scaled.webp", // Top middle right
   "/images/LR1-474907880.webp",   // Bottom right
-  "/images/KI1-474906199.webp"    // Bottom middle right
+  "/images/KI1-474906199.webp",   // Bottom middle right
+  "/images/LRa.1920x1280-605x465.webp" // New image added
 ];
 
 const GallerySection = () => {
@@ -59,8 +60,8 @@ const GallerySection = () => {
             </div>
             <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[249px]">
               <img
-                src={galleryImages[4]}
-                alt="Villa interior with traditional ceiling"
+                src={galleryImages[5]} // Using the new image in the 4th position
+                alt="Villa interior with traditional design"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
               />
             </div>
