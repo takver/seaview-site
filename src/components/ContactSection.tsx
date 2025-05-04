@@ -5,34 +5,36 @@ const ContactSection = () => {
   return (
     <section className="py-16">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">Contact Us</h2>
-        <p className="text-center text-gray-600 max-w-2xl mx-auto mb-10">
+        <h2 className="text-4xl font-light text-center mb-12 text-[#1A1F2C]">
+          <span className="border-b-2 border-[#6E59A5] pb-1">Contact Us</span>
+        </h2>
+        <p className="text-gray-600 text-center font-light leading-relaxed max-w-2xl mx-auto mb-10">
           Have questions about our property or booking? Get in touch with us
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white p-8 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-4">Contact Information</h3>
-            <div className="space-y-4 text-gray-600">
+          <div className="border-2 border-gray-300 shadow-md hover:shadow-lg transition-shadow bg-white p-6 rounded-lg">
+            <h3 className="text-xl font-normal text-[#6E59A5] text-center mb-4">Contact Information</h3>
+            <div className="space-y-4 text-gray-600 font-light">
               <p>
-                <strong>Email:</strong> info@sifnos-seaview.com
+                <strong className="font-normal">Email:</strong> info@sifnos-seaview.com
               </p>
               <p>
-                <strong>Phone:</strong> +30 12345 67890
+                <strong className="font-normal">Phone:</strong> +30 12345 67890
               </p>
               <p>
-                <strong>Address:</strong> Kamares, Sifnos 84003, Greece
+                <strong className="font-normal">Address:</strong> Kamares, Sifnos 84003, Greece
               </p>
             </div>
           </div>
           
-          <div className="bg-white p-8 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-4">Send Us a Message</h3>
-            <p className="text-gray-600 mb-6">
+          <div className="border-2 border-gray-300 shadow-md hover:shadow-lg transition-shadow bg-white p-6 rounded-lg">
+            <h3 className="text-xl font-normal text-[#6E59A5] text-center mb-4">Send Us a Message</h3>
+            <p className="text-gray-600 font-light mb-6 text-center">
               We'll get back to you as soon as possible
             </p>
-            <div className="space-y-4">
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+            <div className="text-center">
+              <Button className="bg-[#6E59A5] hover:bg-[#6E59A5]/90 text-white px-4 py-2 rounded">
                 Contact Now
               </Button>
             </div>
