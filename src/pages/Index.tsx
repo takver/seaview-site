@@ -1,9 +1,10 @@
 
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
-import PropertyFeatures from "@/components/PropertyFeatures";
-import GallerySection from "@/components/GallerySection";
+import PropertyFeaturesBanner from "@/components/PropertyFeaturesBanner";
 import LocationSection from "@/components/LocationSection";
+import PropertyHighlights from "@/components/PropertyHighlights";
+import GallerySection from "@/components/GallerySection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
@@ -13,9 +14,10 @@ const Index = () => {
       <Header />
       <main className="flex-grow pt-20">
         <HeroSection />
-        <PropertyFeatures />
-        <GallerySection />
+        <PropertyFeaturesBanner />
         <LocationSection />
+        <PropertyHighlights />
+        <GallerySection />
         <ContactSection />
       </main>
       <Footer />

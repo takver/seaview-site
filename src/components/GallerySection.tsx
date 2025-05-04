@@ -1,39 +1,77 @@
 
 import { Button } from "./ui/button";
+import { GalleryHorizontal } from "lucide-react";
 
 const galleryImages = [
-  "/placeholder.svg",
-  "/placeholder.svg",
-  "/placeholder.svg",
-  "/placeholder.svg",
-  "/placeholder.svg",
-  "/placeholder.svg"
+  "/images/IMG_0389-scaled.webp", // Large main image
+  "/images/IMG_0380-scaled.webp", // Top right
+  "/images/DSC09508-scaled.webp", // Top middle right
+  "/images/LR1-474907880.webp",   // Bottom right
+  "/images/KI1-474906199.webp",   // Bottom middle right
+  "/images/LRa.1920x1280-605x465.webp" // New image added
 ];
 
 const GallerySection = () => {
   return (
     <section className="py-16">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">Gallery</h2>
-        <p className="text-center text-gray-600 max-w-2xl mx-auto mb-10">
+        <h2 className="text-4xl font-light text-center mb-12 text-[#1A1F2C]">
+          Gallery
+        </h2>
+        <p className="text-gray-600 text-center font-light leading-relaxed max-w-2xl mx-auto mb-10">
           Take a glimpse at our beautiful property and the stunning views of Sifnos
         </p>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {galleryImages.map((image, index) => (
-            <div key={index} className="aspect-square overflow-hidden rounded-md shadow-md">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-1">
+          {/* Large left image - spans 7 columns */}
+          <div className="md:col-span-7 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[500px]">
+            <img
+              src={galleryImages[0]}
+              alt="Villa exterior with olive trees"
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+          
+          {/* Right side grid - spans 5 columns */}
+          <div className="md:col-span-5 grid grid-cols-2 gap-1 h-[500px]">
+            {/* Top row - 2 images */}
+            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[249px]">
               <img
-                src={image}
-                alt={`Gallery image ${index + 1}`}
-                className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
+                src={galleryImages[1]}
+                alt="Villa entrance with blue door"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
               />
             </div>
-          ))}
+            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[249px]">
+              <img
+                src={galleryImages[2]}
+                alt="Villa interior living room"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            
+            {/* Bottom row - 2 images */}
+            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[249px]">
+              <img
+                src={galleryImages[3]}
+                alt="Garden view with sea in background"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[249px]">
+              <img
+                src={galleryImages[5]} // Using the new image in the 4th position
+                alt="Villa interior with traditional design"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          </div>
         </div>
         
         <div className="text-center mt-10">
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-            View Full Gallery
+          <Button className="bg-[#6E59A5] hover:bg-[#6E59A5]/90 text-white flex items-center gap-2">
+            <GalleryHorizontal size={20} />
+            <span>Show All Pictures</span>
           </Button>
         </div>
       </div>
