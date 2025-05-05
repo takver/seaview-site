@@ -113,8 +113,8 @@ const PropertyDetailsSection = () => {
                   <div className="text-gray-600 font-light leading-relaxed space-y-4">
                     <div className="md:float-right md:ml-8 md:mb-4 rounded-lg overflow-hidden shadow-md mb-6 md:max-w-[300px]">
                       <img
-                        src="/images/DSC09537-scaled.webp"
-                        alt="Sustainable features of the villa"
+                        src="/images/graywater.webp"
+                        alt="Gray water recycling system"
                         className="w-full h-auto object-cover"
                       />
                     </div>
