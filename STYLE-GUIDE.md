@@ -86,6 +86,17 @@ This document serves as the definitive reference for all styling decisions acros
 - Desktop: Four columns for cards `lg:grid-cols-4`
 - Gap between grid items: `gap-6`
 
+### Gallery Section Layout
+- Gallery grid uses `md:grid-cols-12` layout
+- Large image spans 7 columns: `md:col-span-7`
+- Small images grid spans 5 columns: `md:col-span-5`
+- Consistent gap size of 4px for both outer and inner grids: `gap-[4px]`
+- Height of large image: `h-[500px]`
+- Height of small images: `h-[248px]` (calculated as (500px - 4px) ÷ 2)
+- Image hover effect: `hover:scale-105 transition-transform duration-300`
+- Cards have `shadow-md hover:shadow-xl transition-shadow`
+- All images have `object-cover` to maintain aspect ratio
+
 ### Card Spacing
 - Card padding: `p-6`
 - Card margin bottom (when stacked): `mb-6`
@@ -166,3 +177,4 @@ This document serves as the definitive reference for all styling decisions acros
 ---
 
 This style guide should be referenced when making any design decisions or implementing new features to ensure visual consistency throughout the application. Updates to this guide should be proposed as needed to keep it aligned with the evolving design of the site.
+
