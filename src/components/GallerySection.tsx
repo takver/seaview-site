@@ -22,7 +22,8 @@ const GallerySection = () => {
           Take a glimpse at our beautiful property and the stunning views of Sifnos
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-1">
+        {/* Set both outer and inner grids to have the same gap (4px) */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-[4px]">
           {/* Large left image - spans 7 columns */}
           <div className="md:col-span-7 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[500px]">
             <img
@@ -32,17 +33,17 @@ const GallerySection = () => {
             />
           </div>
           
-          {/* Right side grid - spans 5 columns */}
-          <div className="md:col-span-5 grid grid-cols-2 gap-[10px] h-[500px]">
-            {/* Top row - 2 images - calculate (500px - 10px gap) / 2 = 245px */}
-            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[245px]">
+          {/* Right side grid - spans 5 columns - same 4px gap as outer grid */}
+          <div className="md:col-span-5 grid grid-cols-2 gap-[4px] h-[500px]">
+            {/* (500px - (1 gap × 4px)) ÷ 2 = 248px for each small image */}
+            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[248px]">
               <img
                 src={galleryImages[1]}
                 alt="Villa entrance with blue door"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
               />
             </div>
-            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[245px]">
+            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[248px]">
               <img
                 src={galleryImages[2]}
                 alt="Villa interior living room"
@@ -50,15 +51,15 @@ const GallerySection = () => {
               />
             </div>
             
-            {/* Bottom row - 2 images - same height as top row */}
-            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[245px]">
+            {/* Bottom row - same height as top row */}
+            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[248px]">
               <img
                 src={galleryImages[3]}
                 alt="Garden view with sea in background"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
               />
             </div>
-            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[245px]">
+            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[248px]">
               <img
                 src={galleryImages[5]} // Using the new image in the 4th position
                 alt="Villa interior with traditional design"
