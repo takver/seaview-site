@@ -16,31 +16,31 @@ const PropertyDetailsSection = () => {
             orientation="vertical"
             className="flex flex-col md:flex-row w-full"
           >
-            <TabsList className="flex flex-row md:flex-col h-auto md:self-start space-x-2 md:space-x-0 md:space-y-2 md:min-w-[200px] bg-transparent p-0">
+            <TabsList className="flex flex-row md:flex-col h-auto md:self-start space-x-2 md:space-x-0 md:space-y-2 md:min-w-[220px] bg-transparent p-0">
               <TabsTrigger
                 value="place"
-                className="flex items-center gap-2 justify-start w-full px-5 py-3 data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white text-left data-[state=active]:rounded-md"
+                className="flex items-center gap-2 justify-start w-full px-6 py-3 data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white hover:bg-gray-100 data-[state=active]:hover:bg-[#6E59A5]/90 text-left rounded-md transition-colors"
               >
                 <Home size={20} />
                 <span>The Place</span>
               </TabsTrigger>
               <TabsTrigger
                 value="gardens"
-                className="flex items-center gap-2 justify-start w-full px-5 py-3 data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white text-left data-[state=active]:rounded-md"
+                className="flex items-center gap-2 justify-start w-full px-6 py-3 data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white hover:bg-gray-100 data-[state=active]:hover:bg-[#6E59A5]/90 text-left rounded-md transition-colors"
               >
                 <Leaf size={20} />
                 <span>Gardens</span>
               </TabsTrigger>
               <TabsTrigger
                 value="sustainability"
-                className="flex items-center gap-2 justify-start w-full px-5 py-3 data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white text-left data-[state=active]:rounded-md"
+                className="flex items-center gap-2 justify-start w-full px-6 py-3 data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white hover:bg-gray-100 data-[state=active]:hover:bg-[#6E59A5]/90 text-left rounded-md transition-colors"
               >
                 <Recycle size={20} />
                 <span>Sustainability</span>
               </TabsTrigger>
             </TabsList>
 
-            <div className="flex-1 mt-6 md:mt-0 min-h-[500px]">
+            <div className="flex-1 mt-6 md:mt-0 min-h-[500px] md:ml-10">
               {/* The Place Tab Content */}
               <TabsContent
                 value="place"
