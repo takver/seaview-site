@@ -34,7 +34,7 @@ const GallerySection = () => {
           
           {/* Right side grid - spans 5 columns */}
           <div className="md:col-span-5 grid grid-cols-2 gap-1 h-[500px]">
-            {/* Top row - 2 images */}
+            {/* Top row - 2 images - calculate (500px - 1px gap) / 2 = 249.5px, round to 249px */}
             <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[249px]">
               <img
                 src={galleryImages[1]}
@@ -50,7 +50,7 @@ const GallerySection = () => {
               />
             </div>
             
-            {/* Bottom row - 2 images */}
+            {/* Bottom row - 2 images - same height as top row */}
             <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[249px]">
               <img
                 src={galleryImages[3]}
