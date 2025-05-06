@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Card, CardContent } from "./ui/card";
-import { Coffee, City, Beach, Hiking } from "lucide-react";
+import { Coffee, Building, Waves, MapPin } from "lucide-react";
 
 type LocationCardProps = {
   title: string;
@@ -55,19 +55,19 @@ const DiscoverSifnosSection = () => {
       title: "Apollonia",
       description: "Experience vibrant nightlife, stylish pubs, and savor the island's best food in the trendy heart of Sifnos.",
       imageSrc: "/images/apollonia-night-drone-394x303.jpg",
-      icon: City,
+      icon: Building,
     },
     {
       title: "Beaches & Culture",
       description: "From stunning beaches to rich culinary delights, Sifnos offers an untouched charm and an unforgettable Greek experience.",
       imageSrc: "/images/chrissopigi.1920x1280-605x465.webp",
-      icon: Beach,
+      icon: Waves,
     },
     {
       title: "Hiking Paradise",
       description: "The house is positioned near trailheads – explore hidden treasures... accessible only on foot! A unique network of trails some 200 km, the oldest dating back as far as the 3 millennium BC. Officially marked trails are available on",
       imageSrc: "/images/sifnos-trail-1-32.webp",
-      icon: Hiking,
+      icon: MapPin,
     },
   ];
 
