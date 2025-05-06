@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import AirbnbIcon from "./icons/AirbnbIcon";
 import BookingIcon from "./icons/BookingIcon";
 import { Mail, Phone } from "lucide-react";
+import AvailabilityCalendar from "./AvailabilityCalendar";
 
 const BookingSection = () => {
   return (
@@ -112,12 +113,18 @@ const BookingSection = () => {
             </CardContent>
           </Card>
           
-          {/* Right Card - Empty Placeholder */}
+          {/* Right Card - Availability Calendar */}
           <Card className="overflow-hidden shadow-lg rounded-xl border-2 border-gray-300">
-            <CardContent className="p-6 h-full flex items-center justify-center">
-              <div className="text-gray-400 font-light text-center">
-                <p className="mb-2">Additional information</p>
-                <p className="text-sm">Coming soon</p>
+            <CardContent className="p-6">
+              <h3 className="text-lg font-normal text-[#6E59A5] mb-3">Check Villa Availability</h3>
+              <p className="text-gray-600 font-light mb-4">
+                Our calendar shows real-time availability from all booking platforms. 
+                Green days are available, red days are booked, and split days are check-in/out dates.
+              </p>
+              <AvailabilityCalendar />
+              <div className="mt-4 text-sm text-gray-500">
+                <p>Calendar data refreshes automatically every minute. Last updated at: {new Date().toLocaleTimeString()}</p>
+                <p className="mt-1">To book specific dates, please use one of our booking platforms listed on the left.</p>
               </div>
             </CardContent>
           </Card>
