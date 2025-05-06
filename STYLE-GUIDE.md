@@ -97,6 +97,21 @@ This document serves as the definitive reference for all styling decisions acros
 - Cards have `shadow-md hover:shadow-xl transition-shadow`
 - All images have `object-cover` to maintain aspect ratio
 
+### Amenities Section Layout
+- Grid layout: 1 column (mobile), 2 columns (tablet), 3 columns (medium), 5 columns (desktop)
+- Grid columns: `grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5`
+- Gap between amenity cards: `gap-6`
+- Amenity card styling: 
+  - Border: `border border-gray-300`
+  - Shadow: `shadow-md hover:shadow-lg transition-shadow`
+  - Padding: `p-6`
+  - Layout: `flex flex-col items-center`
+- Icon styling: 
+  - Brand purple: `text-[#6E59A5]`
+  - Size: `size={24}`
+  - Stroke width: `strokeWidth={1.5}`
+- Collapsible functionality: Initially shows 10 featured amenities
+
 ### Card Spacing
 - Card padding: `p-6`
 - Card margin bottom (when stacked): `mb-6`
@@ -177,4 +192,3 @@ This document serves as the definitive reference for all styling decisions acros
 ---
 
 This style guide should be referenced when making any design decisions or implementing new features to ensure visual consistency throughout the application. Updates to this guide should be proposed as needed to keep it aligned with the evolving design of the site.
-
