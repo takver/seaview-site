@@ -7,6 +7,7 @@ import PropertyHighlights from "@/components/PropertyHighlights";
 import PropertyDetailsSection from "@/components/PropertyDetailsSection";
 import GallerySection from "@/components/GallerySection";
 import AmenitiesSection from "@/components/AmenitiesSection";
+import IdealGuestsSection from "@/components/IdealGuestsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
@@ -21,6 +22,7 @@ const Index = () => {
         <PropertyHighlights />
         <GallerySection />
         <AmenitiesSection />
+        <IdealGuestsSection />
         <PropertyDetailsSection />
         <ContactSection />
       </main>
