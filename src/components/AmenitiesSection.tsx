@@ -12,11 +12,11 @@ import {
   CollapsibleTrigger 
 } from "./ui/collapsible";
 
-// Define the amenity type
+// Define the amenity type with a correct icon type that matches lucide-react components
 type Amenity = {
   id: number;
   title: string;
-  icon: React.FC<{ size?: number; className?: string }>;
+  icon: React.ElementType; // Updated icon type to accept any React component
   featured?: boolean;
 };
 
