@@ -42,29 +42,6 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ className }
     return () => clearInterval(intervalId);
   }, []);
 
-  // Custom CSS to apply to calendar days
-  const dayClassNames = (date: Date): string => {
-    if (isCheckInOutDay(date, bookings)) {
-      // Check-in/out days have split colors
-      return 'bg-gradient-to-r from-[#F2FCE2] to-[#ea384c] hover:bg-none';
-    } else if (isDateBooked(date, bookings)) {
-      // Booked days are red
-      return 'bg-[#ea384c] text-white hover:bg-[#ea384c]/90';
-    } else {
-      // Available days are soft green
-      return 'bg-[#F2FCE2] hover:bg-[#F2FCE2]/90';
-    }
-  };
-
-  // Custom component to modify the appearance of day cells
-  const dayContent = (day: Date, modifiers: Record<string, boolean>) => {
-    return (
-      <div className={cn(dayClassNames(day), 'h-full w-full flex items-center justify-center')}>
-        {day.getDate()}
-      </div>
-    );
-  };
-
   return (
     <div className={cn("relative", className)}>
       {isLoading && (
@@ -98,14 +75,32 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ className }
             showOutsideDays
             className="pointer-events-auto rounded border shadow"
             classNames={{
-              day: (date) => cn(dayClassNames(date)),
+              day: cn("h-9 w-9 p-0 font-normal", (date) => {
+                if (isCheckInOutDay(date, bookings)) {
+                  // Check-in/out days have split colors
+                  return 'bg-gradient-to-r from-[#F2FCE2] to-[#ea384c] hover:bg-none';
+                } else if (isDateBooked(date, bookings)) {
+                  // Booked days are red
+                  return 'bg-[#ea384c] text-white hover:bg-[#ea384c]/90';
+                } else {
+                  // Available days are soft green
+                  return 'bg-[#F2FCE2] hover:bg-[#F2FCE2]/90';
+                }
+              }),
               day_today: "bg-accent text-accent-foreground font-semibold",
             }}
             components={{
               Day: ({ date, ...props }) => (
                 <div 
                   {...props} 
-                  className={cn("h-9 w-9 p-0 font-normal", dayClassNames(date))}
+                  className={cn(
+                    "h-9 w-9 p-0 font-normal", 
+                    isCheckInOutDay(date, bookings) 
+                      ? 'bg-gradient-to-r from-[#F2FCE2] to-[#ea384c] hover:bg-none' 
+                      : isDateBooked(date, bookings)
+                      ? 'bg-[#ea384c] text-white hover:bg-[#ea384c]/90'
+                      : 'bg-[#F2FCE2] hover:bg-[#F2FCE2]/90'
+                  )}
                 >
                   {date.getDate()}
                 </div>
