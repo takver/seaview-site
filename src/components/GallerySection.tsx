@@ -1,7 +1,9 @@
-
+import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { GalleryHorizontal } from "lucide-react";
+import GalleryCarousel from "./GalleryCarousel";
 
+// Gallery images
 const galleryImages = [
   "/images/IMG_0389-scaled.webp", // Large main image
   "/images/IMG_0380-scaled.webp", // Top right
@@ -11,7 +13,28 @@ const galleryImages = [
   "/images/LRa.1920x1280-605x465.webp" // New image added
 ];
 
+// Hero images
+const heroImages = [
+  "/images/DSC09508-scaled.webp",     // Path with trees and greenery
+  "/images/IMG_0379.webp",            // Indoor dining area with hanging lights
+  "/images/IMG_0383-scaled.webp",     // Bedroom with white bedding
+  "/images/474913331.webp",           // View from terrace with sea
+  "/images/474913028.webp",           // Sea view with white building
+  "/images/GA1-IMG_0393-E-scaled.webp", // White building exterior
+  "/images/BLD-E1.webp",              // Night landscape
+  "/images/IMG_0389-scaled.webp",     // Garden view with greenery
+  "/images/DSC09522-scaled.webp",     // Stone garden feature
+  "/images/IMG_0330-scaled.webp",     // Stone pathway
+  "/images/DSC09537-scaled.webp",     // White building corner
+  "/images/IMG_0380-scaled.webp"      // Interior with hanging lights
+];
+
+// Combine all images, removing duplicates
+const allImages = [...new Set([...galleryImages, ...heroImages])];
+
 const GallerySection = () => {
+  const [isCarouselOpen, setIsCarouselOpen] = useState(false);
+
   return (
     <section className="py-16">
       <div className="container mx-auto px-4">
@@ -70,11 +93,20 @@ const GallerySection = () => {
         </div>
         
         <div className="text-center mt-10">
-          <Button className="bg-[#6E59A5] hover:bg-[#6E59A5]/90 text-white flex items-center gap-2">
+          <Button 
+            className="bg-[#6E59A5] hover:bg-[#6E59A5]/90 text-white flex items-center gap-2"
+            onClick={() => setIsCarouselOpen(true)}
+          >
             <GalleryHorizontal size={20} />
             <span>Show All Pictures</span>
           </Button>
         </div>
+
+        <GalleryCarousel
+          isOpen={isCarouselOpen}
+          onClose={() => setIsCarouselOpen(false)}
+          images={allImages}
+        />
       </div>
     </section>
   );
