@@ -1,39 +1,77 @@
-import React, { useState } from "react";
-import { Button } from "./ui/button";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { GalleryHorizontal } from "lucide-react";
 import GalleryCarousel from "./GalleryCarousel";
 
-// Gallery images
-const galleryImages = [
-  "/images/IMG_0389-scaled.webp", // Large main image
-  "/images/IMG_0380-scaled.webp", // Top right
-  "/images/DSC09508-scaled.webp", // Top middle right
-  "/images/LR1-474907880.webp",   // Bottom right
-  "/images/KI1-474906199.webp",   // Bottom middle right
-  "/images/LRa.1920x1280-605x465.webp" // New image added
+// Gallery images with proper typing
+interface GalleryImage {
+  src: string;
+  alt: string;
+}
+
+const galleryImages: GalleryImage[] = [
+  { src: "/images/BLD-E1.webp", alt: "Villa exterior night view" },
+  { src: "/images/IMG_0380-scaled.webp", alt: "Villa entrance with blue door" },
+  { src: "/images/DSC09508-scaled.webp", alt: "Villa interior living room" },
+  { src: "/images/LR1-474907880.webp", alt: "Garden view with sea in background" },
+  { src: "/images/KI1-474906199.webp", alt: "Villa interior with traditional design" },
+  { src: "/images/LRa.1920x1280-605x465.webp", alt: "Villa interior with modern design" }
 ];
 
-// Hero images
-const heroImages = [
-  "/images/DSC09508-scaled.webp",     // Path with trees and greenery
-  "/images/IMG_0379.webp",            // Indoor dining area with hanging lights
-  "/images/IMG_0383-scaled.webp",     // Bedroom with white bedding
-  "/images/474913331.webp",           // View from terrace with sea
-  "/images/474913028.webp",           // Sea view with white building
-  "/images/GA1-IMG_0393-E-scaled.webp", // White building exterior
-  "/images/BLD-E1.webp",              // Night landscape
-  "/images/IMG_0389-scaled.webp",     // Garden view with greenery
-  "/images/DSC09522-scaled.webp",     // Stone garden feature
-  "/images/IMG_0330-scaled.webp",     // Stone pathway
-  "/images/DSC09537-scaled.webp",     // White building corner
-  "/images/IMG_0380-scaled.webp"      // Interior with hanging lights
+// Hero images with proper typing
+const heroImages: GalleryImage[] = [
+  { src: "/images/DSC09508-scaled.webp", alt: "Path with trees and greenery" },
+  { src: "/images/IMG_0379.webp", alt: "Indoor dining area with hanging lights" },
+  { src: "/images/IMG_0383-scaled.webp", alt: "Bedroom with white bedding" },
+  { src: "/images/474913331.webp", alt: "View from terrace with sea" },
+  { src: "/images/474913028.webp", alt: "Sea view with white building" },
+  { src: "/images/GA1-IMG_0393-E-scaled.webp", alt: "White building exterior" },
+  { src: "/images/BLD-E1.webp", alt: "Night landscape" },
+  { src: "/images/IMG_0389-scaled.webp", alt: "Garden view with greenery" },
+  { src: "/images/DSC09522-scaled.webp", alt: "Stone garden feature" },
+  { src: "/images/IMG_0330-scaled.webp", alt: "Stone pathway" },
+  { src: "/images/DSC09537-scaled.webp", alt: "White building corner" },
+  { src: "/images/IMG_0380-scaled.webp", alt: "Interior with hanging lights" }
 ];
 
-// Combine all images, removing duplicates
-const allImages = [...new Set([...galleryImages, ...heroImages])];
+// Combine all images, removing duplicates based on src
+const allImages = [...new Set([...galleryImages, ...heroImages].map(img => img.src))];
 
 const GallerySection = () => {
   const [isCarouselOpen, setIsCarouselOpen] = useState(false);
+  const [carouselGridMode, setCarouselGridMode] = useState(true);
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
+
+  const handleImageLoad = (src: string) => {
+    setLoadedImages(prev => new Set([...prev, src]));
+  };
+
+  const handleImageError = (src: string) => {
+    setImageErrors(prev => new Set([...prev, src]));
+  };
+
+  const renderImage = (image: GalleryImage, className: string) => (
+    <div className={`relative ${className}`}>
+      <img
+        src={image.src}
+        alt={image.alt}
+        className={`w-full h-full object-cover transition-transform duration-300 ${
+          loadedImages.has(image.src) ? 'hover:scale-105' : ''
+        }`}
+        onLoad={() => handleImageLoad(image.src)}
+        onError={() => handleImageError(image.src)}
+      />
+      {!loadedImages.has(image.src) && !imageErrors.has(image.src) && (
+        <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+      )}
+      {imageErrors.has(image.src) && (
+        <div className="absolute inset-0 bg-gray-100 flex items-center justify-center text-gray-400">
+          Failed to load image
+        </div>
+      )}
+    </div>
+  );
 
   return (
     <section className="py-16">
@@ -45,57 +83,27 @@ const GallerySection = () => {
           Take a glimpse at our beautiful property and the stunning views of Sifnos
         </p>
         
-        {/* Set both outer and inner grids to have the same gap (4px) */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-[4px]">
-          {/* Large left image - spans 7 columns */}
           <div className="md:col-span-7 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[500px]">
-            <img
-              src={galleryImages[0]}
-              alt="Villa exterior with olive trees"
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-            />
+            {renderImage(galleryImages[0], "h-full")}
           </div>
           
-          {/* Right side grid - spans 5 columns - same 4px gap as outer grid */}
           <div className="md:col-span-5 grid grid-cols-2 gap-[4px] h-[500px]">
-            {/* (500px - (1 gap × 4px)) ÷ 2 = 248px for each small image */}
-            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[248px]">
-              <img
-                src={galleryImages[1]}
-                alt="Villa entrance with blue door"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[248px]">
-              <img
-                src={galleryImages[2]}
-                alt="Villa interior living room"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-            
-            {/* Bottom row - same height as top row */}
-            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[248px]">
-              <img
-                src={galleryImages[3]}
-                alt="Garden view with sea in background"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[248px]">
-              <img
-                src={galleryImages[5]} // Using the new image in the 4th position
-                alt="Villa interior with traditional design"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              />
-            </div>
+            {galleryImages.slice(1, 5).map((image, index) => (
+              <div key={image.src} className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[248px]">
+                {renderImage(image, "h-full")}
+              </div>
+            ))}
           </div>
         </div>
         
         <div className="text-center mt-10">
           <Button 
             className="bg-[#6E59A5] hover:bg-[#6E59A5]/90 text-white flex items-center gap-2"
-            onClick={() => setIsCarouselOpen(true)}
+            onClick={() => {
+              setCarouselGridMode(true);
+              setIsCarouselOpen(true);
+            }}
           >
             <GalleryHorizontal size={20} />
             <span>Show All Pictures</span>
@@ -106,6 +114,8 @@ const GallerySection = () => {
           isOpen={isCarouselOpen}
           onClose={() => setIsCarouselOpen(false)}
           images={allImages}
+          gridMode={carouselGridMode}
+          initialIndex={0}
         />
       </div>
     </section>

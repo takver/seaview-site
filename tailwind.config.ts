@@ -1,6 +1,7 @@
+import type { Config } from 'tailwindcss'
+import animate from 'tailwindcss-animate'
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+const config: Config = {
   darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
@@ -59,15 +60,15 @@ module.exports = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-      },
+      } as const,
       keyframes: {
         "accordion-down": {
-          from: { height: 0 },
+          from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
+          to: { height: "0" },
         },
         "slow-zoom": {
           "0%": { transform: "scale(1.0)" },
@@ -86,5 +87,7 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [animate],
 }
+
+export default config

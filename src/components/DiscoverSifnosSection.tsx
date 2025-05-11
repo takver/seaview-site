@@ -7,7 +7,7 @@ type LocationCardProps = {
   imageSrc: string;
 };
 
-const LocationCard: React.FC<LocationCardProps> = ({ title, description, imageSrc }) => {
+const LocationCard = ({ title, description, imageSrc }: LocationCardProps) => {
   return (
     <Card className="overflow-hidden shadow-lg rounded-xl transition-all duration-300 hover:shadow-xl">
       <div className="h-56 overflow-hidden">
