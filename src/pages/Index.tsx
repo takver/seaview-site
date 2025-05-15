@@ -1,17 +1,16 @@
-
-import Header from "@/components/Header";
-import HeroSection from "@/components/HeroSection";
-import PropertyFeaturesBanner from "@/components/PropertyFeaturesBanner";
-import LocationSection from "@/components/LocationSection";
-import PropertyHighlights from "@/components/PropertyHighlights";
-import PropertyDetailsSection from "@/components/PropertyDetailsSection";
-import GallerySection from "@/components/GallerySection";
-import AmenitiesSection from "@/components/AmenitiesSection";
-import IdealGuestsSection from "@/components/IdealGuestsSection";
-import DiscoverSifnosSection from "@/components/DiscoverSifnosSection";
-import BookingSection from "@/components/BookingSection";
-import ContactSection from "@/components/ContactSection";
-import Footer from "@/components/Footer";
+import { Header } from "@/components/header";
+import { HeroSection } from "@/components/hero-section";
+import { PropertyFeaturesBanner } from "@/components/property-features-banner";
+import { LocationSection } from "@/components/location-section";
+import { PropertyHighlights } from "@/components/property-highlights";
+import { PropertyDetailsSection } from "@/components/property-details-section";
+import { GallerySection } from "@/components/gallery-section";
+import { AmenitiesSection } from "@/components/amenities-section";
+import { IdealGuestsSection } from "@/components/ideal-guests-section";
+import { DiscoverSifnosSection } from "@/components/discover-sifnos-section";
+import { BookingSection } from "@/components/booking-section";
+import { ContactSection } from "@/components/contact-section";
+import { Footer } from "@/components/footer";
 
 const Index = () => {
   return (
