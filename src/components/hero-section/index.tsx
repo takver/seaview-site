@@ -104,13 +104,15 @@ export const HeroSection: FC = () => {
         <p className="text-lg md:text-xl text-white mb-6">
           An Exceptional Sanctuary in Ano Petali Village
         </p>
-        <Button 
-          size="lg" 
-          variant="transparentRounded"
-          className="px-8"
-        >
-          Check Availability
-        </Button>
+        <a href="#booking-section">
+          <Button 
+            size="lg" 
+            variant="transparentRounded"
+            className="px-8"
+          >
+            Check Availability
+          </Button>
+        </a>
       </div>
     </div>
   );

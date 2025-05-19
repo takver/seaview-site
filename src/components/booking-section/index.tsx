@@ -9,7 +9,7 @@ import AvailabilityCalendar from "../AvailabilityCalendar";
 
 export const BookingSection = () => {
   return (
-    <section className="py-10 bg-white">
+    <section id="booking-section" className="py-10 bg-white">
       <div className="container mx-auto px-4">
         <h2 className="text-3.5xl font-light text-center mb-12 text-[#1A1F2C]">
           Book Your Stay<span className="text-[#6E59A5]">...</span>
@@ -74,18 +74,16 @@ export const BookingSection = () => {
                   className="inline-block mt-2"
                 >
                   <Button 
-                    variant="transparentRounded"
-                    className="group border-2 border-[#F69E00] text-[#F69E00] hover:bg-[#F69E00] hover:text-white"
-                    size="pill"
+                    className="group bg-gray-100 border-2 border-[#F69E00] text-[#F69E00] hover:bg-[#F69E00] hover:text-white hover:border-[#F69E00] px-4 py-2 rounded-full flex items-center justify-center transition-colors duration-200 ease-in-out"
                   >
-                    <div className="relative w-5 h-5 mr-2 flex items-center justify-center">
+                    <div className="relative w-5 h-5 mr-2 flex items-center justify-center group-hover:bg-white group-hover:p-0.5 group-hover:rounded-sm transition-all duration-200 ease-in-out">
                       <img 
                         src="/images/homeexchangelogo.svg" 
                         alt="HomeExchange" 
-                        className="w-full h-full object-contain brightness-0 group-hover:brightness-100 group-hover:invert" 
+                        className="w-full h-full object-contain"
                       />
                     </div>
-                    <span>HomeExchange</span>
+                    <span className="text-sm font-medium">HomeExchange</span>
                   </Button>
                 </a>
               </div>
