@@ -23,9 +23,9 @@ const GalleryPreview: React.FC<GalleryPreviewProps> = ({ previewImages, renderIm
     displayImages.push({ src: "", categories: [] }); // Placeholder for empty slot
   }
 
-  const commonImageContainerClass = "overflow-hidden rounded-lg shadow-lg";
-  const commonImageClass = "w-full h-full object-cover";
-  const placeholderClass = "bg-gray-200 dark:bg-gray-700 rounded-lg shadow-lg";
+  const commonImageContainerClass = "relative overflow-hidden rounded-lg shadow-2xl";
+  const commonImageClass = "absolute top-1/2 left-1/2 w-[110%] h-[110%] transform -translate-x-1/2 -translate-y-1/2";
+  const placeholderClass = "bg-gray-200 dark:bg-gray-700 shadow-2xl";
 
   return (
     // The parent grid now defines 2 rows of equal height implicitly by how content flows.
@@ -36,44 +36,44 @@ const GalleryPreview: React.FC<GalleryPreviewProps> = ({ previewImages, renderIm
       {displayImages[0]?.src ? (
         <div className={`md:col-span-2 md:row-span-2 aspect-[4/3] ${commonImageContainerClass}`}>
           {/* The image itself will now fill this container, and object-cover will handle its aspect ratio */}
-          {renderImage(displayImages[0], "", commonImageClass)}
+          {renderImage(displayImages[0], "w-full h-full", commonImageClass)}
         </div>
       ) : (
-        <div className={`md:col-span-2 md:row-span-2 aspect-[3/3] ${placeholderClass}`}></div>
+        <div className={`md:col-span-2 md:row-span-2 aspect-[4/3] ${placeholderClass}`}></div>
       )}
       
       {/* Right Side - 2x2 Grid */}
       {/* These will occupy one grid cell each. Their height will be determined by the implicit row height established by the large image. */}
       {displayImages[1]?.src ? (
-        <div className={`aspect-[5/6] ${commonImageContainerClass}`}>
-          {renderImage(displayImages[1], "", commonImageClass)}
+        <div className={`aspect-[4/3] ${commonImageContainerClass}`}>
+          {renderImage(displayImages[1], "w-full h-full", commonImageClass)}
         </div>
       ) : (
-        <div className={`aspect-[4/4] ${placeholderClass}`}></div>
+        <div className={`aspect-[4/3] ${placeholderClass}`}></div>
       )}
       
       {displayImages[2]?.src ? (
-        <div className={`aspect-[4/4] ${commonImageContainerClass}`}>
-          {renderImage(displayImages[2], "", commonImageClass)}
+        <div className={`aspect-[4/3] ${commonImageContainerClass}`}>
+          {renderImage(displayImages[2], "w-full h-full", commonImageClass)}
         </div>
       ) : (
-        <div className={`aspect-[5/6] ${placeholderClass}`}></div>
+        <div className={`aspect-[4/3] ${placeholderClass}`}></div>
       )}
       
       {displayImages[3]?.src ? (
-        <div className={`aspect-[5/6] ${commonImageContainerClass}`}>
-          {renderImage(displayImages[3], "", commonImageClass)}
+        <div className={`aspect-[4/3] ${commonImageContainerClass}`}>
+          {renderImage(displayImages[3], "w-full h-full", commonImageClass)}
         </div>
       ) : (
-        <div className={`aspect-[5/6] ${placeholderClass}`}></div>
+        <div className={`aspect-[4/3] ${placeholderClass}`}></div>
       )}
       
       {displayImages[4]?.src ? (
-        <div className={`aspect-[5/6] ${commonImageContainerClass}`}>
-          {renderImage(displayImages[4], "", commonImageClass)}
+        <div className={`aspect-[4/3] ${commonImageContainerClass}`}>
+          {renderImage(displayImages[4], "w-full h-full", commonImageClass)}
         </div>
       ) : (
-        <div className={`aspect-[5/6] ${placeholderClass}`}></div>
+        <div className={`aspect-[4/3] ${placeholderClass}`}></div>
       )}
     </div>
   );

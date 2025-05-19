@@ -66,12 +66,12 @@ export const GallerySection = () => {
   };
 
   // renderImage function remains here as it's used by GalleryPreview
-  const renderImage = (image: { src: string; alt?: string }, className: string) => (
+  const renderImage = (image: { src: string; alt?: string }, className: string, imageSpecificClass?: string) => (
     <div className={`relative ${className}`}>
       <img
         src={image.src}
         alt={image.alt || ""}
-        className={`w-full h-full object-cover transition-transform duration-300 ${
+        className={`w-full h-full object-cover transition-transform duration-300 ${imageSpecificClass || ''} ${
           loadedImages.has(image.src) ? '' : ''
         }`}
         onLoad={() => handleImageLoad(image.src)}
