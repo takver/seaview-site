@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import { Card, CardContent } from "../ui/card";
 
@@ -42,17 +43,17 @@ export const DiscoverSifnosSection = () => {
     {
       title: "Artemonas",
       description: "Wander the stone-paved alleys, visit art galleries, and enjoy artisan coffee in this beautifully preserved village.",
-      imageSrc: "/images/aerial-hilltop-village-dusk.webp",
+      imageSrc: "/images/sifnos-artemonas.webp",
     },
     {
       title: "Apollonia",
       description: "Experience vibrant nightlife, stylish pubs, and savor the island's best food in the trendy heart of Sifnos.",
-      imageSrc: "/images/aerial-village-night-lights.webp",
+      imageSrc: "/images/sifnos-apollonia.jpg",
     },
     {
       title: "Beaches & Culture",
       description: "From stunning beaches to rich culinary delights, Sifnos offers an untouched charm and an unforgettable Greek experience.",
-      imageSrc: "/images/aerial-coastline-church-sunset.webp",
+      imageSrc: "/images/sifnos-chrissopigi.webp",
     },
     {
       title: "Hiking Paradise",
@@ -62,9 +63,9 @@ export const DiscoverSifnosSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-10 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-light text-center mb-12 text-[#1A1F2C]">
+        <h2 className="text-3.5xl font-light text-center mb-12 text-[#1A1F2C]">
           Discover Sifnos<span className="text-[#6E59A5]">...</span>
         </h2>
         

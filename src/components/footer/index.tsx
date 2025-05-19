@@ -68,17 +68,17 @@ export const Footer = () => {
               <h3 className="text-xl font-light mb-6">Reserve Your Stay...</h3>
               <div className="flex gap-6">
                 <a href="#" aria-label="Book on Airbnb">
-                  <div className="bg-black w-10 h-10 flex items-center justify-center rounded-sm border border-gray-700">
+                  <div className="bg-[#FF5A5F] w-10 h-10 flex items-center justify-center rounded-sm border border-[#FF5A5F]">
                     <AirbnbIcon size={24} className="text-white" />
                   </div>
                 </a>
                 <a href="#" aria-label="Book on Booking.com">
-                  <div className="bg-black w-10 h-10 flex items-center justify-center rounded-sm border border-gray-700">
+                  <div className="bg-[#003580] w-10 h-10 flex items-center justify-center rounded-sm border border-[#003580]">
                     <BookingIcon size={24} className="text-white" />
                   </div>
                 </a>
                 <a href="#" aria-label="Book on Home Exchange">
-                  <div className="bg-black w-10 h-10 flex items-center justify-center rounded-sm border border-gray-700">
+                  <div className="bg-[#F69E00] w-10 h-10 flex items-center justify-center rounded-sm border border-[#F69E00]">
                     <img 
                       src="/images/homeexchangelogo.svg" 
                       alt="Home Exchange" 

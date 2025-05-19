@@ -10,6 +10,22 @@ const config: Config = {
     './src/**/*.{ts,tsx}',
 	],
   theme: {
+    fontSize: {
+      'xs': '0.75rem',
+      'sm': '0.875rem',
+      'base': '1rem',     // 16px
+      'lg': '1.125rem',   // 18px
+      'xl': '1.25rem',    // 20px
+      '2xl': '1.5rem',    // 24px
+      '3xl': '1.75rem',   // 28px (reduced from default 30px)
+      '3.5xl': '2rem',    // 32px (custom size for section headers)
+      '4xl': '2.25rem',   // 36px
+      '5xl': '3rem',      // 48px
+      '6xl': '3.75rem',   // 60px
+      '7xl': '4.5rem',    // 72px
+      '8xl': '6rem',      // 96px
+      '9xl': '8rem',      // 128px
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -75,8 +91,12 @@ const config: Config = {
           "100%": { transform: "scale(1.1)" },
         },
         "slow-zoom-pan": {
-          "0%": { transform: "scale(1.0)" },
-          "100%": { transform: "scale(1.1)" },
+          "0%": { transform: "scale(1.0) translate(0%, 0%)" },
+          "100%": { transform: "scale(1.15) translate(var(--pan-x), var(--pan-y))" },
+        },
+        "dynamic-zoom-pan": {
+          "0%": { transform: "scale(1.0) translate(0%, 0%)" },
+          "100%": { transform: "scale(1.2) translate(var(--pan-x), var(--pan-y))" },
         },
       },
       animation: {
@@ -84,6 +104,7 @@ const config: Config = {
         "accordion-up": "accordion-up 0.2s ease-out",
         "slow-zoom": "slow-zoom 5s linear forwards",
         "slow-zoom-pan": "slow-zoom-pan 12s linear forwards",
+        "dynamic-zoom-pan": "dynamic-zoom-pan 8s cubic-bezier(0.25, 0.1, 0.25, 1.0) forwards",
       },
     },
   },

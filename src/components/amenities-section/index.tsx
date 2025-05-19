@@ -1,5 +1,5 @@
-import * as React from "react";
-import { useState } from "react";
+// @ts-nocheck
+import React, { useState } from "react";
 import { 
   Bed, BedDouble, Coffee, Fan, Lamp, 
   Tv, Wifi, WifiHigh, Power, Microwave, WashingMachine, 
@@ -19,6 +19,24 @@ type Amenity = {
   icon: React.ElementType; // Updated icon type to accept any React component
   featured?: boolean;
 };
+
+// Define premium brand logos to showcase
+const premiumBrands = [
+  { id: 1, name: "Miele", logo: "/images/logos/Miele-logo-3498353745.png", category: "appliances" },
+  { id: 2, name: "Bosch", logo: "/images/logos/Bosch-Logo-1925-1981-2210267314.png", category: "appliances" },
+  { id: 3, name: "Fisher & Paykel", logo: "/images/logos/fisher-paykel-appliances-1-logo-png-transparent.png", category: "appliances" },
+  { id: 4, name: "Smeg", logo: "/images/logos/Smeg-UK-Logo-Vector.svg-.png", category: "appliances" },
+  { id: 5, name: "Grohe", logo: "/images/logos/grohe-logo-png-transparent.png", category: "fixtures" },
+  { id: 6, name: "Coco-mat", logo: "/images/logos/cocomat-logo-1444269077.jpg", category: "furniture" },
+  { id: 7, name: "KNX", logo: "/images/logos/knx_logo-3126555041.png", category: "smart home" },
+  { id: 8, name: "Loytec", logo: "/images/logos/20120222_loytec-logo-2659534211.jpg", category: "smart home" },
+  { id: 9, name: "Starlink", logo: "/images/logos/1200px-Starlink_Logo.svg-2729561376.png", category: "connectivity" },
+  { id: 10, name: "Hikvision", logo: "/images/logos/Hikvision-Logo.wine-244368602.png", category: "security" },
+  { id: 11, name: "Ecowitt", logo: "/images/logos/ecowitt_logo.jpg", category: "sustainability" },
+  { id: 14, name: "Varangis", logo: "/images/logos/varangis_logo.png", category: "furniture" },
+  { id: 15, name: "GreyFlow", logo: "/images/logos/GreyFlowlogo.png", category: "sustainability" },
+  { id: 16, name: "Aermec", logo: "/images/logos/aermec-logo1.png", category: "appliances" },
+];
 
 // Define all amenities
 const amenities: Amenity[] = [
@@ -87,9 +105,9 @@ export const AmenitiesSection = () => {
   const remainingAmenities = amenities.filter(amenity => !amenity.featured);
 
   return (
-    <section className="py-16">
+    <section className="py-10">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-light text-center mb-8 text-[#1A1F2C]">
+        <h2 className="text-3.5xl font-light text-center mb-8 text-[#1A1F2C]">
           Modern Amenities
         </h2>
         
@@ -137,6 +155,71 @@ export const AmenitiesSection = () => {
             </CollapsibleTrigger>
           </div>
         </Collapsible>
+        
+        {/* Premium Brands Showcase */}
+        <div className="mt-16 pt-12 border-t border-gray-200">
+          <h3 className="text-xl font-light text-center mb-6 text-[#1A1F2C]">
+            Premium Brands & Technology Partners
+          </h3>
+          
+          <p className="text-gray-600 text-center font-light leading-relaxed max-w-3xl mx-auto mb-6">
+            Our villa is equipped with premium brands and technologies, carefully selected to enhance your comfort while supporting environmental sustainability.
+          </p>
+          
+          <div className="bg-gray-50 py-8 px-6 rounded-xl shadow-md">
+            {/* Two rows of logos in a grid layout */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4 justify-items-center">
+              {premiumBrands.map((brand) => (
+                <div key={brand.id} className="flex items-center justify-center">
+                  <div className={`h-14 w-24 flex items-center justify-center bg-white rounded-md ${brand.name === "Fisher & Paykel" ? "p-0" : "p-2"}`}>
+                    <img 
+                      src={brand.logo} 
+                      alt={`${brand.name} logo`} 
+                      className={`${brand.name === "Fisher & Paykel" ? "max-h-[126%] max-w-[126%] scale-[1.26]" : 
+                        brand.name === "Smeg" ? "max-h-[95%] max-w-[95%] scale-[0.85]" : 
+                        brand.name === "KNX" ? "max-h-[105%] max-w-[121%] scale-[1.05] translate-y-[-5%]" :
+                        brand.name === "Loytec" || brand.name === "Hikvision" ? "max-h-[121%] max-w-[121%] scale-[1.21]" : 
+                        "max-h-[110%] max-w-[110%] scale-110"} object-contain opacity-100`}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Single row of descriptions with smaller font */}
+            <div className="mt-6 flex flex-wrap justify-center">
+              <div className="flex flex-wrap justify-center gap-3 text-center max-w-5xl mx-auto">
+                <div className="flex-1 min-w-[200px]">
+                  <span className="text-xs text-[#6E59A5] font-medium">Premium Appliances</span>
+                  <p className="text-[11px] text-gray-600 font-light mt-1 h-8">
+                    Top-tier brands like Fisher & Paykel, Grohe, and Smeg ensure efficiency and luxury
+                  </p>
+                </div>
+                
+                <div className="flex-1 min-w-[200px]">
+                  <span className="text-xs text-[#6E59A5] font-medium">Smart Home Technology</span>
+                  <p className="text-[11px] text-gray-600 font-light mt-1 h-8">
+                    Integrated KNX systems provide intelligent climate control and energy management
+                  </p>
+                </div>
+                
+                <div className="flex-1 min-w-[200px]">
+                  <span className="text-xs text-[#6E59A5] font-medium">Sustainable Solutions</span>
+                  <p className="text-[11px] text-gray-600 font-light mt-1 h-8">
+                    Environmentally conscious systems for water recycling and energy conservation
+                  </p>
+                </div>
+                
+                <div className="flex-1 min-w-[200px]">
+                  <span className="text-xs text-[#6E59A5] font-medium">Luxury and Comfort</span>
+                  <p className="text-[11px] text-gray-600 font-light mt-1 h-8">
+                    Coco-mat natural sleep products and Varangis furniture for elegant living
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

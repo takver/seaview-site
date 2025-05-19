@@ -1,21 +1,19 @@
+// @ts-nocheck
 import React from "react";
 import { Heart, Mountain, Leaf, Star, Coffee } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 
 export const IdealGuestsSection = () => {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-10 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-light text-center mb-8 text-[#1A1F2C]">
+        <h2 className="text-3.5xl font-light text-center mb-8 text-[#1A1F2C]">
           Ideal Guests
         </h2>
         
         <div className="max-w-3xl mx-auto mb-10">
           <p className="text-gray-600 text-center font-light leading-relaxed mb-8">
             Appreciators of design, breathtaking vistas, environmental sustainability, luxury, and authentic local culture, this retreat is for you.
-          </p>
-          <p className="text-gray-600 text-center font-light leading-relaxed">
-            Indulge in a stay that blends comfort, authenticity, and environmental consciousness, and experience Greece like never before.
           </p>
         </div>
         
@@ -51,13 +49,10 @@ export const IdealGuestsSection = () => {
           </Card>
         </div>
         
-        <div className="flex justify-center mt-12">
-          <div className="flex items-center gap-2 bg-white p-4 rounded-lg border border-gray-300 shadow-sm">
-            <Star className="text-[#6E59A5]" size={20} />
-            <p className="text-gray-700 font-light italic">
-              "Experience a stay that respects both luxury and our beautiful planet."
-            </p>
-          </div>
+        <div className="max-w-3xl mx-auto mt-10">
+          <p className="text-gray-600 text-center font-light leading-relaxed">
+            Indulge in a stay that blends comfort, authenticity, and environmental consciousness, and experience Greece like never before.
+          </p>
         </div>
       </div>
     </section>

@@ -1,84 +1,26 @@
-import { useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
-import { GalleryHorizontal } from "lucide-react";
-import GalleryCarousel from "../GalleryCarousel";
+/** @jsxRuntime classic */
+/** @jsx React.createElement */
+/** @jsxFrag React.Fragment */
 
-// Combine all images, removing duplicates based on src
-const initialImages = [
-  "/images/exterior-east-side.webp",
-  "/images/garden-path-st-john-evening.webp",
-  "/images/livingroom-tripod-camera-seats.webp",
-  "/images/kitchen-view-patio-st-john.webp",
-  "/images/exterior-white-house-olive.webp",
-  "/images/bathroom-gold-shower-sink.webp",
-  "/images/view-st-john-bright.webp",
-  "/images/livingroom-archway-sunbeam.webp",
-  "/images/livingroom-carved-cabinet-window.webp",
-  "/images/kitchen-island-amber-pendants.webp",
-  "/images/interior-brass-lantern-cabinet.webp",
-  "/images/interior-hat-hook-windowview.webp",
-  "/images/view-st-john-bright.webp",
-  "/images/garden-sunset-herbs-view.webp",
-  "/images/garden-central-path-morning.webp",
-  "/images/bathroom-gold-shower-mirror.webp",
-  "/images/plan-floor-topographic-sketch.webp",
-  "/images/garden-night-path-uplights.webp",
-  "/images/closeup-brass-lantern-detail.webp",
-  "/images/exterior-rouster-flowers.webp",
-  "/images/garden-curved-path-sunset.webp",
-  "/images/bathroom-modern-wall-mounted-mixer.webp",
-  "/images/livingroom-sofa-tripod-lamp.webp",
-  "/images/exterior-garden-steps-shaded-path.webp",
-  "/images/exterior-stairs-shadow-light-angle.webp",
-  "/images/exterior-white-pergola-archway.webp",
-  "/images/garden-night-lit-path.webp",
-  "/images/garden-olive-tree-seating.webp",
-  "/images/garden-path-south-view.webp",
-  "/images/garden-path-spring.webp",
-  "/images/garden-path-st-john-2.webp",
-  "/images/garden-tree-round-stonebed.webp",
-  "/images/livingroom-blue-windows-bamboo-seating.webp",
-  "/images/sifnos-coast-rocks-steps.jpg",
-  "/images/sifnos-trail-1-32.webp"
-];
+// @ts-nocheck
+import React, { useState, useEffect, useMemo } from "react";
+// Button and GalleryHorizontal are no longer directly used here for main actions
+import { loadGalleryConfig } from "@/utils/galleryConfigUtils";
+import { CATEGORY_KEYWORDS } from "@/config/galleryConfig"; // Corrected import
+// CATEGORY_LABELS is used in GalleryMosaic now
 
-const applianceImages = [
-  "/images/kitchen-appliance-stove-pot-pan.webp",
-  "/images/appliance-clothes-washer-bosch.webp",
-  "/images/kitchen-appliance-smeg-burners-closeup.webp",
-  "/images/kitchen-appliance-smeg-gas-cooktop.webp",
-  "/images/kitchen-appliance-retro-cream-fridge.webp",
-  "/images/kitchen-appliance-dishwasher-drawer-open.webp"
-];
+import GalleryPreview from './GalleryPreview';
+import GalleryMosaic from './GalleryMosaic';
 
-const allImages = Array.from(new Set([...initialImages, ...applianceImages]));
+// Moved to GalleryMosaic.tsx
+// function getCategoriesForImage(filename: string) { ... }
+// function filterImagesByCategory(images, category: string) { ... }
 
-// --- Dynamic Categorization ---
-const CATEGORY_KEYWORDS = {
-  interior: ["bedroom", "livingroom", "kitchen", "bathroom", "interior", "kitchen-appliance-stove-pot-pan", "kitchen-appliance-smeg-burners-closeup", "kitchen-appliance-smeg-gas-cooktop", "kitchen-appliance-retro-cream-fridge", "kitchen-appliance-dishwasher-drawer-open", "appliance-clothes-washer-bosch"],
-  exterior: ["exterior", "garden", "view", "yard", "patio", "terrace", "stone", "path", "st-john", "stjohn"],
-  sifnos: ["sifnos", "island", "apollonia", "vathi", "beach"],
-  "kitchen-appliances": [
-    "kitchen-appliance-stove-pot-pan",
-    "kitchen-appliance-smeg-burners-closeup",
-    "kitchen-appliance-smeg-gas-cooktop",
-    "kitchen-appliance-retro-cream-fridge",
-    "kitchen-appliance-dishwasher-drawer-open",
-    "appliance-clothes-washer-bosch"
-  ],
-};
-
-const CATEGORY_LABELS = [
-  { key: "all", label: "All" },
-  { key: "interior", label: "Interior" },
-  { key: "exterior", label: "Exterior" },
-  { key: "sifnos", label: "Sifnos" },
-  { key: "kitchen-appliances", label: "Kitchen Appliances" },
-];
-
-function getCategoriesForImage(filename: string) {
+// Helper to add categories to images, used for initial data transformation
+function getCategoriesForImage(filename: string, keywordsConfig: Record<string, string[]>) {
+  if (!filename) return [];
   const cats = [];
-  for (const [cat, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
+  for (const [cat, keywords] of Object.entries(keywordsConfig)) {
     if (keywords.some(kw => filename.toLowerCase().includes(kw))) {
       cats.push(cat);
     }
@@ -86,30 +28,34 @@ function getCategoriesForImage(filename: string) {
   return cats;
 }
 
-const categorizedImages = allImages.map(src => {
-  const categories = getCategoriesForImage(src);
-  return { src, categories };
-});
-
-function filterImagesByCategory(category: string) {
-  if (category === "all") return categorizedImages;
-  if (category === "kitchen-appliances") {
-    return categorizedImages.filter(img => img.categories.includes("kitchen-appliances"));
-  }
-  // For other categories, exclude kitchen appliances from the top 5
-  return categorizedImages.filter(
-    img => img.categories.includes(category) && !img.categories.includes("kitchen-appliances")
-  );
-}
-
 export const GallerySection = () => {
-  const [isCarouselOpen, setIsCarouselOpen] = useState(false);
-  const [carouselGridMode, setCarouselGridMode] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState("all");
   const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
+  const [allImages, setAllImages] = useState<Array<{src: string, categories: string[]}>>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredImages = useMemo(() => filterImagesByCategory(selectedCategory), [selectedCategory]);
+  // Load images from configuration
+  useEffect(() => {
+    const fetchImages = async () => {
+      setLoading(true);
+      try {
+        const imagePaths = await loadGalleryConfig();
+        const transformedImages = imagePaths.map(src => ({
+          src,
+          categories: getCategoriesForImage(src, CATEGORY_KEYWORDS) // Use imported CATEGORY_KEYWORDS
+        }));
+        setAllImages(transformedImages);
+      } catch (error) {
+        console.error("Failed to load gallery configuration:", error);
+        // Set empty array or handle error state for allImages
+        setAllImages([]); 
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchImages();
+  }, []);
 
   const handleImageLoad = (src: string) => {
     setLoadedImages(prev => new Set([...prev, src]));
@@ -119,13 +65,14 @@ export const GallerySection = () => {
     setImageErrors(prev => new Set([...prev, src]));
   };
 
+  // renderImage function remains here as it's used by GalleryPreview
   const renderImage = (image: { src: string; alt?: string }, className: string) => (
     <div className={`relative ${className}`}>
       <img
         src={image.src}
         alt={image.alt || ""}
         className={`w-full h-full object-cover transition-transform duration-300 ${
-          loadedImages.has(image.src) ? 'hover:scale-105' : ''
+          loadedImages.has(image.src) ? '' : ''
         }`}
         onLoad={() => handleImageLoad(image.src)}
         onError={() => handleImageError(image.src)}
@@ -133,57 +80,37 @@ export const GallerySection = () => {
       {!loadedImages.has(image.src) && !imageErrors.has(image.src) && (
         <div className="absolute inset-0 bg-gray-200 animate-pulse" />
       )}
+      {/* Optionally show an error state for the image itself */}
       {imageErrors.has(image.src) && (
-        <div className="absolute inset-0 bg-gray-100 flex items-center justify-center text-gray-400">
-          Failed to load image
+        <div className="absolute inset-0 bg-red-100 flex items-center justify-center text-red-500">
+          Error
         </div>
       )}
     </div>
   );
 
+  // Prepare the first 5 images for the preview grid, without category filtering
+  const previewImagesForGrid = useMemo(() => allImages.slice(0, 5), [allImages]);
+
   return (
-    <section className="py-16">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-light text-center mb-12 text-[#1A1F2C]">
-          Gallery
-        </h2>
-        <p className="text-gray-600 text-center font-light leading-relaxed max-w-2xl mx-auto mb-10">
-          Take a glimpse at our beautiful property and the stunning views of Sifnos
-        </p>
-        {/* Main grid preview (uses filteredImages) */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-[4px]">
-          <div className="md:col-span-7 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[500px]">
-            {filteredImages[0] && renderImage({ src: filteredImages[0].src }, "h-full")}
+    <section id="gallery" className="py-16 px-4 md:px-8 lg:px-12">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-light text-center mb-4">Gallery</h2>
+
+        
+        {loading ? (
+          <div className="flex justify-center items-center min-h-[400px]">
+            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
           </div>
-          <div className="md:col-span-5 grid grid-cols-2 gap-[4px] h-[500px]">
-            {filteredImages.slice(1, 5).map((img) => (
-              <div key={img.src} className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow h-[248px]">
-                {renderImage({ src: img.src }, "h-full")}
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="text-center mt-10">
-          <Button
-            variant="rounded"
-            size="pill"
-            onClick={() => {
-              setCarouselGridMode(true);
-              setIsCarouselOpen(true);
-            }}
-          >
-            <GalleryHorizontal size={20} />
-            <span>Show All Pictures</span>
-          </Button>
-        </div>
-        <GalleryCarousel
-          isOpen={isCarouselOpen}
-          onClose={() => setIsCarouselOpen(false)}
-          images={filteredImages}
-          gridMode={carouselGridMode}
-          initialIndex={0}
-        />
+        ) : (
+          <>
+            <GalleryPreview previewImages={previewImagesForGrid} renderImage={renderImage} />
+            <GalleryMosaic allImages={allImages} />
+          </>
+        )}
       </div>
+      
+      {/* GalleryCarousel is now rendered inside GalleryMosaic */}
     </section>
   );
 }; 

@@ -264,8 +264,12 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ className }
         const dayInWeek = dayIndex % 7;
         
         // Is this the start or end of a booking?
-        const isFirstDay = currentDay.getTime() === spanStart.getTime();
-        const isLastDay = currentDay.getTime() === spanEnd.getTime();
+        const isFirstDay = currentDay.getTime() === booking.start.getTime();
+        const isLastDay = currentDay.getTime() === booking.end.getTime();
+        
+        // Is this the start or end of the visible portion of the booking in this month?
+        const isFirstSegmentInMonth = currentDay.getTime() === spanStart.getTime();
+        const isLastSegmentInMonth = currentDay.getTime() === spanEnd.getTime();
         
         // Add booking span for this day
         bookingSpans.push({
@@ -275,8 +279,8 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ className }
           spanWidth: 1, // Each span is just one day
           spanStart: new Date(currentDay),
           spanEnd: new Date(currentDay),
-          isFirstSegment: isFirstDay,
-          isLastSegment: isLastDay
+          isFirstSegment: isFirstDay, // Use the actual booking start, not just the visible portion
+          isLastSegment: isLastDay    // Use the actual booking end, not just the visible portion
         });
         
         // Go to next day
@@ -338,8 +342,8 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ className }
     const { weeks, bookingSpans } = generateCalendarData(month);
     
     return (
-      <div key={month.toISOString()} className="mb-4">
-        <div className="text-base font-medium mb-3 text-gray-700">
+      <div key={month.toISOString()}>
+        <div className="text-base font-medium mb-1 text-gray-700">
           {format(month, 'MMMM yyyy')}
         </div>
         
@@ -368,8 +372,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ className }
                         key={dayIndex} 
                         className={cn(
                           "relative align-top p-1 border border-gray-100",
-                          isDisabled ? "bg-gray-50" : "bg-white",
-                          isBooked && !isDisabled ? "bg-gray-100" : ""
+                          isDisabled ? "bg-gray-50" : "bg-white"
                         )}
                       >
                         {day && (
@@ -385,12 +388,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ className }
                           </div>
                         )}
                         
-                        {/* If this is a booked day and disabled, add a diagonal line */}
-                        {day && isBooked && isDisabled && (
-                          <div className="absolute inset-0 overflow-hidden">
-                            <div className="absolute inset-0 transform origin-top-left rotate-45 border-t-2 border-gray-300" />
-                          </div>
-                        )}
+
                       </td>
                     );
                   })}
@@ -403,7 +401,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ className }
           <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
             {bookingSpans.map((span, index) => {
               // Calculate position and width of the booking "tube"
-              const weekTop = 32 + (span.weekIndex * 48) + 24; // 32px for header, 48px per week, 24px for positioning in middle
+              const weekTop = 32 + (span.weekIndex * 48) + 20; // lifted 4px closer to date numbers
               const dayWidth = 100 / 7; // Width percentage per day
               
               // Calculate starting position (as percentage)
@@ -440,7 +438,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ className }
                 <div 
                   key={index}
                   className={cn(
-                    "absolute h-6 bg-[#6E59A5] flex items-center overflow-hidden",
+                    "absolute h-4 bg-[#6E59A5] flex items-center overflow-hidden",
                     isFirstDay && isLastDay ? "rounded-full" : // Both start and end in this row
                     isFirstDay ? "rounded-l-full" : // Just starts in this row
                     isLastDay ? "rounded-r-full" : // Just ends in this row
@@ -468,6 +466,8 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ className }
     );
   };
 
+  const SHOW_DEBUG = false;
+
   return (
     <div className={cn("relative", className)}>
       {isLoading && (
@@ -486,31 +486,24 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ className }
         {/* Scrollable container for months - only show one month height */}
         <div 
           ref={calendarContainerRef}
-          className="h-[350px] overflow-y-auto pr-2 rounded-lg border border-gray-200 bg-white shadow-inner relative"
+          className="h-[350px] overflow-y-auto pr-2 rounded-lg border border-gray-200 bg-white relative"
           style={{
-            boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)',
             borderWidth: '1px',
             borderColor: 'rgba(209, 213, 219, 1)',
           }}
         >
-          {/* Elegant border overlay for depth effect */}
-          <div className="absolute inset-0 pointer-events-none rounded-lg" 
-              style={{ 
-                boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', 
-                zIndex: 1 
-              }}>
-          </div>
-          
-          <div className="p-4 space-y-6 relative z-0">
+          <div className="p-4 space-y-0 relative z-0">
             {displayedMonths.map(month => renderMonth(month))}
           </div>
         </div>
         
-        {/* Debug Panel - Hidden in production */}
-        <div className="mt-8 p-4 bg-gray-100 rounded text-xs" style={{fontFamily: 'monospace', whiteSpace: 'pre-wrap'}}>
-          <h3 className="font-bold mb-2">Calendar Debug Info:</h3>
-          {debugInfo}
-        </div>
+        {/* Debug Panel - toggled via SHOW_DEBUG */}
+        {SHOW_DEBUG && (
+          <div className="mt-8 p-4 bg-gray-100 rounded text-xs" style={{fontFamily: 'monospace', whiteSpace: 'pre-wrap'}}>
+            <h3 className="font-bold mb-2">Calendar Debug Info:</h3>
+            {debugInfo}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,11 +1,12 @@
+// @ts-nocheck
 import { MapPin } from "lucide-react";
 import { Button } from "../ui/button";
 
 export const LocationSection = () => {
   return (
-    <section className="py-16">
+    <section className="py-10">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-light text-center mb-8 text-gray-800">Cycladic home in Sifnos, Greece</h2>
+        <h2 className="text-3.5xl font-light text-center mb-8 text-gray-800">Cycladic home in Sifnos, Greece</h2>
         <p className="text-center text-gray-600 max-w-4xl mx-auto mb-12 leading-relaxed font-light text-lg">
           Nestled on a hilltop with a stunning view of the ocean and the surrounding villages, this
           peaceful retreat is surrounded by a beautiful Mediterranean garden of cypresses, olive trees

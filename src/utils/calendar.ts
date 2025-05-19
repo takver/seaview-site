@@ -1,5 +1,5 @@
 import { icalSources, ICalSource } from '@/config/icalConfig';
-import { addDays, format, isSameDay, isAfter, isBefore, parseISO, startOfToday } from 'date-fns';
+import { addDays, format } from 'date-fns';
 
 export interface BookingEvent {
   start: Date;
@@ -15,42 +15,6 @@ export interface DayAvailability {
   isCheckOut: boolean;
 }
 
-/**
- * Mock booking events for testing purposes (fallback if API calls fail)
- */
-const MOCK_BOOKING_EVENTS: BookingEvent[] = [
-  {
-    start: new Date(2025, 4, 30), // May 30, 2025
-    end: new Date(2025, 5, 4),    // June 4, 2025
-    summary: "CLOSED - Not available",
-    source: "Booking.com"
-  },
-  {
-    start: new Date(2025, 4, 15), // May 15, 2025
-    end: new Date(2025, 4, 17),   // May 17, 2025
-    summary: "Airbnb (Not available)",
-    source: "Airbnb"
-  },
-  {
-    start: new Date(2025, 4, 30), // May 30, 2025
-    end: new Date(2025, 5, 4),    // June 4, 2025
-    summary: "Airbnb (Not available)",
-    source: "Airbnb"
-  },
-  {
-    start: new Date(2024, 7, 3),  // August 3, 2024
-    end: new Date(2024, 7, 13),   // August 13, 2024
-    summary: "August Booking 1",
-    source: "Booking.com"
-  },
-  {
-    start: new Date(2024, 7, 20), // August 20, 2024
-    end: new Date(2024, 7, 27),   // August 27, 2024
-    summary: "August Booking 2",
-    source: "Airbnb"
-  }
-];
-
 // URL for our proxy server
 const PROXY_SERVER_URL = 'http://localhost:3001/api/ical';
 
@@ -59,59 +23,35 @@ const PROXY_SERVER_URL = 'http://localhost:3001/api/ical';
  */
 export async function fetchAllCalendars(forceRefresh: boolean = false): Promise<BookingEvent[]> {
   try {
-    console.log("Starting to fetch calendars from sources:", icalSources);
-    
-    // Temporarily use mock data for faster testing and to fix August bookings
-    console.log("Using mock data for testing");
-    return MOCK_BOOKING_EVENTS;
-    
-    // The following code is commented out during testing
-    /*
-    // Try to get real data first
-    let allEvents: BookingEvent[] = [];
-    
-    try {
-      // Pass the forceRefresh parameter from the caller, don't always force refresh
-      const promises = icalSources.map(source => fetchCalendar(source, forceRefresh));
-      const results = await Promise.all(promises);
-      allEvents = results.flat();
-      
-      console.log(`Fetched ${allEvents.length} total events from all calendars`);
-      
-      // If no real events, use mock data 
-      if (allEvents.length === 0) {
-        console.log("No events found from API, using mock data");
-        allEvents = [...MOCK_BOOKING_EVENTS];
-      } else {
-        // Use mock data for August bookings, which might be missing from the API
-        const augustMockBookings = MOCK_BOOKING_EVENTS.filter(
-          event => event.start.getMonth() === 7 && event.start.getFullYear() === 2024
-        );
-        
-        // Add August mock bookings to help with August display issues
-        allEvents = [...allEvents, ...augustMockBookings];
-        console.log(`Added ${augustMockBookings.length} mock August bookings`);
-      }
-    } catch (fetchError) {
-      console.error("Error fetching from API:", fetchError);
-      console.log("Falling back to mock data");
-      allEvents = [...MOCK_BOOKING_EVENTS];
-    }
-    
-    // Merge overlapping and consecutive bookings
+    console.log('Starting to fetch calendars from sources:', icalSources);
+
+    // Fetch calendars from every source in parallel
+    const results = await Promise.all(
+      icalSources.map((source) => fetchCalendar(source, forceRefresh))
+    );
+
+    // Flatten the result arrays into a single array
+    let allEvents: BookingEvent[] = results.flat();
+
+    console.log(`Fetched ${allEvents.length} total events from all calendars.`);
+
+    // Merge overlapping or consecutive bookings to simplify the calendar
     allEvents = mergeOverlappingBookings(allEvents);
-    
-    // Log events for debugging
-    allEvents.forEach(event => {
-      console.log(`Event: ${format(event.start, 'yyyy-MM-dd')} to ${format(event.end, 'yyyy-MM-dd')} (${event.source}) - ${event.summary || 'No summary'}`);
+
+    // Log merged events for debugging
+    allEvents.forEach((event) => {
+      console.log(
+        `Event: ${format(event.start, 'yyyy-MM-dd')} → ${format(
+          event.end,
+          'yyyy-MM-dd'
+        )} (${event.source}) ${event.summary ?? ''}`
+      );
     });
-    
+
     return allEvents;
-    */
   } catch (error) {
     console.error('Error in fetchAllCalendars:', error);
-    // Return mock data as a last resort
-    return [...MOCK_BOOKING_EVENTS];
+    return [];
   }
 }
 
@@ -290,7 +230,7 @@ export function getAvailabilityForDateRange(
     const isCheckOut = isCheckOutDay(currentDate, bookings);
     
     availability.push({
-      date: new Date(currentDate),
+      date: new Date(currentDate.getTime()),
       isAvailable: !isBooked,
       isCheckIn,
       isCheckOut
@@ -342,8 +282,8 @@ export function mergeOverlappingBookings(bookings: BookingEvent[]): BookingEvent
     
     if (nextStartsBeforeOrOnDayAfterCurrentEnds) {
       // Merge the bookings - take earlier start date and later end date
-      const oldStart = new Date(currentBooking.start);
-      const oldEnd = new Date(currentBooking.end);
+      const oldStart = new Date(currentBooking.start.getTime());
+      const oldEnd = new Date(currentBooking.end.getTime());
       
       currentBooking = {
         start: new Date(Math.min(currentBooking.start.getTime(), nextBooking.start.getTime())),

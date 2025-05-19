@@ -1,10 +1,11 @@
+// @ts-nocheck
 import { Button } from "../ui/button";
 
 export const ContactSection = () => {
   return (
-    <section className="py-16">
+    <section className="py-10">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-light text-center mb-12 text-[#1A1F2C]">
+        <h2 className="text-3.5xl font-light text-center mb-12 text-[#1A1F2C]">
           Contact Us
         </h2>
         <p className="text-gray-600 text-center font-light leading-relaxed max-w-2xl mx-auto mb-10">

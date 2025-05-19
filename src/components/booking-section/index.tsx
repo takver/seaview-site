@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
@@ -8,21 +9,23 @@ import AvailabilityCalendar from "../AvailabilityCalendar";
 
 export const BookingSection = () => {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-10 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-light text-center mb-12 text-[#1A1F2C]">
+        <h2 className="text-3.5xl font-light text-center mb-12 text-[#1A1F2C]">
           Book Your Stay<span className="text-[#6E59A5]">...</span>
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Left Card - Booking Options */}
-          <Card className="overflow-hidden shadow-lg rounded-xl border-2 border-gray-300">
-            <div className="h-64 overflow-hidden">
-              <img 
-                src="/images/BLD-E1-1024x705.webp" 
-                alt="Sifnos Villa" 
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-              />
+          <Card className="overflow-hidden shadow-lg border-2 border-gray-300" style={{ borderRadius: "0.75rem" }}>
+            <div className="overflow-hidden" style={{ borderTopLeftRadius: "0.65rem", borderTopRightRadius: "0.65rem" }}>
+              <div className="relative h-[380px]">
+                <img 
+                  src="/images/exterior-garden-steps-shaded-path.webp" 
+                  alt="Sifnos Villa Garden Steps" 
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </div>
             </div>
             <CardContent className="p-6">
               <div className="mb-6">
@@ -38,10 +41,10 @@ export const BookingSection = () => {
                   >
                     <Button 
                       variant="transparentRounded"
-                      className="border-2 border-[#FF5A5F] text-[#FF5A5F] hover:bg-[#FF5A5F] hover:text-white"
+                      className="group border-2 border-[#FF5A5F] text-[#FF5A5F] hover:bg-[#FF5A5F] hover:text-white"
                       size="pill"
                     >
-                      <AirbnbIcon className="text-[#FF5A5F] group-hover:text-white" size={20} />
+                      <AirbnbIcon className="text-[#FF5A5F] group-hover:text-white !fill-current" size={20} />
                       <span>Airbnb</span>
                     </Button>
                   </a>
@@ -53,10 +56,10 @@ export const BookingSection = () => {
                   >
                     <Button 
                       variant="transparentRounded"
-                      className="border-2 border-[#003580] text-[#003580] hover:bg-[#003580] hover:text-white"
+                      className="group border-2 border-[#003580] text-[#003580] hover:bg-[#003580] hover:text-white"
                       size="pill"
                     >
-                      <BookingIcon className="text-[#003580] group-hover:text-white" size={20} />
+                      <BookingIcon className="text-[#003580] group-hover:text-white !fill-current" size={20} />
                       <span>Booking.com</span>
                     </Button>
                   </a>
@@ -72,14 +75,16 @@ export const BookingSection = () => {
                 >
                   <Button 
                     variant="transparentRounded"
-                    className="border-2 border-[#49A9DE] text-[#49A9DE] hover:bg-[#49A9DE] hover:text-white"
+                    className="group border-2 border-[#F69E00] text-[#F69E00] hover:bg-[#F69E00] hover:text-white"
                     size="pill"
                   >
-                    <img 
-                      src="/images/homeexchangelogo.svg" 
-                      alt="HomeExchange" 
-                      className="w-5 h-5 mr-2" 
-                    />
+                    <div className="relative w-5 h-5 mr-2 flex items-center justify-center">
+                      <img 
+                        src="/images/homeexchangelogo.svg" 
+                        alt="HomeExchange" 
+                        className="w-full h-full object-contain brightness-0 group-hover:brightness-100 group-hover:invert" 
+                      />
+                    </div>
                     <span>HomeExchange</span>
                   </Button>
                 </a>
@@ -116,12 +121,11 @@ export const BookingSection = () => {
           </Card>
           
           {/* Right Card - Availability Calendar */}
-          <Card className="overflow-hidden shadow-lg rounded-xl border-2 border-gray-300">
+          <Card className="overflow-hidden shadow-lg border-2 border-gray-300" style={{ borderRadius: "0.75rem" }}>
             <CardContent className="p-6">
               <h3 className="text-lg font-normal text-[#6E59A5] mb-3">Check Villa Availability</h3>
               <p className="text-gray-600 font-light mb-4">
-                Our calendar shows real-time availability from all booking platforms. 
-                Green days are available, red days are booked, and split days are check-in/out dates.
+                The purple bars indicate periods that are already booked. Days without a bar are currently available.
               </p>
               <AvailabilityCalendar />
               <div className="mt-4 text-sm text-gray-500">

@@ -1,4 +1,3 @@
-
 # Style Guide - Sifnos Seaview Villa
 
 This document serves as the definitive reference for all styling decisions across the Sifnos Seaview Villa project. Follow these guidelines to maintain consistency throughout the application.
@@ -12,6 +11,7 @@ This document serves as the definitive reference for all styling decisions acros
   - Regular (400) - Navbar, buttons, card titles
   - Medium (500) - Selected navigation items
   - Semibold (600) - Not currently used, but available if needed
+- **Base Font Size**: 16px (default)
 
 ### Heading Styles
 - **Page Titles (h1)**
@@ -23,7 +23,7 @@ This document serves as the definitive reference for all styling decisions acros
 
 - **Section Headers (h2)**
   - Font: Montserrat Light
-  - Size: `text-4xl` (desktop) / `text-3xl` (mobile)
+  - Size: `text-2xl` (24px)
   - Weight: `font-light`
   - Color: `text-[#1A1F2C]` or `text-gray-800`
   - Center aligned: `text-center`
@@ -76,7 +76,7 @@ This document serves as the definitive reference for all styling decisions acros
 ## Layout & Spacing
 
 ### Section Spacing
-- Standard vertical padding between sections: `py-16`
+- Standard vertical padding between sections: `py-10`
 - Container horizontal padding: `px-4`
 - Container width: `container mx-auto`
 
@@ -154,9 +154,28 @@ This document serves as the definitive reference for all styling decisions acros
 - Vertical spacing: `py-6`
 - Element spacing: `gap-6 md:gap-8`
 
+### Header
+- **Transparent Header**: Initial state on page load
+  - Background: `bg-transparent`
+  - Text: `text-white` with `text-shadow` for readability
+  - Z-index: `z-50` (content), `z-40` (gradient overlay)
+- **Solid Header**: Appears when scrolled (scrollPosition > 80px)
+  - Background: `bg-white`
+  - Text: `text-black`
+  - Shadow: `shadow-md`
+- **Gradient Overlay**: Improves text visibility on transparent header
+  - Implementation: Separate div rendered conditionally when header is transparent
+  - Style: `fixed top-0 left-0 right-0 h-[120px]`
+  - Gradient: `bg-gradient-to-b from-black/70 via-black/40 to-transparent`
+  - Pointer events: `pointer-events-none` to allow clicks to pass through
+  - Z-index: Lower than header content but higher than page elements
+
 ### Hero Section
-- Overlay Background: `bg-[rgba(90,110,80,0.4)]`
-- Animation: `animate-slow-zoom-pan` (subtle zoom effect for images)
+- Overlay Background: `bg-[rgba(90,110,80,0.4)]` (semi-transparent olive-green without blur for clear background visibility)
+- Content Box: Positioned on the left side for better readability
+- Dynamic Animation: `animate-dynamic-zoom-pan` for a more engaging visual experience
+- Auto-rotation: Images rotate automatically with smooth transitions every 8 seconds
+- Interactive Indicators: Dots at the bottom allow manual navigation between images
 
 ## Icons
 - Source: lucide-react
@@ -184,10 +203,19 @@ This document serves as the definitive reference for all styling decisions acros
 - Standard focus outline is managed via Tailwind's built-in focus utilities
 - Example: `focus:outline-none focus:ring-2 focus:ring-offset-2`
 
+### Text Shadows
+- Used to improve text visibility on variable backgrounds (especially when over images)
+- Standard text shadow: `text-shadow` class with values `0 2px 4px rgba(0, 0, 0, 0.7), 0 0 1px rgba(0, 0, 0, 0.5)`
+- Applied to white text on transparent header for better contrast against bright images
+
 ## Animation
 - Custom animations defined in tailwind.config.ts:
   - `slow-zoom` - Scale from 1.0 to 1.1 over 5s
-  - `slow-zoom-pan` - Scale from 1.0 to 1.1 over 12s with directional movement
+  - `slow-zoom-pan` - Scale from 1.0 to 1.15 over 12s with directional movement
+  - `dynamic-zoom-pan` - Enhanced animation that scales from 1.0 to 1.2 over 8s with variable directional pan movement using cubic-bezier timing function for smooth acceleration/deceleration
+- CSS Variables:
+  - `--pan-x` and `--pan-y` - Dynamic variables set via inline styles to control pan direction and magnitude
+  - Pan values are set randomly for each image (range: -8% to 8%) to create variety
 
 ---
 

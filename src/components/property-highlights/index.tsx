@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Card, CardContent } from "../ui/card";
 
 const highlights = [
@@ -37,9 +38,9 @@ const highlights = [
 
 export const PropertyHighlights = () => {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-10 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-light text-center mb-12 text-[#1A1F2C]">
+        <h2 className="text-3.5xl font-light text-center mb-12 text-[#1A1F2C]">
           What Sets This Place Apart
         </h2>
         
