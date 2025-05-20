@@ -5,7 +5,7 @@
 // @ts-nocheck
 import React, { useState, useEffect, useMemo } from "react";
 // Button and GalleryHorizontal are no longer directly used here for main actions
-import { loadGalleryConfig } from "@/utils/galleryConfigUtils";
+import { loadMainGalleryConfig, getPreviewHomepageImages } from "@/utils/galleryConfigUtils";
 import { CATEGORY_KEYWORDS } from "@/config/galleryConfig"; // Corrected import
 // CATEGORY_LABELS is used in GalleryMosaic now
 
@@ -31,30 +31,39 @@ function getCategoriesForImage(filename: string, keywordsConfig: Record<string, 
 export const GallerySection = () => {
   const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
-  const [allImages, setAllImages] = useState<Array<{src: string, categories: string[]}>>([]);
+  
+  const [allGalleryImages, setAllGalleryImages] = useState<Array<{src: string, categories: string[]}>>([]); // For Mosaic
+  const [previewDisplayImages, setPreviewDisplayImages] = useState<Array<{src: string}>>([]); // For Preview
+  
   const [loading, setLoading] = useState(true);
 
-  // Load images from configuration
   useEffect(() => {
-    const fetchImages = async () => {
+    const fetchAllData = async () => {
       setLoading(true);
       try {
-        const imagePaths = await loadGalleryConfig();
-        const transformedImages = imagePaths.map(src => ({
+        // Fetch images for the main mosaic/carousel gallery
+        const mainGalleryPaths = await loadMainGalleryConfig();
+        const transformedMainGallery = mainGalleryPaths.map(src => ({
           src,
-          categories: getCategoriesForImage(src, CATEGORY_KEYWORDS) // Use imported CATEGORY_KEYWORDS
+          categories: getCategoriesForImage(src, CATEGORY_KEYWORDS)
         }));
-        setAllImages(transformedImages);
+        setAllGalleryImages(transformedMainGallery);
+
+        // Fetch images for the homepage preview
+        const previewPaths = getPreviewHomepageImages(); // This is synchronous
+        const transformedPreview = previewPaths.map(src => ({ src })); // Preview doesn't need categories prop
+        setPreviewDisplayImages(transformedPreview);
+
       } catch (error) {
-        console.error("Failed to load gallery configuration:", error);
-        // Set empty array or handle error state for allImages
-        setAllImages([]); 
+        console.error("Failed to load gallery configurations:", error);
+        setAllGalleryImages([]); 
+        setPreviewDisplayImages([]);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchImages();
+    fetchAllData();
   }, []);
 
   const handleImageLoad = (src: string) => {
@@ -89,8 +98,7 @@ export const GallerySection = () => {
     </div>
   );
 
-  // Prepare the first 5 images for the preview grid, without category filtering
-  const previewImagesForGrid = useMemo(() => allImages.slice(0, 5), [allImages]);
+  // Note: previewImagesForGrid is now previewDisplayImages from state
 
   return (
     <section id="gallery" className="py-16 px-4 md:px-8 lg:px-12">
@@ -104,8 +112,8 @@ export const GallerySection = () => {
           </div>
         ) : (
           <>
-            <GalleryPreview previewImages={previewImagesForGrid} renderImage={renderImage} />
-            <GalleryMosaic allImages={allImages} />
+            <GalleryPreview previewImages={previewDisplayImages} renderImage={renderImage} />
+            <GalleryMosaic allImages={allGalleryImages} />
           </>
         )}
       </div>

@@ -50,6 +50,16 @@ function filterImagesByCategory(images: GalleryImage[], category: string): Galle
   );
 }
 
+function getImageCaption(src: string): string {
+  if (!src) return '';
+  // Extract filename from path
+  const filename = src.split('/').pop() || '';
+  // Remove file extension
+  const nameWithoutExt = filename.split('.')[0] || '';
+  // Replace underscores and hyphens with spaces
+  return nameWithoutExt.replace(/[_-]/g, ' ');
+}
+
 const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
   images,
   onClose,
@@ -252,7 +262,7 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
                   <div
                     key={item.src + idx}
                     style={item.style}
-                    className="rounded-md overflow-hidden cursor-pointer hover:opacity-90 transition-opacity bg-gray-700" // Added bg for placeholder
+                    className="rounded-md overflow-hidden cursor-pointer hover:opacity-90 transition-opacity bg-gray-700 group" // Added 'group' class for hover effect
                     onClick={() => {
                       setCurrentIndex(originalIndex !== -1 ? originalIndex : 0);
                       setShowGrid(false); 
@@ -278,6 +288,10 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
                           Image not available
                         </div>
                       )}
+                      {/* Image caption - only shown on hover */}
+                      <div className="absolute bottom-0 left-0 right-0 bg-black/40 py-1 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 font-light text-sm truncate text-center">
+                        {getImageCaption(item.src)}
+                      </div>
                     </div>
                   </div>
                 );
