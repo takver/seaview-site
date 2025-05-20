@@ -310,49 +310,44 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
       aria-modal="true"
       aria-label="Image carousel"
     >
-      <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center">
-        <div className="text-white text-sm">
-          {currentIndex + 1} / {images.length}
-        </div>
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={toggleView}
-            className="rounded-full bg-transparent border border-white text-white hover:bg-white/30 hover:text-white focus-visible:ring-white"
-            aria-label="Switch to grid view"
-          >
-            <LayoutGrid className="h-4 w-4 mr-2" />
-            Grid
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onClose}
-            className="rounded-full text-white hover:bg-white/30 hover:text-white focus-visible:ring-white"
-            aria-label="Close gallery"
-          >
-            <X className="h-6 w-6" />
-          </Button>
-        </div>
+      <div className="absolute top-0 right-0 p-4 z-10 flex gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={toggleView}
+          className="rounded-full bg-black/50 border border-white text-white hover:bg-white/30 hover:text-white focus-visible:ring-white"
+          aria-label="Switch to grid view"
+        >
+          <LayoutGrid className="h-4 w-4 mr-2" />
+          Grid
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onClose}
+          className="rounded-full bg-black/50 text-white hover:bg-white/30 hover:text-white focus-visible:ring-white"
+          aria-label="Close gallery"
+        >
+          <X className="h-6 w-6" />
+        </Button>
       </div>
 
       <button
-        className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition"
+        className="absolute left-4 top-1/2 -translate-y-1/2 p-2 z-10 rounded-full bg-black/50 text-white hover:bg-black/70 transition"
         onClick={() => setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))}
         aria-label="Previous image"
       >
         <ChevronLeft size={24} />
       </button>
 
-      <div className="max-w-5xl max-h-[85vh] px-16 relative">
-        <div className="relative">
+      <div className="h-full w-full flex items-center justify-center">
+        <div className="relative h-full w-full flex items-center justify-center">
           {images[currentIndex] && (
             <img
               src={images[currentIndex].src}
               alt={images[currentIndex].alt || `Gallery image ${currentIndex + 1} of ${images.length}`}
-              className="max-h-[80vh] mx-auto object-contain"
-              onLoad={(e) => handleImageLoad(e, images[currentIndex].src)} // Pass event here too
+              className="max-h-screen max-w-full w-auto h-auto object-contain"
+              onLoad={(e) => handleImageLoad(e, images[currentIndex].src)}
               onError={() => handleImageError(images[currentIndex].src)}
             />
           )}
@@ -371,7 +366,7 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
       </div>
 
       <button
-        className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition"
+        className="absolute right-4 top-1/2 -translate-y-1/2 p-2 z-10 rounded-full bg-black/50 text-white hover:bg-black/70 transition"
         onClick={() => setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))}
         aria-label="Next image"
       >
