@@ -40,7 +40,7 @@ const GalleryMosaic: React.FC<GalleryMosaicProps> = ({ allImages }) => {
           size="lg"
         >
           <GalleryHorizontal className="mr-2 h-5 w-5" />
-          Show All Pictures ({allImages.length})
+          Show All Pictures
         </Button>
       </div>
 

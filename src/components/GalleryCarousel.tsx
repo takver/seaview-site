@@ -262,7 +262,7 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
                   <div
                     key={item.src + idx}
                     style={item.style}
-                    className="rounded-md overflow-hidden cursor-pointer hover:opacity-90 transition-opacity bg-gray-700 group" // Added 'group' class for hover effect
+                    className="rounded-md overflow-hidden cursor-pointer hover:brightness-105 transition-all delay-200 bg-gray-700 group" // Added 'group' class for hover effect
                     onClick={() => {
                       setCurrentIndex(originalIndex !== -1 ? originalIndex : 0);
                       setShowGrid(false); 
@@ -289,7 +289,7 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
                         </div>
                       )}
                       {/* Image caption - only shown on hover */}
-                      <div className="absolute bottom-0 left-0 right-0 bg-black/40 py-1 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 font-light text-sm truncate text-center">
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent py-1 pb-2 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-200 font-light text-sm truncate text-center">
                         {getImageCaption(item.src)}
                       </div>
                     </div>
