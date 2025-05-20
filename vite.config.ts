@@ -77,6 +77,83 @@ function galleryApiPlugin() {
           next();
         }
       });
+      
+      // Endpoint to RENAME a gallery image (file rename + update paths in gallery order)
+      server.middlewares.use('/api/rename-gallery-image', (req: IncomingMessage, res: ServerResponse, next: () => void) => {
+        if (req.method === 'POST') {
+          let body = '';
+          req.on('data', (chunk: Buffer | string) => {
+            body += chunk.toString();
+          });
+          req.on('end', () => {
+            try {
+              const { oldPath, newPath } = JSON.parse(body);
+              
+              if (!oldPath || !newPath) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ message: 'Both oldPath and newPath are required' }));
+                return;
+              }
+
+              // Get absolute paths for the files
+              const publicDir = path.resolve(__dirname, 'public');
+              // Remove the leading / if present
+              const oldRelativePath = oldPath.startsWith('/') ? oldPath.slice(1) : oldPath;
+              const newRelativePath = newPath.startsWith('/') ? newPath.slice(1) : newPath;
+              
+              const oldFilePath = path.join(publicDir, oldRelativePath);
+              const newFilePath = path.join(publicDir, newRelativePath);
+              
+              // Check if source file exists
+              if (!fs.existsSync(oldFilePath)) {
+                res.writeHead(404, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ message: 'Source file not found' }));
+                return;
+              }
+              
+              // Create directory structure for the new path if it doesn't exist
+              const newDirPath = path.dirname(newFilePath);
+              if (!fs.existsSync(newDirPath)) {
+                fs.mkdirSync(newDirPath, { recursive: true });
+              }
+              
+              // Rename the file on the filesystem
+              fs.renameSync(oldFilePath, newFilePath);
+              
+              // Update gallery order JSON with new path
+              const galleryOrderPath = path.resolve(__dirname, 'public/galleryOrder.json');
+              if (fs.existsSync(galleryOrderPath)) {
+                const galleryOrderContent = fs.readFileSync(galleryOrderPath, 'utf-8');
+                const galleryOrder = JSON.parse(galleryOrderContent);
+                
+                if (Array.isArray(galleryOrder)) {
+                  // Replace old path with new path in the gallery order
+                  const updatedOrder = galleryOrder.map(imgPath => 
+                    imgPath === oldPath ? newPath : imgPath
+                  );
+                  
+                  // Save updated gallery order
+                  fs.writeFileSync(galleryOrderPath, JSON.stringify(updatedOrder, null, 2));
+                }
+              }
+              
+              res.writeHead(200, { 'Content-Type': 'application/json' });
+              res.end(JSON.stringify({ 
+                message: 'Image renamed successfully',
+                oldPath,
+                newPath
+              }));
+              
+            } catch (error) {
+              console.error('Error renaming gallery image:', error);
+              res.writeHead(500, { 'Content-Type': 'application/json' });
+              res.end(JSON.stringify({ message: 'Error renaming image', error: String(error) }));
+            }
+          });
+        } else {
+          next();
+        }
+      });
     }
   };
 }

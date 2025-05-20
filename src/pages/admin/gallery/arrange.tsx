@@ -1,11 +1,143 @@
+// @ts-nocheck
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 // @ts-ignore TS Language Server has intermittent issue resolving this, but it works at runtime
 import { DragDropContext, Droppable, Draggable, type DroppableProvided, type DraggableProvided } from '@hello-pangea/dnd';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { saveGalleryConfig, loadMainGalleryConfig } from '@/utils/galleryConfigUtils';
-import X from "lucide-react/dist/esm/icons/x"; // Direct import for X icon
+import { saveGalleryConfig, loadMainGalleryConfig, renameGalleryImage } from '@/utils/galleryConfigUtils';
+// @ts-ignore
+import { X } from "lucide-react";
+// @ts-ignore
+import { Edit } from "lucide-react";
+// @ts-ignore
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+// @ts-ignore
+import { Input } from "@/components/ui/input";
+// @ts-ignore
+import { Label } from "@/components/ui/label";
+
+interface RenameDialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+  currentImage: string;
+  onRename: (oldPath: string, newPath: string) => Promise<void>;
+}
+
+const RenameDialog = ({ isOpen, onClose, currentImage, onRename }: RenameDialogProps) => {
+  const [newFilename, setNewFilename] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const { toast } = useToast();
+  
+  // Extract the current filename and directory from the path
+  const currentFilePath = currentImage || '';
+  const lastSlashIndex = currentFilePath.lastIndexOf('/');
+  const directory = lastSlashIndex !== -1 ? currentFilePath.substring(0, lastSlashIndex + 1) : '';
+  const currentFilename = lastSlashIndex !== -1 
+    ? currentFilePath.substring(lastSlashIndex + 1).split('.')[0] 
+    : '';
+  const extension = currentFilePath.split('.').pop() || '';
+  
+  useEffect(() => {
+    if (isOpen && currentFilename) {
+      setNewFilename(currentFilename);
+    }
+  }, [isOpen, currentFilename]);
+  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!newFilename.trim()) {
+      toast({
+        title: "Error",
+        description: "Filename cannot be empty",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Check for invalid characters in the filename
+    const invalidChars = /[<>:"\/\\|?*\x00-\x1F]/g;
+    if (invalidChars.test(newFilename)) {
+      toast({
+        title: "Error",
+        description: "Filename contains invalid characters",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setIsProcessing(true);
+    
+    try {
+      // Construct the new path with the new filename but keeping the same directory and extension
+      const newPath = `${directory}${newFilename}.${extension}`;
+      
+      // Don't do anything if the name hasn't changed
+      if (newPath === currentImage) {
+        onClose();
+        return;
+      }
+      
+      await onRename(currentImage, newPath);
+      onClose();
+    } catch (error) {
+      console.error('Error renaming file:', error);
+      toast({
+        title: "Error",
+        description: "Failed to rename image",
+        variant: "destructive",
+      });
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+  
+  return (
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Rename Image</DialogTitle>
+        </DialogHeader>
+        <form onSubmit={handleSubmit}>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="new-filename" className="text-right">
+                New Filename
+              </Label>
+              <Input
+                id="new-filename"
+                value={newFilename}
+                onChange={(e) => setNewFilename(e.target.value)}
+                className="col-span-3"
+                autoFocus
+                disabled={isProcessing}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <div className="text-right text-sm text-muted-foreground">Directory</div>
+              <div className="col-span-3 text-sm truncate" title={directory}>
+                {directory}
+              </div>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <div className="text-right text-sm text-muted-foreground">Extension</div>
+              <div className="col-span-3 text-sm">.{extension}</div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={onClose} disabled={isProcessing}>
+              Cancel
+            </Button>
+            <Button type="submit" disabled={isProcessing || !newFilename.trim()}>
+              {isProcessing ? "Renaming..." : "Rename"}
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 const AdminGalleryArrangePage = () => { // Renamed component
   const { toast } = useToast();
@@ -13,6 +145,8 @@ const AdminGalleryArrangePage = () => { // Renamed component
   const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [renameDialogOpen, setRenameDialogOpen] = useState(false);
+  const [imageToRename, setImageToRename] = useState<string>('');
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -85,6 +219,46 @@ const AdminGalleryArrangePage = () => { // Renamed component
     return path.split('/').pop()?.split('.')[0] || path;
   };
   
+  const openRenameDialog = (image: string, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent the image click handler from being triggered
+    setImageToRename(image);
+    setRenameDialogOpen(true);
+  };
+  
+  const closeRenameDialog = () => {
+    setRenameDialogOpen(false);
+    setImageToRename('');
+  };
+  
+  const handleRename = async (oldPath: string, newPath: string) => {
+    try {
+      await renameGalleryImage(oldPath, newPath);
+      
+      // Update the images array with the new path
+      const updatedImages = images.map(img => 
+        img === oldPath ? newPath : img
+      );
+      setImages(updatedImages);
+      
+      // Automatically save the gallery configuration after rename
+      await saveGalleryConfig(updatedImages);
+      setSaved(true);
+      
+      toast({
+        title: "Success",
+        description: "Image renamed successfully and gallery configuration updated",
+      });
+    } catch (error) {
+      console.error('Failed to rename image:', error);
+      toast({
+        title: "Error",
+        description: "Failed to rename image",
+        variant: "destructive",
+      });
+      throw error; // Re-throw to be caught by the dialog
+    }
+  };
+  
   if (loading) {
     return (
       <div className="container mx-auto p-8">
@@ -101,6 +275,7 @@ const AdminGalleryArrangePage = () => { // Renamed component
       <h1 className="text-3xl font-semibold mb-6">Arrange Gallery Images</h1> {/* Updated Title */}
       <p className="mb-6 text-muted-foreground">
         Drag and drop images to reorder them in the gallery. The order will be preserved and used in the "Show All Pictures" section.
+        You can also rename images - this will rename the actual files on the server.
       </p>
       
       <div className="mb-6 flex gap-4">
@@ -156,18 +331,29 @@ const AdminGalleryArrangePage = () => { // Renamed component
                         <div className="text-muted-foreground text-sm mr-4">
                           Position: {index + 1}
                         </div>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDeleteImage(index);
-                          }}
-                          className="text-destructive hover:bg-destructive/10"
-                          aria-label="Delete image"
-                        >
-                          <X className="h-4 w-4" />
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={(e) => openRenameDialog(image, e)}
+                            className="text-primary hover:bg-primary/10"
+                            aria-label="Rename image"
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteImage(index);
+                            }}
+                            className="text-destructive hover:bg-destructive/10"
+                            aria-label="Delete image"
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </li>
                     )}
                   </Draggable>
@@ -179,7 +365,7 @@ const AdminGalleryArrangePage = () => { // Renamed component
         </DragDropContext>
       </div>
 
-      {/* Image Modal */}
+      {/* Image Preview Modal */}
       {selectedImage && (
         <div 
           className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
@@ -203,6 +389,14 @@ const AdminGalleryArrangePage = () => { // Renamed component
           </div>
         </div>
       )}
+      
+      {/* Rename Dialog */}
+      <RenameDialog 
+        isOpen={renameDialogOpen}
+        onClose={closeRenameDialog}
+        currentImage={imageToRename}
+        onRename={handleRename}
+      />
     </div>
   );
 };

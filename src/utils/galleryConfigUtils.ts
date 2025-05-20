@@ -60,3 +60,32 @@ export const loadMainGalleryConfig = async (): Promise<string[]> => {
     return Promise.resolve([]);
   }
 }; 
+
+/**
+ * Renames a gallery image by updating both the file on the filesystem and its path in the gallery configuration.
+ * @param oldPath The current path of the image
+ * @param newPath The new path for the image
+ * @returns A promise that resolves when the rename operation is complete
+ */
+export const renameGalleryImage = async (oldPath: string, newPath: string): Promise<{ oldPath: string, newPath: string }> => {
+  try {
+    const response = await fetch('/api/rename-gallery-image', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ oldPath, newPath }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({ message: 'Failed to rename image' }));
+      throw new Error(errorData.message || 'Failed to rename image');
+    }
+    
+    const result = await response.json();
+    return Promise.resolve({ oldPath, newPath });
+  } catch (error) {
+    console.error('Error renaming gallery image via API:', error);
+    return Promise.reject(error);
+  }
+};
