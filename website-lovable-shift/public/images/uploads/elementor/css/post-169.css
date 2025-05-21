@@ -1,0 +1,36 @@
+.elementor-kit-169{--e-global-color-primary:#006E9C;--e-global-color-secondary:#54595F;--e-global-color-text:#7A7A7A;--e-global-color-accent:#61CE70;--e-global-color-thmv_primary:#130B4B;--e-global-color-thmv_accent:#50514f;--e-global-color-thmv_dark:#151515;--e-global-color-thmv_shadow:#707070;--e-global-color-thmv_midtone:#B9B8B8;--e-global-color-thmv_highlight:#F4F4F4;--e-global-color-thmv_light:#FFFFFF;--e-global-color-3d0eafd5:#F96D64;--e-global-color-6a24cc9b:#888888;--e-global-color-1b02c7b4:#FFFFFF;--e-global-color-748ae788:#F25F5C;--e-global-color-6d78095a:#23A455;--e-global-color-f33b44f:#2C2C2C;--e-global-color-68d89e39:#F8F9F9;--e-global-typography-primary-font-family:"Montserrat";--e-global-typography-primary-font-weight:300;--e-global-typography-secondary-font-family:"Montserrat";--e-global-typography-secondary-font-weight:200;--e-global-typography-text-font-family:"Montserrat";--e-global-typography-text-font-weight:400;--e-global-typography-accent-font-family:"Montserrat";--e-global-typography-accent-font-weight:500;--e-global-typography-additional_fonts_1-font-weight:700;--e-global-typography-additional_fonts_1-font-style:normal;--e-global-typography-additional_fonts_2-font-family:"Open Sans";--e-global-typography-additional_fonts_2-font-weight:600;color:var( --e-global-color-thmv_dark );font-family:"Open Sans", Sans-serif;font-size:16px;font-weight:300;line-height:1.75em;}.elementor-kit-169 e-page-transition{background-color:#FFBC7D;}.elementor-kit-169 h1{color:var( --e-global-color-thmv_dark );font-family:"Spinnaker", Sans-serif;font-size:52px;font-weight:700;line-height:1em;}.elementor-kit-169 h2{color:var( --e-global-color-thmv_dark );font-family:"Spinnaker", Sans-serif;font-size:40px;font-weight:700;line-height:1em;}.elementor-kit-169 h3{color:var( --e-global-color-thmv_dark );font-family:"Spinnaker", Sans-serif;font-size:32px;font-weight:700;line-height:1em;}.elementor-kit-169 h4{color:var( --e-global-color-thmv_dark );font-family:"Spinnaker", Sans-serif;font-size:28px;font-weight:700;line-height:1.2em;}.elementor-kit-169 h5{color:var( --e-global-color-thmv_dark );font-family:"Spinnaker", Sans-serif;font-size:22px;font-weight:700;line-height:1em;}.elementor-kit-169 h6{color:var( --e-global-color-thmv_dark );font-family:"Spinnaker", Sans-serif;font-size:16px;font-weight:700;line-height:1em;}.elementor-section.elementor-section-boxed > .elementor-container{max-width:1170px;}.e-con{--container-max-width:1170px;}{}h1.entry-title{display:var(--page-title-display);}.elementor-lightbox{--lightbox-header-icons-size:31px;--lightbox-navigation-icons-size:34px;}.themo_mphb_availability_calendar .datepick, .datepick-popup .datepick.mphb-datepick-popup{width:auto!important;}.datepick-popup .datepick.mphb-datepick-popup{max-width:600px;}:root .mphb-calendar.mphb-datepick,:root .mphb-calendar.mphb-datepick [class*="mphb-datepicker-"], :root .datepick-popup .mphb-datepick-popup,:root .datepick-popup [class*="mphb-datepicker-"].mphb-datepick-popup{--mphb-booked-date-bg:#B81515;--mphb-booked-date-color:#FFFFFF;}@media(max-width:1024px){.elementor-kit-169{font-size:18px;}.elementor-kit-169 h1{font-size:38px;}.elementor-kit-169 h2{font-size:32px;}.elementor-kit-169 h3{font-size:28px;}.elementor-kit-169 h4{font-size:22px;}.elementor-kit-169 h5{font-size:18px;}.elementor-kit-169 h6{font-size:14px;}.elementor-section.elementor-section-boxed > .elementor-container{max-width:1024px;}.e-con{--container-max-width:1024px;}}@media(max-width:767px){.elementor-kit-169{font-size:14px;}.elementor-kit-169 h1{font-size:28px;}.elementor-kit-169 h2{font-size:26px;}.elementor-kit-169 h3{font-size:22px;}.elementor-kit-169 h4{font-size:20px;}.elementor-kit-169 h5{font-size:18px;}.elementor-kit-169 h6{font-size:14px;}.elementor-section.elementor-section-boxed > .elementor-container{max-width:767px;}.e-con{--container-max-width:767px;}}/* Start Custom Fonts CSS */@font-face {
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 400;
+	font-display: auto;
+	src: url('https://sifnos-seaview.com/wp-content/uploads/2024/05/Montserrat-Regular.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 300;
+	font-display: auto;
+	src: url('https://sifnos-seaview.com/wp-content/uploads/2024/05/Montserrat-Light.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 500;
+	font-display: auto;
+	src: url('https://sifnos-seaview.com/wp-content/uploads/2024/05/Montserrat-Medium.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: normal;
+	font-display: auto;
+	src: url('https://sifnos-seaview.com/wp-content/uploads/2024/05/Montserrat-Regular.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 200;
+	font-display: auto;
+	src: url('https://sifnos-seaview.com/wp-content/uploads/2024/05/Montserrat-ExtraLight.ttf') format('truetype');
+}
+/* End Custom Fonts CSS */
