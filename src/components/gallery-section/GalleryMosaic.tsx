@@ -5,7 +5,7 @@
 import React, { useState, useMemo } from 'react';
 import { Button } from "@/components/ui/button";
 import { GalleryHorizontal } from "lucide-react";
-import GalleryCarousel from "../GalleryCarousel";
+import GalleryCarousel from "./GalleryCarousel";
 import { 
   CATEGORY_LABELS
 } from "@/config/galleryConfig";
