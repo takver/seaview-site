@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Button } from "../ui/button";
 import contactConfig from "../../config/contactConfig.json";
 

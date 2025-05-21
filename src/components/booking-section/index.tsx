@@ -1,4 +1,4 @@
-// @ts-nocheck
+// tslint:disable-next-line:max-line-length
 import React, { useState } from "react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
@@ -45,7 +45,7 @@ export const BookingSection = () => {
                 </p>
                 <div className="flex gap-4 mb-4">
                   <a
-                    href="https://www.airbnb.com/rooms/example"
+                    href={`${contactConfig.airbnbUrl}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-block"
@@ -59,8 +59,9 @@ export const BookingSection = () => {
                       <span>Airbnb</span>
                     </Button>
                   </a>
+		  
                   <a
-                    href="https://www.booking.com/hotel/example"
+                    href={`${contactConfig.bookingUrl}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-block"
@@ -74,52 +75,58 @@ export const BookingSection = () => {
                       <span>Booking.com</span>
                     </Button>
                   </a>
-                </div>
-                <p className="text-gray-600 font-light text-sm">
-                  HomeExchange is also available off-season (October to April)
-                </p>
-                <a
-                  href="https://www.homeexchange.com/example"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block mt-2"
-                >
-                  <Button 
-                    className="group bg-gray-100 border-2 border-[#F69E00] text-[#F69E00] hover:bg-[#F69E00] hover:text-white hover:border-[#F69E00] px-4 py-2 rounded-full flex items-center justify-center transition-colors duration-200 ease-in-out"
+                  <a
+                    href={`${contactConfig.homeexchangeUrl}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block"
                   >
-                    <div className="relative w-5 h-5 mr-2 flex items-center justify-center group-hover:bg-white group-hover:p-0.5 group-hover:rounded-sm transition-all duration-200 ease-in-out">
-                      <img 
-                        src="/images/homeexchangelogo.svg" 
-                        alt="HomeExchange" 
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <span className="text-sm font-medium">HomeExchange</span>
-                  </Button>
-                </a>
+                    <Button 
+                      className="group bg-gray-100 border-2 border-[#F69E00] text-[#F69E00] hover:bg-[#F69E00] hover:text-white hover:border-[#F69E00] px-4 py-2 rounded-full flex items-center justify-center transition-colors duration-200 ease-in-out"
+                    >
+                      <div className="relative w-5 h-5 mr-2 flex items-center justify-center group-hover:bg-white group-hover:p-0.5 group-hover:rounded-sm transition-all duration-200 ease-in-out">
+                        <img 
+                          src="/images/homeexchangelogo.svg" 
+                          alt="HomeExchange" 
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      <span className="text-sm font-medium">HomeExchange</span>
+                    </Button>
+                  </a>
+                </div>
+
+                <p className="text-gray-600 font-light text-sm">
+                  HomeExchange is available off-season only, November to March
+                </p>
               </div>
               
-              <div className="border-t border-gray-200 pt-4 mb-4">
-                <h3 className="text-lg font-normal text-[#6E59A5] mb-3">Contact Information</h3>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
+              {/* Direct contact options */}
+              <div className="pt-10 border-t border-gray-200">
+                <h3 className="text-2xl font-light text-center text-[#1A1F2C]">
+                  Prefer to book directly?
+                </h3>
+          
+                <p className="text-gray-600 text-center max-w-2xl mx-auto mb-8">
+                  Contact us directly for personalized assistance with your booking, special requests, or any questions you might have about your stay.
+                </p>
+          
+                <div className="flex flex-col md:flex-row justify-center items-center gap-4">
+                  <a 
+                    href={emailLink}
+                    className="flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-[#6E59A5] hover:bg-gray-50 min-w-[200px] justify-center"
+                  >
                     <Mail size={18} className="text-[#6E59A5]" />
-                    <a 
-                      href={emailLink}
-                      className="text-gray-600 hover:text-[#6E59A5] transition-colors"
-                    >
-                      {contactConfig.email}
-                    </a>
-                  </div>
-                  <div className="flex items-center gap-2">
+                    <span>Email Us</span>
+                  </a>
+            
+                  <a 
+                    href={phoneLink}
+                    className="flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-[#6E59A5] hover:bg-gray-50 min-w-[200px] justify-center"
+                  >
                     <Phone size={18} className="text-[#6E59A5]" />
-                    <a 
-                      href={phoneLink}
-                      className="text-gray-600 hover:text-[#6E59A5] transition-colors"
-                    >
-                      {contactConfig.phone}
-                    </a>
-                  </div>
+                    <span>{contactConfig.phone}</span>
+                  </a>
                 </div>
               </div>
               
@@ -145,34 +152,7 @@ export const BookingSection = () => {
           </Card>
         </div>
 
-        {/* Direct contact options */}
-        <div className="mt-10 pt-10 border-t border-gray-200">
-          <h3 className="text-2xl font-light text-center mb-6 text-[#1A1F2C]">
-            Prefer to book directly?
-          </h3>
-          
-          <p className="text-gray-600 text-center max-w-2xl mx-auto mb-8">
-            Contact us directly for personalized assistance with your booking, special requests, or any questions you might have about your stay.
-          </p>
-          
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4">
-            <a 
-              href={emailLink}
-              className="flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-[#6E59A5] hover:bg-gray-50 min-w-[200px] justify-center"
-            >
-              <Mail size={18} className="text-[#6E59A5]" />
-              <span>Email Us</span>
-            </a>
-            
-            <a 
-              href={phoneLink}
-              className="flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-[#6E59A5] hover:bg-gray-50 min-w-[200px] justify-center"
-            >
-              <Phone size={18} className="text-[#6E59A5]" />
-              <span>{contactConfig.phone}</span>
-            </a>
-          </div>
-        </div>
+
       </div>
     </section>
   );

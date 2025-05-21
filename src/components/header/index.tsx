@@ -1,4 +1,4 @@
-// @ts-nocheck
+import type { FC, ReactElement } from "react";
 import React, { useEffect, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Link, useLocation } from "react-router-dom";
@@ -12,7 +12,15 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 
-export const Header = () => {
+type ContactItem = {
+  icon: ReactElement;
+  text: string;
+  value?: string;
+  href: string;
+  target?: string;
+};
+
+export const Header: FC = () => {
   const isMobile = useIsMobile();
   const { pathname } = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -43,12 +51,13 @@ export const Header = () => {
     setCopied(type);
   };
 
-  const navItems = [
+  // Reserved for future nav links – suppress unused-var warning with underscore
+  const _navItems: { text: string; href: string }[] = [
     { text: "Home", href: "/" },
     { text: "About", href: "/about" },
   ];
 
-  const contactItems = [
+  const contactItems: ContactItem[] = [
     {
       icon: <Mail className="h-4 w-4" />,
       text: "Email",
@@ -79,7 +88,7 @@ export const Header = () => {
   // Add text shadow for better visibility when header is transparent
   const textShadowClass = isScrolled ? "" : "text-shadow";
 
-  const renderContactItem = (item, index) => {
+  const renderContactItem = (item: ContactItem, index: number) => {
     // Don't show tooltip for the map location
     if (item.text === "Location") {
       return (

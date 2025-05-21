@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Header } from "@/components/header";
 import { HeroSection } from "@/components/hero-section";
 import { PropertyFeaturesBanner } from "@/components/property-features-banner";
