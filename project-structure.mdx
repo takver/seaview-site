@@ -1,0 +1,49 @@
+# Project Structure Overview
+
+> Generated on {{DATE}}
+
+```text
+root /
+├── website-lovable-shift/        # Main Vite / React web-app
+│   ├── src/
+│   │   ├── components/           # Feature & UI components
+│   │   │   ├── gallery-section/  # All gallery UI (grid, preview, carousel)
+│   │   │   │   ├── GalleryCarousel.tsx
+│   │   │   │   ├── GalleryMosaic.tsx
+│   │   │   │   ├── GalleryPreview.tsx
+│   │   │   │   └── index.tsx
+│   │   │   └── … other feature folders …
+│   │   ├── pages/                # Route entry points
+│   │   ├── config/               # Pure config constants
+│   │   ├── utils/                # Re-usable helpers (e.g. galleryConfigUtils)
+│   │   ├── hooks/ | lib/         # Custom hooks / misc libs
+│   │   └── types/                # Global TS types
+│   ├── tsconfig.json             # App-specific TS config
+│   └── … vite, assets, etc.
+│
+├── ical-proxy-server/            # Independent Node proxy service (port 3001)
+├── legacy-src/                   # Archived previous experiment (ignored)
+└── project-structure.mdx         # **This file**
+```
+
+## Gallery-related files
+
+| Path | Purpose |
+| --- | --- |
+| `src/components/gallery-section/GalleryCarousel.tsx` | Full-screen modal carousel view |
+| `src/components/gallery-section/GalleryMosaic.tsx`   | Grid / masonry layout inside modal |
+| `src/components/gallery-section/GalleryPreview.tsx`  | 5-image preview grid on homepage |
+| `src/components/gallery-section/index.tsx`           | Section wrapper rendered on home page |
+| `src/config/galleryConfig.ts`                        | Category labels & keyword mapping |
+| `src/utils/galleryConfigUtils.ts`                    | Helpers to read ordering files, etc. |
+
+All gallery UI now lives in **one folder** (`gallery-section`) keeping concerns co-located while business/config logic stays in their respective folders.
+
+---
+
+Future conventions:
+
+* New cross-section UI ⇒ **components/** sub-folder per feature.
+* Pure data/constants ⇒ **config/**.
+* Pure functions/helpers ⇒ **utils/**.
+* Avoid duplicate tooling at repo root; each app has its own build setup or live in an `apps/` monorepo layout.

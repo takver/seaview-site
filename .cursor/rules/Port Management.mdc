@@ -1,0 +1,46 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Port Management Guidelines
+
+## Port Assignments
+- Main Website (Vite React): Port 3000
+- iCal Proxy Server: Port 3001
+
+## Port Conflict Resolution
+When encountering a port conflict:
+
+1. ALWAYS check which process is using the required port:
+```bash
+lsof -i :PORT_NUMBER
+```
+
+2. If the port is in use by a previous instance of our service:
+   - Kill the existing process
+   - Restart the service on the same port
+   - DO NOT try alternative ports
+
+3. NEVER use alternative ports (3002, 3003, etc.) as this breaks the architecture
+   - Main website MUST run on 3000
+   - iCal proxy MUST run on 3001
+
+## Standard Port Resolution Commands
+```bash
+# Check port usage
+lsof -i :3000  # For main website
+lsof -i :3001  # For iCal proxy
+
+# Kill process using port (replace PID with actual process ID)
+kill PID
+
+# Restart services on correct ports
+cd website-lovable-shift && npm run dev -- --port 3000
+cd ical-proxy-server && node server.js  # Runs on 3001
+```
+
+## Important Notes
+- Port assignments are critical for service discovery
+- Changing ports can break inter-service communication
+- Always maintain the standard port configuration

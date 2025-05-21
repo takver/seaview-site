@@ -1,0 +1,12 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+To understand how the ports are configured and to understand the overall architecture of the web service and proxy
+
+When you start the server and define a port for it to use
+
+Read 
+[seaview-site-architecture.md](mdc:seaview-site-architecture.md)
+[start-services.sh](mdc:start-services.sh)
