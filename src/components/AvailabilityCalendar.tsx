@@ -238,7 +238,18 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ className }
     weeks.push(currentWeek);
     
     // Create a simple array of booking spans
-    const bookingSpans = [];
+    interface BookingSpan {
+      booking: BookingEvent;
+      weekIndex: number;
+      dayInWeek: number;
+      spanWidth: number;
+      spanStart: Date;
+      spanEnd: Date;
+      isFirstSegment: boolean;
+      isLastSegment: boolean;
+    }
+
+    const bookingSpans: BookingSpan[] = [];
     
     // Process each booking for this month
     for (let i = 0; i < bookings.length; i++) {
@@ -294,7 +305,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ className }
     const mergedSpans = [];
     
     // Group spans by week
-    const spansByWeek = {};
+    const spansByWeek: Record<string, BookingSpan[]> = {};
     for (let i = 0; i < bookingSpans.length; i++) {
       const span = bookingSpans[i];
       const key = `${span.booking.source}_${span.weekIndex}`;
@@ -311,7 +322,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ className }
       const weekSpans = spansByWeek[key];
       
       // Sort by day in week
-      weekSpans.sort((a, b) => a.dayInWeek - b.dayInWeek);
+      weekSpans.sort((a: BookingSpan, b: BookingSpan) => a.dayInWeek - b.dayInWeek);
       
       let currentSpan = weekSpans[0];
       

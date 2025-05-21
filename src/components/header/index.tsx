@@ -46,8 +46,10 @@ export const Header: FC = () => {
     }
   }, [copied]);
 
-  const handleCopy = (text: string, type: string) => {
-    navigator.clipboard.writeText(text);
+  const handleCopy = (text: string | undefined, type: string) => {
+    if (text) {
+      navigator.clipboard.writeText(text);
+    }
     setCopied(type);
   };
 

@@ -38,9 +38,12 @@ const buttonVariants = cva(
   }
 )
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+type NativeButtonProps = Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  "size"
+>;
+
+export interface ButtonProps extends NativeButtonProps, VariantProps<typeof buttonVariants> {
   asChild?: boolean
 }
 
