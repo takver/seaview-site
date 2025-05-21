@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { MapPin } from "lucide-react";
 import { Button } from "../ui/button";
 

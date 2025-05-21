@@ -1,15 +1,15 @@
-// @ts-nocheck
+import * as React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Home, Leaf, Globe2 } from "lucide-react";
+import { Home, Leaf, Globe2, X } from "lucide-react";
 import { useState, useEffect } from "react";
-import { X } from "lucide-react";
+import * as TabsPrimitive from "@radix-ui/react-tabs";
 
 export const PropertyDetailsSection = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   // Close modal on escape key
   useEffect(() => {
-    const handleEsc = (event) => {
+    const handleEsc = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setSelectedImage(null);
       }
@@ -20,7 +20,7 @@ export const PropertyDetailsSection = () => {
     };
   }, []);
 
-  const openImage = (imageSrc) => {
+  const openImage = (imageSrc: string) => {
     setSelectedImage(imageSrc);
   };
 
@@ -36,38 +36,37 @@ export const PropertyDetailsSection = () => {
         </h2>
 
         <div className="flex flex-col gap-8">
-          <Tabs
+          <TabsPrimitive.Root
             defaultValue="place"
-            orientation="horizontal"
             className="flex flex-col w-full"
           >
-            <TabsList className="flex flex-row h-auto justify-center space-x-4 bg-transparent p-0 mb-8">
-              <TabsTrigger
+            <TabsPrimitive.List className="flex flex-row h-auto justify-center space-x-4 bg-transparent p-0 mb-8">
+              <TabsPrimitive.Trigger
                 value="place"
                 className="flex items-center gap-2 justify-center px-6 py-3 rounded-full border-2 border-[#6E59A5] transition-colors data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white data-[state=inactive]:bg-white/10 data-[state=inactive]:text-[#6E59A5] data-[state=inactive]:hover:bg-[#6E59A5]/10"
               >
                 <Home size={20} />
                 <span className="font-medium">The Place</span>
-              </TabsTrigger>
-              <TabsTrigger
+              </TabsPrimitive.Trigger>
+              <TabsPrimitive.Trigger
                 value="gardens"
                 className="flex items-center gap-2 justify-center px-6 py-3 rounded-full border-2 border-[#6E59A5] transition-colors data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white data-[state=inactive]:bg-white/10 data-[state=inactive]:text-[#6E59A5] data-[state=inactive]:hover:bg-[#6E59A5]/10"
               >
                 <Leaf size={20} />
                 <span className="font-medium">Gardens</span>
-              </TabsTrigger>
-              <TabsTrigger
+              </TabsPrimitive.Trigger>
+              <TabsPrimitive.Trigger
                 value="sustainability"
                 className="flex items-center gap-2 justify-center px-6 py-3 rounded-full border-2 border-[#6E59A5] transition-colors data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white data-[state=inactive]:bg-white/10 data-[state=inactive]:text-[#6E59A5] data-[state=inactive]:hover:bg-[#6E59A5]/10"
               >
                 <Globe2 size={20} />
                 <span className="font-medium">Sustainability</span>
-              </TabsTrigger>
-            </TabsList>
+              </TabsPrimitive.Trigger>
+            </TabsPrimitive.List>
 
             <div className="min-h-[500px]">
               {/* The Place Tab Content */}
-              <TabsContent
+              <TabsPrimitive.Content
                 value="place"
                 className="border-none p-0 m-0 data-[state=active]:block h-full"
               >
@@ -98,10 +97,10 @@ export const PropertyDetailsSection = () => {
                     </p>
                   </div>
                 </div>
-              </TabsContent>
+              </TabsPrimitive.Content>
 
               {/* Gardens Tab Content */}
-              <TabsContent
+              <TabsPrimitive.Content
                 value="gardens"
                 className="border-none p-0 m-0 data-[state=active]:block h-full"
               >
@@ -139,10 +138,10 @@ export const PropertyDetailsSection = () => {
                     </p>
                   </div>
                 </div>
-              </TabsContent>
+              </TabsPrimitive.Content>
 
               {/* Sustainability Tab Content */}
-              <TabsContent
+              <TabsPrimitive.Content
                 value="sustainability"
                 className="border-none p-0 m-0 data-[state=active]:block h-full"
               >
@@ -168,9 +167,9 @@ export const PropertyDetailsSection = () => {
                     </p>
                   </div>
                 </div>
-              </TabsContent>
+              </TabsPrimitive.Content>
             </div>
-          </Tabs>
+          </TabsPrimitive.Root>
         </div>
       </div>
 
@@ -178,12 +177,12 @@ export const PropertyDetailsSection = () => {
       {selectedImage && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80"
-          onClick={closeImage}
+          onClick={(e: React.MouseEvent<HTMLDivElement>) => closeImage()}
         >
           <div className="relative w-full h-full flex items-center justify-center">
             <button 
               className="absolute top-4 right-4 p-2 bg-white bg-opacity-40 rounded-full text-white hover:bg-opacity-60 transition-colors"
-              onClick={closeImage}
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => closeImage()}
               aria-label="Close"
             >
               <X size={32} />
@@ -192,7 +191,7 @@ export const PropertyDetailsSection = () => {
               src={selectedImage}
               alt="Enlarged view"
               className="max-w-[90%] max-h-[90vh] object-contain"
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: React.MouseEvent<HTMLImageElement>) => e.stopPropagation()}
             />
           </div>
         </div>

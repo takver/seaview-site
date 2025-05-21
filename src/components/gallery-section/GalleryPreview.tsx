@@ -2,7 +2,6 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 
-// @ts-nocheck
 import React from 'react';
 
 interface ImageItem {

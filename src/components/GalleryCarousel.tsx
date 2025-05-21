@@ -2,7 +2,6 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 
-// @ts-nocheck
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { X, ChevronLeft, ChevronRight, LayoutGrid, Maximize } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,6 +19,10 @@ interface GalleryImage {
   // width and height are now primarily for initial estimates if needed, actual dimensions will be read from loaded images
   // width?: number; 
   // height?: number;
+}
+
+interface MasonryItem extends GalleryImage {
+  style: React.CSSProperties;
 }
 
 interface GalleryCarouselProps {
@@ -45,8 +48,10 @@ function getCategoriesForImage(filename: string, keywordsConfig: Record<string, 
 
 function filterImagesByCategory(images: GalleryImage[], category: string): GalleryImage[] {
   if (category === "all") return images;
-  return images.filter(img => 
-    (img.categories || getCategoriesForImage(img.src)).includes(category)
+  const keywords = CATEGORY_KEYWORDS[category as keyof typeof CATEGORY_KEYWORDS] || [];
+  if (keywords.length === 0) return images;
+  return images.filter(({ src }) =>
+    keywords.some((kw) => src.toLowerCase().includes(kw))
   );
 }
 
@@ -73,7 +78,7 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
   const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
   const [showGrid, setShowGrid] = useState(gridMode);
-  const [masonryItems, setMasonryItems] = useState([]);
+  const [masonryItems, setMasonryItems] = useState<MasonryItem[]>([]);
   const galleryRef = useRef<HTMLDivElement>(null);
   const [imageDimensionsMap, setImageDimensionsMap] = useState<Record<string, {width: number, height: number}>>({});
 
@@ -88,14 +93,11 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
     setShowGrid(gridMode);
   }, [gridMode]);
 
-  const imagesForGrid = useMemo(() => {
-    if (!showGrid) return [];
-    const imagesWithCats = images.map(img => ({
-      ...img,
-      categories: img.categories || getCategoriesForImage(img.src)
-    }));
-    return filterImagesByCategory(imagesWithCats, selectedCategory);
-  }, [images, selectedCategory, showGrid]);
+  // Images after applying current category filter
+  const filteredImages = useMemo(() => filterImagesByCategory(images, selectedCategory), [images, selectedCategory]);
+
+  // Images that will be rendered in grid view (empty array if grid not shown)
+  const imagesForGrid = useMemo(() => (showGrid ? filteredImages : []), [filteredImages, showGrid]);
 
   useEffect(() => {
     const calculateMasonryLayout = () => {
@@ -114,7 +116,7 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
       const columnWidth = (galleryWidth - (numColumns - 1) * gap) / numColumns;
       const columnHeights = Array(numColumns).fill(0);
       
-      const items = imagesForGrid.map((image) => {
+      const items: MasonryItem[] = imagesForGrid.map((image) => {
         const dimensions = imageDimensionsMap[image.src];
         // Use actual aspect ratio if image dimensions are loaded, otherwise default (e.g., 1:1 or 3:2 for placeholder)
         // Using 1:1 as a more neutral placeholder before load might be better than landscape bias.
@@ -170,17 +172,19 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
         }
         return;
       }
+      const length = filteredImages.length;
+      if (length === 0) return;
       if (e.key === "ArrowLeft") {
-        setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+        setCurrentIndex((prev) => (prev === 0 ? length - 1 : prev - 1));
       } else if (e.key === "ArrowRight") {
-        setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+        setCurrentIndex((prev) => (prev === length - 1 ? 0 : prev + 1));
       } else if (e.key === "Escape") {
         onClose();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [images.length, onClose, showGrid]);
+  }, [filteredImages.length, onClose, showGrid]);
 
   const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement, Event>, src: string) => {
     setLoadedImages(prev => new Set(prev).add(src));
@@ -257,7 +261,7 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
           ) : (
             <div ref={galleryRef} className="relative"> 
               {masonryItems.map((item, idx) => { 
-                const originalIndex = images.findIndex(originalImg => originalImg.src === item.src);
+                const originalIndex = filteredImages.findIndex(originalImg => originalImg.src === item.src);
                 return (
                   <div
                     key={item.src + idx}
@@ -310,7 +314,26 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
       aria-modal="true"
       aria-label="Image carousel"
     >
-      <div className="absolute top-0 right-0 p-4 z-10 flex gap-2">
+      {/* Category buttons + heading overlay in carousel view */}
+      <div className="absolute top-0 left-0 right-0 p-4 z-10 flex flex-col sm:flex-row items-center gap-4">
+        <h2 className="text-white text-xl font-light self-start">Gallery</h2>
+        <div className="flex flex-wrap justify-center gap-2 sm:flex-1">
+          {categoryLabels.map(({ key, label }) => (
+            <Button
+              key={key}
+              variant={selectedCategory === key ? "filterActive" : "filterInactive"}
+              onClick={() => {
+                setSelectedCategory(key);
+                setCurrentIndex(0); // reset to first image in new filter
+              }}
+            >
+              {label}
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      <div className="absolute top-0 right-0 p-4 z-10 flex items-center gap-4">        
         <Button
           variant="outline"
           size="sm"
@@ -342,22 +365,22 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
 
       <div className="h-full w-full flex items-center justify-center">
         <div className="relative h-full w-full flex items-center justify-center">
-          {images[currentIndex] && (
+          {filteredImages[currentIndex] && (
             <img
-              src={images[currentIndex].src}
-              alt={images[currentIndex].alt || `Gallery image ${currentIndex + 1} of ${images.length}`}
+              src={filteredImages[currentIndex].src}
+              alt={filteredImages[currentIndex].alt || `Gallery image ${currentIndex + 1} of ${filteredImages.length}`}
               className="max-h-screen max-w-full w-auto h-auto object-contain"
-              onLoad={(e) => handleImageLoad(e, images[currentIndex].src)}
-              onError={() => handleImageError(images[currentIndex].src)}
+              onLoad={(e) => handleImageLoad(e, filteredImages[currentIndex].src)}
+              onError={() => handleImageError(filteredImages[currentIndex].src)}
             />
           )}
           {/* Updated loading/error state for carousel view to match consistency */}
-          {images[currentIndex] && !loadedImages.has(images[currentIndex].src) && !imageErrors.has(images[currentIndex].src) && (
+          {filteredImages[currentIndex] && !loadedImages.has(filteredImages[currentIndex].src) && !imageErrors.has(filteredImages[currentIndex].src) && (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
             </div>
           )}
-          {images[currentIndex] && imageErrors.has(images[currentIndex].src) && (
+          {filteredImages[currentIndex] && imageErrors.has(filteredImages[currentIndex].src) && (
             <div className="absolute inset-0 flex items-center justify-center text-white">
               Failed to load image
             </div>

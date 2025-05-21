@@ -5,7 +5,7 @@ import { previewHomepageImages } from "@/config/galleryConfig";
  * The main gallery (mosaic/carousel) image order is solely determined by public/galleryOrder.json via the API.
  * It can be removed if no other part of the application needs a default image list concept.
  */
-export const getDefaultImages = (): string[] => {
+export const getDefaultGalleryImages = (): string[] => {
   return []; // Return empty array as there's no longer a static default list for the main gallery.
 };
 
@@ -54,12 +54,12 @@ export const loadMainGalleryConfig = async (): Promise<string[]> => {
         return Promise.resolve(serverConfig);
       }
     }
-    return Promise.resolve([]); 
+    return Promise.resolve([]);
   } catch (fetchError) {
     console.error('Error fetching main gallery configuration from API:', fetchError);
     return Promise.resolve([]);
   }
-}; 
+};
 
 /**
  * Renames a gallery image by updating both the file on the filesystem and its path in the gallery configuration.
@@ -67,7 +67,7 @@ export const loadMainGalleryConfig = async (): Promise<string[]> => {
  * @param newPath The new path for the image
  * @returns A promise that resolves when the rename operation is complete
  */
-export const renameGalleryImage = async (oldPath: string, newPath: string): Promise<{ oldPath: string, newPath: string }> => {
+export const renameGalleryImage = async (oldPath: string, newPath: string): Promise<{ oldPath: string; newPath: string }> => {
   try {
     const response = await fetch('/api/rename-gallery-image', {
       method: 'POST',
@@ -81,8 +81,9 @@ export const renameGalleryImage = async (oldPath: string, newPath: string): Prom
       const errorData = await response.json().catch(() => ({ message: 'Failed to rename image' }));
       throw new Error(errorData.message || 'Failed to rename image');
     }
-    
-    const result = await response.json();
+
+    // Just check that response is ok, no need to store the result
+    await response.json();
     return Promise.resolve({ oldPath, newPath });
   } catch (error) {
     console.error('Error renaming gallery image via API:', error);

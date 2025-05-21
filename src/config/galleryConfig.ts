@@ -15,10 +15,10 @@ export const previewHomepageImages = [
 
 // Category keywords for image classification (used by GallerySection to categorize images from galleryOrder.json)
 export const CATEGORY_KEYWORDS = {
-  interior: ["bedroom", "livingroom", "kitchen", "bathroom", "interior", "kitchen-appliance-stove-pot-pan", "kitchen-appliance-smeg-burners-closeup", "kitchen-appliance-smeg-gas-cooktop", "kitchen-appliance-retro-cream-fridge", "kitchen-appliance-dishwasher-drawer-open", "appliance-clothes-washer-bosch"],
-  exterior: ["exterior", "garden", "view", "yard", "patio", "terrace", "stone", "path", "st-john", "stjohn"],
-  sifnos: ["sifnos", "island", "apollonia", "vathi", "beach"],
-  };
+  interior: ["bedroom", "livingroom", "kitchen", "bathroom", "interior", "appliance"],
+  exterior: ["exterior", "garden", "view", "john"],
+  sifnos: ["sifnos"],
+};
 
 // Category labels for the gallery filter buttons
 export const CATEGORY_LABELS = [

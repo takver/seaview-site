@@ -4,13 +4,13 @@ import { PropertyFeaturesBanner } from "@/components/property-features-banner";
 import { LocationSection } from "@/components/location-section";
 import { PropertyHighlights } from "@/components/property-highlights";
 import { PropertyDetailsSection } from "@/components/property-details-section";
-import { GallerySection } from "@/components/gallery-section";
+import GallerySection from "@/components/gallery-section";
 import { AmenitiesSection } from "@/components/amenities-section";
 import { IdealGuestsSection } from "@/components/ideal-guests-section";
 import { DiscoverSifnosSection } from "@/components/discover-sifnos-section";
 import { BookingSection } from "@/components/booking-section";
 import { LocationPlaceholder } from "@/components/location-placeholder";
-import { Footer } from "@/components/footer";
+import Footer from "@/components/footer";
 
 const Index = () => {
   return (

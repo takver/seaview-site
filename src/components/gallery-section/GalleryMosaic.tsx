@@ -2,7 +2,6 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 
-// @ts-nocheck
 import React, { useState, useMemo } from 'react';
 import { Button } from "@/components/ui/button";
 import { GalleryHorizontal } from "lucide-react";

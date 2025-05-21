@@ -6,12 +6,13 @@ import { dirname } from "path";
 import { componentTagger } from "lovable-tagger";
 import fs from 'fs'; // Node.js file system module
 import type { IncomingMessage, ServerResponse } from 'http'; // Import http types
+import type { Buffer } from 'buffer'; // Import Buffer type
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Helper function to remove duplicates from an array
-const ensureUnique = (arr: string[]) => [...new Set(arr)];
+const ensureUnique = (arr: string[]) => Array.from(new Set(arr));
 
 // Plugin to handle gallery order API
 function galleryApiPlugin() {
@@ -162,18 +163,20 @@ function galleryApiPlugin() {
 export default defineConfig(({ mode }) => ({
   server: {
     host: true,
-    port: 8080,
+    port: 3000,
     strictPort: true,
   },
   plugins: [
     react(),
     galleryApiPlugin(), 
-    mode === 'development' &&
-    componentTagger(),
+    mode === 'development' && componentTagger(),
   ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'lucide-react']
+  }
 }));

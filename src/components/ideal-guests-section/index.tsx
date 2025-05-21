@@ -1,5 +1,4 @@
-// @ts-nocheck
-import React from "react";
+import * as React from 'react';
 import { Heart, Mountain, Leaf, Star, Coffee } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 
