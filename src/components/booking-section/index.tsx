@@ -1,13 +1,24 @@
 // @ts-nocheck
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import AirbnbIcon from "../icons/AirbnbIcon";
 import BookingIcon from "../icons/BookingIcon";
 import { Mail, Phone } from "lucide-react";
 import AvailabilityCalendar from "../AvailabilityCalendar";
+import { useIsMobile } from "@/hooks/use-mobile";
+import contactConfig from "../../config/contactConfig.json";
 
 export const BookingSection = () => {
+  const isMobile = useIsMobile();
+  const [view, setView] = useState<"platforms" | "calendar">("platforms");
+
+  // For Email Button
+  const emailLink = `mailto:${contactConfig.email}${contactConfig.emailLinkParams}`;
+  
+  // For Phone Button  
+  const phoneLink = `tel:${contactConfig.phoneClean}`;
+
   return (
     <section id="booking-section" className="py-10 bg-white">
       <div className="container mx-auto px-4">
@@ -94,19 +105,19 @@ export const BookingSection = () => {
                   <div className="flex items-center gap-2">
                     <Mail size={18} className="text-[#6E59A5]" />
                     <a 
-                      href="mailto:info@sifnos-seaview.com" 
+                      href={emailLink}
                       className="text-gray-600 hover:text-[#6E59A5] transition-colors"
                     >
-                      info@sifnos-seaview.com
+                      {contactConfig.email}
                     </a>
                   </div>
                   <div className="flex items-center gap-2">
                     <Phone size={18} className="text-[#6E59A5]" />
                     <a 
-                      href="tel:+3012345678" 
+                      href={phoneLink}
                       className="text-gray-600 hover:text-[#6E59A5] transition-colors"
                     >
-                      +30 12345 67890
+                      {contactConfig.phone}
                     </a>
                   </div>
                 </div>
@@ -132,6 +143,35 @@ export const BookingSection = () => {
               </div>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Direct contact options */}
+        <div className="mt-10 pt-10 border-t border-gray-200">
+          <h3 className="text-2xl font-light text-center mb-6 text-[#1A1F2C]">
+            Prefer to book directly?
+          </h3>
+          
+          <p className="text-gray-600 text-center max-w-2xl mx-auto mb-8">
+            Contact us directly for personalized assistance with your booking, special requests, or any questions you might have about your stay.
+          </p>
+          
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4">
+            <a 
+              href={emailLink}
+              className="flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-[#6E59A5] hover:bg-gray-50 min-w-[200px] justify-center"
+            >
+              <Mail size={18} className="text-[#6E59A5]" />
+              <span>Email Us</span>
+            </a>
+            
+            <a 
+              href={phoneLink}
+              className="flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-[#6E59A5] hover:bg-gray-50 min-w-[200px] justify-center"
+            >
+              <Phone size={18} className="text-[#6E59A5]" />
+              <span>{contactConfig.phone}</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>

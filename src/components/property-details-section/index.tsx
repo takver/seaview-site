@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Home, Leaf, Recycle } from "lucide-react";
+import { Home, Leaf, Globe2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 
@@ -35,37 +35,37 @@ export const PropertyDetailsSection = () => {
           Property Highlights
         </h2>
 
-        <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex flex-col gap-8">
           <Tabs
             defaultValue="place"
-            orientation="vertical"
-            className="flex flex-col md:flex-row w-full"
+            orientation="horizontal"
+            className="flex flex-col w-full"
           >
-            <TabsList className="flex flex-row md:flex-col h-auto md:self-start space-x-2 md:space-x-0 md:space-y-2 md:min-w-[50px] bg-transparent p-0">
+            <TabsList className="flex flex-row h-auto justify-center space-x-4 bg-transparent p-0 mb-8">
               <TabsTrigger
                 value="place"
-                className="flex items-center gap-2 justify-start w-full px-6 py-3 data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white hover:bg-gray-100 data-[state=active]:hover:bg-[#6E59A5]/90 text-left rounded-md transition-colors"
+                className="flex items-center gap-2 justify-center px-6 py-3 rounded-full border-2 border-[#6E59A5] transition-colors data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white data-[state=inactive]:bg-white/10 data-[state=inactive]:text-[#6E59A5] data-[state=inactive]:hover:bg-[#6E59A5]/10"
               >
                 <Home size={20} />
-                <span>The Place</span>
+                <span className="font-medium">The Place</span>
               </TabsTrigger>
               <TabsTrigger
                 value="gardens"
-                className="flex items-center gap-2 justify-start w-full px-6 py-3 data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white hover:bg-gray-100 data-[state=active]:hover:bg-[#6E59A5]/90 text-left rounded-md transition-colors"
+                className="flex items-center gap-2 justify-center px-6 py-3 rounded-full border-2 border-[#6E59A5] transition-colors data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white data-[state=inactive]:bg-white/10 data-[state=inactive]:text-[#6E59A5] data-[state=inactive]:hover:bg-[#6E59A5]/10"
               >
                 <Leaf size={20} />
-                <span>Gardens</span>
+                <span className="font-medium">Gardens</span>
               </TabsTrigger>
               <TabsTrigger
                 value="sustainability"
-                className="flex items-center gap-2 justify-start w-full px-6 py-3 data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white hover:bg-gray-100 data-[state=active]:hover:bg-[#6E59A5]/90 text-left rounded-md transition-colors"
+                className="flex items-center gap-2 justify-center px-6 py-3 rounded-full border-2 border-[#6E59A5] transition-colors data-[state=active]:bg-[#6E59A5] data-[state=active]:text-white data-[state=inactive]:bg-white/10 data-[state=inactive]:text-[#6E59A5] data-[state=inactive]:hover:bg-[#6E59A5]/10"
               >
-                <Recycle size={20} />
-                <span>Sustainability</span>
+                <Globe2 size={20} />
+                <span className="font-medium">Sustainability</span>
               </TabsTrigger>
             </TabsList>
 
-            <div className="flex-1 mt-6 md:mt-0 min-h-[500px] md:ml-10">
+            <div className="min-h-[500px]">
               {/* The Place Tab Content */}
               <TabsContent
                 value="place"

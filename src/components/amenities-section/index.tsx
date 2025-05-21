@@ -1,10 +1,5 @@
 // @ts-nocheck
 import React, { useState } from "react";
-import { 
-  Bed, BedDouble, Coffee, Fan, Lamp, 
-  Tv, Wifi, WifiHigh, Power, Microwave, WashingMachine, 
-  DoorOpen, LampFloor, Home, Utensils, Bath
-} from "lucide-react";
 import { Button } from "../ui/button";
 import { 
   Collapsible, 
@@ -12,11 +7,11 @@ import {
   CollapsibleTrigger 
 } from "../ui/collapsible";
 
-// Define the amenity type with a correct icon type that matches lucide-react components
+// Define the amenity type
 type Amenity = {
   id: number;
   title: string;
-  icon: React.ElementType; // Updated icon type to accept any React component
+  iconPath: string; // Path to SVG icon
   featured?: boolean;
 };
 
@@ -38,63 +33,54 @@ const premiumBrands = [
   { id: 16, name: "Aermec", logo: "/images/logos/aermec-logo1.png", category: "appliances" },
 ];
 
-// Define all amenities
+// Define all amenities with SVG paths
 const amenities: Amenity[] = [
-  { id: 1, title: "Sea View", icon: Home, featured: true },
-  { id: 2, title: "Bed Linens", icon: BedDouble, featured: true },
-  { id: 3, title: "Clothes washer", icon: WashingMachine, featured: true },
-  { id: 4, title: "Dryer", icon: Fan, featured: true },
-  { id: 5, title: "Essentials", icon: Bath, featured: true },
-  { id: 6, title: "Heating", icon: Power, featured: true },
-  { id: 7, title: "Hot water", icon: Coffee, featured: true },
-  { id: 8, title: "Kitchen", icon: Utensils, featured: true },
-  { id: 9, title: "Wifi", icon: WifiHigh, featured: true },
-  { id: 10, title: "Environmental Mattresses by Coco-mat", icon: Bed, featured: true },
-  { id: 11, title: "TV", icon: Tv },
-  { id: 12, title: "Air conditioning", icon: Fan },
-  { id: 13, title: "Backyard", icon: DoorOpen },
-  { id: 14, title: "BBQ grill", icon: Utensils },
-  { id: 15, title: "Coffee maker", icon: Coffee },
-  { id: 16, title: "Cooking basics", icon: Utensils },
-  { id: 17, title: "Dedicated workspace", icon: Lamp },
-  { id: 18, title: "Dishwasher", icon: WashingMachine },
-  { id: 19, title: "Dishes and silverware", icon: Utensils },
-  { id: 20, title: "Free parking on premises", icon: DoorOpen },
-  { id: 21, title: "Garden", icon: DoorOpen },
-  { id: 22, title: "Long term stays allowed", icon: Home },
-  { id: 23, title: "Microwave", icon: Microwave },
-  { id: 24, title: "Oven", icon: Utensils },
-  { id: 25, title: "Patio or balcony", icon: DoorOpen },
-  { id: 26, title: "Refrigerator", icon: Utensils },
-  { id: 27, title: "Stove", icon: Utensils },
-  { id: 28, title: "Suitable for children", icon: Home },
-  { id: 29, title: "Terrace", icon: DoorOpen },
-  { id: 30, title: "Bathtub", icon: Bath },
-  { id: 31, title: "Body soap", icon: Bath },
-  { id: 32, title: "Cleaning products", icon: Bath },
-  { id: 33, title: "Conditioner", icon: Bath },
-  { id: 34, title: "Hair dryer", icon: Fan },
-  { id: 35, title: "Hangers", icon: LampFloor },
-  { id: 36, title: "Iron", icon: Power },
-  { id: 37, title: "Shampoo", icon: Bath },
-  { id: 38, title: "Beach access", icon: DoorOpen },
-  { id: 39, title: "Ethernet connection", icon: Wifi },
-  { id: 40, title: "Extra pillows and blankets", icon: BedDouble },
-  { id: 41, title: "Formal dining area", icon: Home },
-  { id: 42, title: "High chair", icon: Home },
-  { id: 43, title: "Host greets you", icon: Home },
-  { id: 44, title: "Portable fans", icon: Fan },
-  { id: 45, title: "Room-darkening shades", icon: LampFloor },
-  { id: 46, title: "Security cameras on property", icon: Tv },
-  { id: 47, title: "Single level home", icon: Home },
-  { id: 48, title: "Sound system", icon: Tv },
-  { id: 49, title: "TV with streaming services", icon: Tv },
-  { id: 50, title: "Underfloor heating", icon: Power },
-  { id: 51, title: "Dual satellite internet", icon: Wifi },
-  { id: 52, title: "Energy-efficient appliances", icon: Power },
-  { id: 53, title: "Instant hot water circulation", icon: Bath },
-  { id: 54, title: "Dual-drawer dishwasher", icon: WashingMachine },
-  { id: 55, title: "Quality gas stove", icon: Utensils },
+  { id: 1, title: "Sea View", iconPath: "/images/amenities/sea-beach-svgrepo-com.svg", featured: true },
+  { id: 2, title: "Mountain view", iconPath: "/images/amenities/mountain-view-svgrepo-com.svg", featured: true },
+  { id: 3, title: "Garden", iconPath: "/images/amenities/garden-tree-plant-svgrepo-com.svg", featured: true },
+  { id: 4, title: "Kitchen", iconPath: "/images/amenities/oven-bake-svgrepo-com.svg", featured: true },
+  { id: 5, title: "Coffee Maker", iconPath: "/images/amenities/coffee-machine-svgrepo-com.svg", featured: true },
+  { id: 6, title: "Washer", iconPath: "/images/amenities/washing-machine-svgrepo-com.svg", featured: true },
+  { id: 7, title: "Dishwasher", iconPath: "/images/amenities/dishwasher-svgrepo-com.svg", featured: true },
+  { id: 8, title: "HDTV", iconPath: "/images/amenities/tv-svgrepo-com.svg", featured: true },
+  { id: 9, title: "Outdoor Dining", iconPath: "/images/amenities/outdoor-dining-svgrepo-com.svg", featured: true },
+  { id: 10, title: "Air Conditioning", iconPath: "/images/amenities/snowflake-7-svgrepo-com.svg", featured: true },
+  
+  { id: 11, title: "Private Patio", iconPath: "/images/amenities/terrace-svgrepo-com.svg" },
+  { id: 12, title: "Backyard", iconPath: "/images/amenities/garden-table-svgrepo-com.svg" },
+  { id: 13, title: "Security", iconPath: "/images/amenities/safebox-bank-locker-3-svgrepo-com.svg" },
+  { id: 14, title: "Free WiFi", iconPath: "/images/amenities/wifi-svgrepo-com.svg" },
+  { id: 15, title: "Cleaning Products", iconPath: "/images/amenities/wiping-svgrepo-com.svg" },
+  { id: 16, title: "Bath Toiletries", iconPath: "/images/amenities/soap-bodywash-bodylotion-svgrepo-com.svg" },
+  { id: 17, title: "Bidet", iconPath: "/images/amenities/bidet-svgrepo-com.svg" },
+  { id: 18, title: "Solar Hot Water", iconPath: "/images/amenities/thermometer-sun-svgrepo-com.svg" },
+  { id: 19, title: "Hangers", iconPath: "/images/amenities/hanger-svgrepo-com.svg" },
+  { id: 20, title: "Bed Linens", iconPath: "/images/amenities/pillow-svgrepo-com.svg" },
+  { id: 21, title: "Extra Bedding", iconPath: "/images/amenities/pillow-svgrepo-com-1.svg" },
+  { id: 22, title: "Blackout Shutters", iconPath: "/images/amenities/window-svgrepo-com.svg" },
+  { id: 23, title: "Iron", iconPath: "/images/amenities/iron-svgrepo-com-new.svg" },
+  { id: 24, title: "Drying Rack", iconPath: "/images/amenities/towel-svgrepo-com.svg" },
+  { id: 25, title: "Safe", iconPath: "/images/amenities/safebox-bank-locker-svgrepo-com.svg" },
+  { id: 26, title: "Mosquito Net", iconPath: "/images/amenities/mosquito-net-insect-mosquito-pest-svgrepo-com.svg" },
+  { id: 27, title: "Clothing Storage", iconPath: "/images/amenities/closet-furniture-and-household-svgrepo-com.svg" },
+  { id: 28, title: "Books", iconPath: "/images/amenities/book-alt-svgrepo-com.svg" },
+  { id: 29, title: "Board Games", iconPath: "/images/amenities/game-board-svgrepo-com.svg" },
+  { id: 30, title: "Ceiling Fan", iconPath: "/images/amenities/ceiling-fan-off-svgrepo-com.svg" },
+  { id: 31, title: "Floor Heating", iconPath: "/images/amenities/underfloor-heating-svgrepo-com.svg" },
+  { id: 32, title: "Gas Stove", iconPath: "/images/amenities/gas-stove-svgrepo-com.svg" },
+  { id: 33, title: "Smoke Alarm", iconPath: "/images/amenities/fire-alarm-svgrepo-com.svg" },
+  { id: 34, title: "Fire Extinguisher", iconPath: "/images/amenities/fire-extinguisher-svgrepo-com.svg" },
+  { id: 35, title: "First Aid Kit", iconPath: "/images/amenities/first-aid-kit-svgrepo-com.svg" },
+  { id: 36, title: "Freezer", iconPath: "/images/amenities/freezer-svgrepo-com.svg" },
+  { id: 37, title: "Hair Dryer", iconPath: "/images/amenities/hairdryer-svgrepo-com.svg" },
+  { id: 38, title: "Oven", iconPath: "/images/amenities/oven-bake-svgrepo-com.svg" },
+  { id: 39, title: "Water Kettle", iconPath: "/images/amenities/kettle-svgrepo-com.svg" },
+  { id: 40, title: "Wine Glasses", iconPath: "/images/amenities/wine-glass-wine-svgrepo-com.svg" },
+  { id: 41, title: "Dining Table", iconPath: "/images/amenities/dining-room-furniture-of-a-table-with-chairs-svgrepo-com.svg" },
+  { id: 42, title: "Outdoor Furniture", iconPath: "/images/amenities/garden-table-svgrepo-com.svg" },
+  { id: 43, title: "Luggage Dropoff", iconPath: "/images/amenities/luggage-14-svgrepo-com.svg" },
+  { id: 44, title: "Long Term Stays", iconPath: "/images/amenities/calendar-days-svgrepo-com.svg" },
+  { id: 45, title: "Host Greeting", iconPath: "/images/amenities/handshake-thin-svgrepo-com.svg" },
 ];
 
 export const AmenitiesSection = () => {
@@ -105,7 +91,7 @@ export const AmenitiesSection = () => {
   const remainingAmenities = amenities.filter(amenity => !amenity.featured);
 
   return (
-    <section className="py-10">
+    <section className="py-10 bg-gray-50">
       <div className="container mx-auto px-4">
         <h2 className="text-3.5xl font-light text-center mb-8 text-[#1A1F2C]">
           Modern Amenities
@@ -115,36 +101,50 @@ export const AmenitiesSection = () => {
           Indulge your inner chef with our quality gas stove and unique dual-drawer dishwasher - perfect for efficient cleanup after preparing culinary masterpieces. Enjoy the hotel-like luxury of instant hot water circulation, ensuring no wasted time (or water!) waiting for warm showers. During off-season experience the rare indulgence of underfloor heating, keeping you cozy and comfortable even on cool island evenings. Stay connected with our reliable dual satellite and landline internet. Stream your favorite shows on the Smart TV, all powered by energy-efficient appliances (A++ or better). Effortlessly take care of laundry needs with our on-site clothes washer.
         </p>
         
-        {/* Featured Amenities Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8">
+        {/* Featured Amenities Grid - Compact Layout */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-2 mb-6">
           {featuredAmenities.map((amenity) => (
             <div 
               key={amenity.id} 
-              className="bg-white border border-gray-300 rounded-lg p-6 flex flex-col items-center shadow-md hover:shadow-lg transition-shadow"
+              className="flex items-center py-1"
             >
-              <amenity.icon size={24} className="text-[#6E59A5] mb-3" />
-              <h3 className="text-center font-normal text-gray-800 text-base">{amenity.title}</h3>
+              <div className="w-8 h-8 flex items-center justify-center mr-2 flex-shrink-0">
+                <img 
+                  src={amenity.iconPath} 
+                  alt={amenity.title} 
+                  className="w-6 h-6 text-[#6E59A5]"
+                  style={{ filter: "invert(32%) sepia(15%) saturate(1966%) hue-rotate(217deg) brightness(92%) contrast(95%)" }}
+                />
+              </div>
+              <span className="text-sm font-normal text-gray-700">{amenity.title}</span>
             </div>
           ))}
         </div>
         
-        {/* Collapsible with Remaining Amenities */}
+        {/* Collapsible with Remaining Amenities - Compact Layout */}
         <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
-          <CollapsibleContent className="mt-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <CollapsibleContent className="mt-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-2">
               {remainingAmenities.map((amenity) => (
                 <div 
                   key={amenity.id} 
-                  className="bg-white border border-gray-300 rounded-lg p-6 flex flex-col items-center shadow-md hover:shadow-lg transition-shadow"
+                  className="flex items-center py-1"
                 >
-                  <amenity.icon size={24} className="text-[#6E59A5] mb-3" />
-                  <h3 className="text-center font-normal text-gray-800 text-base">{amenity.title}</h3>
+                  <div className="w-8 h-8 flex items-center justify-center mr-2 flex-shrink-0">
+                    <img 
+                      src={amenity.iconPath} 
+                      alt={amenity.title} 
+                      className="w-6 h-6 text-[#6E59A5]"
+                      style={{ filter: "invert(32%) sepia(15%) saturate(1966%) hue-rotate(217deg) brightness(92%) contrast(95%)" }}
+                    />
+                  </div>
+                  <span className="text-sm font-normal text-gray-700">{amenity.title}</span>
                 </div>
               ))}
             </div>
           </CollapsibleContent>
           
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center mt-6">
             <CollapsibleTrigger asChild>
               <Button 
                 variant="rounded"
@@ -166,12 +166,12 @@ export const AmenitiesSection = () => {
             Our villa is equipped with premium brands and technologies, carefully selected to enhance your comfort while supporting environmental sustainability.
           </p>
           
-          <div className="bg-gray-50 py-8 px-6 rounded-xl shadow-md">
+          <div className="bg-white py-8 px-6 rounded-xl shadow-md">
             {/* Two rows of logos in a grid layout */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4 justify-items-center">
               {premiumBrands.map((brand) => (
                 <div key={brand.id} className="flex items-center justify-center">
-                  <div className={`h-14 w-24 flex items-center justify-center bg-white rounded-md ${brand.name === "Fisher & Paykel" ? "p-0" : "p-2"}`}>
+                  <div className={`h-14 w-24 flex items-center justify-center bg-gray-50 rounded-md ${brand.name === "Fisher & Paykel" ? "p-0" : "p-2"}`}>
                     <img 
                       src={brand.logo} 
                       alt={`${brand.name} logo`} 

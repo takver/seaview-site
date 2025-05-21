@@ -1,49 +1,74 @@
 // @ts-nocheck
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useState, useEffect } from "react";
-import { Menu, X, Mail, Map, Phone } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X, Mail, Map, Phone, Copy } from "lucide-react";
 import { Button } from "../ui/button";
+import contactConfig from "../../config/contactConfig.json";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 export const Header = () => {
   const isMobile = useIsMobile();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const { pathname } = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [copied, setCopied] = useState<string | null>(null);
 
-  // Track scroll position
   useEffect(() => {
     const handleScroll = () => {
-      setScrollPosition(window.scrollY);
+      setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Reset copied state after 2 seconds
+  useEffect(() => {
+    if (copied) {
+      const timer = setTimeout(() => {
+        setCopied(null);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [copied]);
+
+  const handleCopy = (text: string, type: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(type);
+  };
+
+  const navItems = [
+    { text: "Home", href: "/" },
+    { text: "About", href: "/about" },
+  ];
+
   const contactItems = [
-    { 
-      icon: <Mail className="h-4 w-4" />, 
-      text: "Email", 
-      href: "mailto:info@sifnos-seaview.com?cc=sifnos.kratisis@gmail.com&subject=Inquiry%20About%20Your%20Villa%20in%20Sifnos&body=Dear%20Sifnos%20Seaview%20Team,%0D%0A%0D%0AI%20am%20interested%20in%20learning%20more%20about%20your%20villa%20in%20Sifnos.%20Could%20you%20please%20provide%20further%20details%20about%20availability,%20amenities,%20pricing,%20and%20any%20special%20offers%20you%20might%20have?%0D%0A%0D%0AThank%20you%20for%20your%20assistance,%0D%0A[Your%20Name]" 
+    {
+      icon: <Mail className="h-4 w-4" />,
+      text: "Email",
+      value: contactConfig.email,
+      href: `mailto:${contactConfig.email}${contactConfig.emailLinkParams}`
     },
-    { 
-      icon: <Map className="h-4 w-4" />, 
-      text: "Map", 
-      href: "https://maps.google.com/maps/dir//Sifnos+Seaview+Ano+Petali+Apollonia+840+03+Greece/@36.977783,24.7232374,14z/data=!4m5!4m4!1m0!1m2!1m1!1s0x14988d5d9f332f7d:0xfbfe49015dc03f09",
+    {
+      icon: <Map className="h-4 w-4" />,
+      text: "Location",
+      href: contactConfig.mapUrl,
       target: "_blank"
     },
-    { 
-      icon: <Phone className="h-4 w-4" />, 
-      text: "Phone", 
-      href: "tel:+306989783572" 
+    {
+      icon: <Phone className="h-4 w-4" />,
+      text: "Phone",
+      value: contactConfig.phone,
+      href: `tel:${contactConfig.phoneClean}`
     }
   ];
 
-  // Determine if we should show the solid header
-  const isScrolled = scrollPosition > 80;
-  
   // Apply styles based on scroll position
   const headerClasses = `fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
     isScrolled 
@@ -53,6 +78,62 @@ export const Header = () => {
 
   // Add text shadow for better visibility when header is transparent
   const textShadowClass = isScrolled ? "" : "text-shadow";
+
+  const renderContactItem = (item, index) => {
+    // Don't show tooltip for the map location
+    if (item.text === "Location") {
+      return (
+        <a
+          key={index}
+          href={item.href}
+          target={item.target}
+          className={isScrolled 
+            ? "flex items-center text-black hover:text-gray-700" 
+            : `flex items-center text-white hover:text-gray-300 ${textShadowClass}`
+          }
+        >
+          {item.icon}
+          <span className="ml-2">{item.text}</span>
+        </a>
+      );
+    }
+
+    // For email and phone, add tooltips with copy functionality
+    return (
+      <TooltipProvider key={index}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <a
+              href={item.href}
+              className={isScrolled 
+                ? "flex items-center text-black hover:text-gray-700" 
+                : `flex items-center text-white hover:text-gray-300 ${textShadowClass}`
+              }
+            >
+              {item.icon}
+              <span className="ml-2">{item.text}</span>
+            </a>
+          </TooltipTrigger>
+          <TooltipContent className="flex items-center gap-2">
+            <span>{item.value}</span>
+            <button 
+              onClick={(e) => {
+                e.preventDefault(); 
+                handleCopy(item.value, item.text);
+              }}
+              className="p-1 rounded-full hover:bg-gray-100"
+            >
+              {copied === item.text ? (
+                <span className="text-green-500 text-xs">Copied!</span>
+              ) : (
+                <Copy className="h-3 w-3" />
+              )}
+            </button>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    );
+  };
 
   return (
     <>
@@ -77,15 +158,15 @@ export const Header = () => {
               <Button 
                 variant="ghost" 
                 size="icon" 
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
                 aria-label="Toggle menu"
                 className={isScrolled ? "text-black hover:bg-black/10" : `text-white hover:bg-white/10 ${textShadowClass}`}
-                aria-expanded={mobileMenuOpen}
+                aria-expanded={isMenuOpen}
               >
-                {mobileMenuOpen ? <X /> : <Menu />}
+                {isMenuOpen ? <X /> : <Menu />}
               </Button>
               
-              {mobileMenuOpen && (
+              {isMenuOpen && (
                 <div className="absolute top-full left-0 right-0 bg-black p-3 z-40">
                   <div className="flex flex-col space-y-2">
                     {contactItems.map((item, index) => (
@@ -105,20 +186,7 @@ export const Header = () => {
             </>
           ) : (
             <div className="flex items-center space-x-6">
-              {contactItems.map((item, index) => (
-                <a
-                  key={index}
-                  href={item.href}
-                  target={item.target}
-                  className={isScrolled 
-                    ? "flex items-center text-black hover:text-gray-700" 
-                    : `flex items-center text-white hover:text-gray-300 ${textShadowClass}`
-                  }
-                >
-                  {item.icon}
-                  <span className="ml-2">{item.text}</span>
-                </a>
-              ))}
+              {contactItems.map((item, index) => renderContactItem(item, index))}
             </div>
           )}
         </div>
