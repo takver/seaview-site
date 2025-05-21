@@ -21,8 +21,8 @@ export const Footer = () => {
             <p className="text-gray-400 mb-4">
               In crafting our retreat, we were guided by tour deepest convictions: infusing{" "}
               <span className="text-[#86efac]">sustainability</span> with{" "}
-              <span className="text-white">modern luxury</span>, and embracing Sifnos unique{" "}
-              <span className="text-white">tradition</span>.
+              <span className="text-[#86efac]">modern luxury</span>, and embracing Sifnos unique{" "}
+              <span className="text-[#86efac]">tradition</span>.
             </p>
             
             <p className="text-gray-400 mb-8">
@@ -51,18 +51,18 @@ export const Footer = () => {
             <ul className="space-y-5 mb-10">
               <li className="flex items-center">
                 <MapPin className="mr-3 h-5 w-5" />
-                <span className="text-gray-300">Ano Petali, Apollonia, Sifnos, 84003</span>
+                <span className="text-gray-300">{contactConfig.address}</span>
               </li>
               <li className="flex items-center">
                 <Phone className="mr-3 h-5 w-5" />
                 <a href={`tel:${contactConfig.phoneClean}`} className="text-gray-300 hover:text-white transition-colors">
-                  +30 697 656 2484
+                  {contactConfig.phone}
                 </a>
               </li>
               <li className="flex items-center">
                 <Mail className="mr-3 h-5 w-5" />
                 <a href={`mailto:${contactConfig.email}`} className="text-gray-300 hover:text-white transition-colors">
-                  info@sifnos-seaview.com
+		  {contactConfig.email}
                 </a>
               </li>
             </ul>
@@ -70,13 +70,13 @@ export const Footer = () => {
             <h3 className="text-lg font-medium mb-6">Reserve Your Stay...</h3>
             
             <div className="flex items-center space-x-8">
-              <a href="https://www.airbnb.com/rooms/908766266127651509" target="_blank" rel="noopener noreferrer">
+              <a href={`${contactConfig.airbnbUrl}`} target="_blank" rel="noopener noreferrer">
                 <AirbnbIcon className="h-10 w-auto text-white" />
               </a>
-              <a href="https://www.booking.com/hotel/gr/sifnos-seaview-sifnos.en-gb.html" target="_blank" rel="noopener noreferrer">
+              <a href={`${contactConfig.bookingUrl}`} target="_blank" rel="noopener noreferrer">
                 <BookingIcon className="h-10 w-auto text-white" />
               </a>
-              <a href="https://www.homeexchange.com/homes/view/908766" target="_blank" rel="noopener noreferrer">
+              <a href={`${contactConfig.homeexchangeUrl}`} target="_blank" rel="noopener noreferrer">
                 <img src="/images/amenities/homeexchangelogo.svg" alt="HomeExchange" className="h-10 w-auto" />
               </a>
             </div>

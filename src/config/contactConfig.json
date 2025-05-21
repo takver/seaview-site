@@ -1,8 +1,11 @@
 {
-  "email": "info@sifnos-seaview.com",
-  "phone": "+30 697 656 2484",
-  "phoneClean": "+306976562484",
-  "address": "Ano Petali, Apollonia, Sifnos 840 03, Greece",
-  "mapUrl": "https://maps.google.com/maps/dir//Sifnos+Seaview+Ano+Petali+Apollonia+840+03+Greece/@36.977783,24.7232374,14z/data=!4m5!4m4!1m0!1m2!1m1!1s0x14988d5d9f332f7d:0xfbfe49015dc03f09",
-  "emailLinkParams": "?cc=sifnos.kratisis@gmail.com&subject=Inquiry%20About%20Your%20Villa%20in%20Sifnos&body=Dear%20Sifnos%20Seaview%20Team,%0D%0A%0D%0AI%20am%20interested%20in%20learning%20more%20about%20your%20villa%20in%20Sifnos.%20Could"
+    "email": "info@sifnos-seaview.com",
+    "phone": "+30 697 656 2484",
+    "phoneClean": "+306976562484",
+    "address": "Ano Petali, Apollonia, Sifnos 840 03, Greece",
+    "mapUrl": "https://maps.google.com/maps/dir//Sifnos+Seaview+Ano+Petali+Apollonia+840+03+Greece/@36.977783,24.7232374,14z/data=!4m5!4m4!1m0!1m2!1m1!1s0x14988d5d9f332f7d:0xfbfe49015dc03f09",
+    "emailLinkParams": "?cc=sifnos.kratisis@gmail.com&subject=Inquiry%20About%20Your%20Villa%20in%20Sifnos&body=Dear%20Sifnos%20Seaview%20Team,%0D%0A%0D%0AI%20am%20interested%20in%20learning%20more%20about%20your%20villa%20in%20Sifnos.%20Could",
+    "airbnbUrl": "https://airbnb.com/h/sifnos",
+    "bookingUrl": "https://www.booking.com/Share-APnjmfK",
+    "homeexchangeUrl": "https://www.homeexchange.com/homes/view/2445973"
 } 
