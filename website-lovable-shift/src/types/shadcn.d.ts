@@ -1,4 +1,5 @@
 import * as React from 'react';
+import type { DialogProps } from '@radix-ui/react-dialog';
 
 declare module '@/components/ui/button' {
   export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -19,7 +20,7 @@ declare module '@/components/ui/card' {
 }
 
 declare module '@/components/ui/dialog' {
-  export const Dialog: React.FC<React.PropsWithChildren<Record<string, never>>>;
+  export const Dialog: React.FC<DialogProps>;
   export const DialogContent: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement>>;
   export const DialogHeader: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement>>;
   export const DialogFooter: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement>>;

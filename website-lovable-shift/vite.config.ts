@@ -31,6 +31,17 @@ function walkImagesDir(dir: string, allowedExts: string[], imagesDir: string, re
   }
 }
 
+// Helper function to get only top-level images in /public/images
+function getTopLevelImages(imagesDir: string, allowedExts: string[]): string[] {
+  const files = fs.readdirSync(imagesDir);
+  return files
+    .filter(file => {
+      const fullPath = path.join(imagesDir, file);
+      return fs.statSync(fullPath).isFile() && allowedExts.includes(path.extname(file).toLowerCase());
+    })
+    .map(file => '/images/' + file);
+}
+
 // Plugin to handle gallery order API
 function galleryApiPlugin() {
   return {
@@ -201,14 +212,13 @@ function galleryApiPlugin() {
         }
       });
 
-      // Endpoint to LIST all gallery images in /public/images (recursively)
+      // Endpoint to LIST all gallery images in /public/images (top-level only)
       server.middlewares.use('/api/list-gallery-images', (req: IncomingMessage, res: ServerResponse, next: () => void) => {
         if (req.method === 'GET') {
           const imagesDir = path.resolve(__dirname, 'public/images');
           const allowedExts = ['.jpg', '.jpeg', '.webp'];
-          const results: string[] = [];
           try {
-            walkImagesDir(imagesDir, allowedExts, imagesDir, results);
+            const results = getTopLevelImages(imagesDir, allowedExts);
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify(results));
           } catch (err) {
