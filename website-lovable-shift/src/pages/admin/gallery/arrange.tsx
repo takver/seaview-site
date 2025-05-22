@@ -384,6 +384,9 @@ const ArrangePage: React.FC = () => {
                       className="rounded-md overflow-hidden cursor-move group"
                     >
                       <div className="relative w-full h-full bg-gray-700">
+                        <span className="absolute top-2 left-2 z-10 bg-white bg-opacity-80 text-xs font-bold rounded px-2 py-0.5 shadow">
+                          {item.index + 1}
+                        </span>
                         <img
                           src={item.src}
                           alt={`Gallery image ${item.index + 1}`}
