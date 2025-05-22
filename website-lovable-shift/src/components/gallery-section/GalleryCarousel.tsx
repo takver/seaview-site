@@ -101,6 +101,7 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
       let numColumns = 3;
       if (galleryWidth < 640) numColumns = 1;
       else if (galleryWidth < 1024) numColumns = 2;
+      else numColumns = 3;
 
       const columnWidth = (galleryWidth - (numColumns - 1) * gap) / numColumns;
       const columnHeights = Array(numColumns).fill(0);

@@ -1,14 +1,10 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import { DragDropContext, Droppable, Draggable, type DroppableProvided, type DraggableProvided, type DropResult } from '@hello-pangea/dnd';
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
+import { Button, Label, Input, Dialog, DialogContent, DialogHeader, DialogTitle, useToast } from "@/components/ui";
 import { saveGalleryConfig, loadMainGalleryConfig, renameGalleryImage } from '@/utils/galleryConfigUtils';
 import { X, Edit } from "lucide-react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 interface RenameDialogProps {
   isOpen: boolean;
@@ -82,7 +78,7 @@ const RenameDialog: React.FC<RenameDialogProps> = ({ isOpen, onClose, currentIma
             <Input
               id="filename"
               value={newFilename}
-              onChange={(e) => setNewFilename(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setNewFilename(e.target.value)}
               placeholder="Enter new filename"
               disabled={isProcessing}
             />
@@ -163,8 +159,7 @@ const ArrangePage: React.FC = () => {
   const handleRename = async (oldPath: string, newPath: string) => {
     try {
       await renameGalleryImage(oldPath, newPath);
-      // Update the images array with the new path
-      setImages(prevImages => prevImages.map(img => img === oldPath ? newPath : img));
+      setImages((prevImages: string[]) => prevImages.map((img: string) => img === oldPath ? newPath : img));
     } catch (error) {
       throw error;
     }
@@ -184,9 +179,9 @@ const ArrangePage: React.FC = () => {
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
-              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+              className="grid grid-cols-2 md:grid-cols-3 gap-4"
             >
-              {images.map((image, index) => (
+              {images.map((image: string, index: number) => (
                 <Draggable key={image} draggableId={image} index={index}>
                   {(provided: DraggableProvided) => (
                     <div
