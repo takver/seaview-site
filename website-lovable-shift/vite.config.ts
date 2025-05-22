@@ -7,12 +7,29 @@ import { componentTagger } from "lovable-tagger";
 import fs from 'fs'; // Node.js file system module
 import type { IncomingMessage, ServerResponse } from 'http'; // Import http types
 import type { Buffer } from 'buffer'; // Import Buffer type
+import { execSync } from 'child_process'; // For git commit
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Helper function to remove duplicates from an array
 const ensureUnique = (arr: string[]) => Array.from(new Set(arr));
+
+// Helper function to recursively walk a directory and collect image files
+function walkImagesDir(dir: string, allowedExts: string[], imagesDir: string, results: string[]) {
+  const files = fs.readdirSync(dir);
+  for (const file of files) {
+    const fullPath = path.join(dir, file);
+    const stat = fs.statSync(fullPath);
+    if (stat.isDirectory()) {
+      walkImagesDir(fullPath, allowedExts, imagesDir, results);
+    } else if (allowedExts.includes(path.extname(file).toLowerCase())) {
+      // Return as /images/relativepath
+      const rel = '/images/' + path.relative(imagesDir, fullPath).replace(/\\/g, '/');
+      results.push(rel.startsWith('/images//') ? rel.replace('/images//', '/images/') : rel);
+    }
+  }
+}
 
 // Plugin to handle gallery order API
 function galleryApiPlugin() {
@@ -87,6 +104,7 @@ function galleryApiPlugin() {
             body += chunk.toString();
           });
           req.on('end', () => {
+            const warnings = [];
             try {
               const { oldPath, newPath } = JSON.parse(body);
               
@@ -124,6 +142,15 @@ function galleryApiPlugin() {
               // Update gallery order JSON with new path
               const galleryOrderPath = path.resolve(__dirname, 'public/galleryOrder.json');
               if (fs.existsSync(galleryOrderPath)) {
+                // --- BACKUP galleryOrder.json before writing ---
+                const backupPath = galleryOrderPath + '.' + Date.now() + '.bak';
+                try {
+                  fs.copyFileSync(galleryOrderPath, backupPath);
+                } catch (backupErr) {
+                  console.error('Failed to backup galleryOrder.json:', backupErr);
+                  warnings.push('Backup failed: ' + (backupErr instanceof Error ? backupErr.message : String(backupErr)));
+                }
+
                 const galleryOrderContent = fs.readFileSync(galleryOrderPath, 'utf-8');
                 const galleryOrder = JSON.parse(galleryOrderContent);
                 
@@ -135,6 +162,23 @@ function galleryApiPlugin() {
                   
                   // Save updated gallery order
                   fs.writeFileSync(galleryOrderPath, JSON.stringify(updatedOrder, null, 2));
+
+                  // --- GIT COMMIT the change (with robust checks) ---
+                  try {
+                    // Check if git is available
+                    execSync('git --version', { stdio: 'ignore' });
+                    // Check if inside a git repo
+                    execSync('git rev-parse --is-inside-work-tree', { stdio: 'ignore' });
+                    // Check for detached HEAD
+                    const branch = execSync('git symbolic-ref --short -q HEAD').toString().trim();
+                    if (!branch) throw new Error('Detached HEAD');
+                    // Stage and commit
+                    execSync(`git add "${galleryOrderPath}"`);
+                    execSync(`git commit -m "Update gallery order: renamed image from ${oldPath} to ${newPath}"`);
+                  } catch (gitErr) {
+                    console.error('Git commit failed:', gitErr);
+                    warnings.push('Git commit failed: ' + (gitErr instanceof Error ? gitErr.message : String(gitErr)));
+                  }
                 }
               }
               
@@ -142,7 +186,8 @@ function galleryApiPlugin() {
               res.end(JSON.stringify({ 
                 message: 'Image renamed successfully',
                 oldPath,
-                newPath
+                newPath,
+                warnings
               }));
               
             } catch (error) {
@@ -151,6 +196,26 @@ function galleryApiPlugin() {
               res.end(JSON.stringify({ message: 'Error renaming image', error: String(error) }));
             }
           });
+        } else {
+          next();
+        }
+      });
+
+      // Endpoint to LIST all gallery images in /public/images (recursively)
+      server.middlewares.use('/api/list-gallery-images', (req: IncomingMessage, res: ServerResponse, next: () => void) => {
+        if (req.method === 'GET') {
+          const imagesDir = path.resolve(__dirname, 'public/images');
+          const allowedExts = ['.jpg', '.jpeg', '.webp'];
+          const results: string[] = [];
+          try {
+            walkImagesDir(imagesDir, allowedExts, imagesDir, results);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(results));
+          } catch (err) {
+            console.error('Error listing gallery images:', err);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Error listing images' }));
+          }
         } else {
           next();
         }
