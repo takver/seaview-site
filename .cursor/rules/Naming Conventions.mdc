@@ -1,7 +1,7 @@
 ---
 description: 
-globs: false
-alwaysApply: false
+globs: 
+alwaysApply: true
 ---
 
 Directories: lowercase with dashes (e.g. components/auth-wizard)

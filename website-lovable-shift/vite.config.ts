@@ -48,7 +48,7 @@ function galleryApiPlugin() {
     name: 'gallery-api-plugin',
     configureServer(server: ViteDevServer) {
       // Endpoint to GET the current gallery order
-      server.middlewares.use('/api/get-gallery-order', (req: IncomingMessage, res: ServerResponse, next: () => void) => {
+      server.middlewares.use('/api/v1/admin/gallery/get-order', (req: IncomingMessage, res: ServerResponse, next: () => void) => {
         if (req.method === 'GET') {
           const filePath = path.resolve(__dirname, 'public/galleryOrder.json');
           try {
@@ -77,7 +77,7 @@ function galleryApiPlugin() {
       });
 
       // Endpoint to SAVE the gallery order
-      server.middlewares.use('/api/save-gallery-order', (req: IncomingMessage, res: ServerResponse, next: () => void) => {
+      server.middlewares.use('/api/v1/admin/gallery/save-order', (req: IncomingMessage, res: ServerResponse, next: () => void) => {
         if (req.method === 'POST') {
           let body = '';
           req.on('data', (chunk: Buffer | string) => {
@@ -108,7 +108,7 @@ function galleryApiPlugin() {
       });
       
       // Endpoint to RENAME a gallery image (file rename + update paths in gallery order)
-      server.middlewares.use('/api/rename-gallery-image', (req: IncomingMessage, res: ServerResponse, next: () => void) => {
+      server.middlewares.use('/api/v1/admin/gallery/rename-image', (req: IncomingMessage, res: ServerResponse, next: () => void) => {
         if (req.method === 'POST') {
           let body = '';
           req.on('data', (chunk: Buffer | string) => {
@@ -213,7 +213,7 @@ function galleryApiPlugin() {
       });
 
       // Endpoint to LIST all gallery images in /public/images (top-level only)
-      server.middlewares.use('/api/list-gallery-images', (req: IncomingMessage, res: ServerResponse, next: () => void) => {
+      server.middlewares.use('/api/v1/admin/gallery/list-images', (req: IncomingMessage, res: ServerResponse, next: () => void) => {
         if (req.method === 'GET') {
           const imagesDir = path.resolve(__dirname, 'public/images');
           const allowedExts = ['.jpg', '.jpeg', '.webp'];

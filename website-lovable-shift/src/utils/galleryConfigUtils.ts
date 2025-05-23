@@ -22,7 +22,7 @@ export const getPreviewHomepageImages = (): string[] => {
  */
 export const saveGalleryConfig = async (images: string[]): Promise<void> => {
   try {
-    const response = await fetch('/api/save-gallery-order', {
+    const response = await fetch('/api/v1/admin/gallery/save-order', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ export const saveGalleryConfig = async (images: string[]): Promise<void> => {
  */
 export const loadMainGalleryConfig = async (): Promise<string[]> => {
   try {
-    const response = await fetch('/api/get-gallery-order?t=' + new Date().getTime()); // Cache buster
+    const response = await fetch('/api/v1/admin/gallery/get-order?t=' + new Date().getTime()); // Cache buster
     if (response.ok) {
       const serverConfig = await response.json();
       if (Array.isArray(serverConfig) && serverConfig.length > 0) {
@@ -69,7 +69,7 @@ export const loadMainGalleryConfig = async (): Promise<string[]> => {
  */
 export const renameGalleryImage = async (oldPath: string, newPath: string): Promise<{ oldPath: string; newPath: string }> => {
   try {
-    const response = await fetch('/api/rename-gallery-image', {
+    const response = await fetch('/api/v1/admin/gallery/rename-image', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
 ---
-description: 
-globs: false
+description: When editing typescript files
+globs: 
 alwaysApply: false
 ---
 
@@ -10,4 +10,4 @@ Explicitly type function returns and object literals.
 
 Enforce noImplicitAny, strictNullChecks, strictFunctionTypes.
 
-Minimize use of @ts-ignore/@ts-expect-error.
+Do not use @ts-ignore/@ts-expect-error unless explicetily authorized. Seek permission first. 

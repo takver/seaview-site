@@ -1,7 +1,7 @@
 ---
 description: 
-globs: false
-alwaysApply: false
+globs: 
+alwaysApply: true
 ---
 
 Write concise, technical TypeScript. Follow Standard.js rules.

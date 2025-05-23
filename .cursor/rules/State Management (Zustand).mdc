@@ -1,6 +1,6 @@
 ---
-description: 
-globs: false
+description: use when working on react context
+globs: 
 alwaysApply: false
 ---
 

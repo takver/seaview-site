@@ -1,7 +1,7 @@
 ---
 description: 
-globs: false
-alwaysApply: false
+globs: 
+alwaysApply: true
 ---
 
 Validate inputs and preconditions early (guard clauses).

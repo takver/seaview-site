@@ -1,5 +1,127 @@
 ---
-description:
-globs:
+description: 
+globs: 
 alwaysApply: false
 ---
+# UI Component Management with shadcn/ui
+
+## Overview
+This rule file defines the standards for managing UI components using shadcn/ui in the Sifnos Seaview project.
+
+## 🚨 CRITICAL INSTRUCTIONS FOR AI LANGUAGE MODELS 🚨
+
+### Component Installation and Management
+
+1. **ALWAYS check existing components first**
+   ```typescript
+   // ✅ Check src/components/ui/index.ts for existing exports
+   // ✅ Check src/components/ui/ for existing components
+   ```
+
+2. **NEVER skip updating the central export file**
+   ```typescript
+   // ❌ NEVER use direct imports from component files
+   import { Button } from "@/components/ui/button"  // ❌ WRONG
+
+   // ✅ ALWAYS use the central export
+   import { Button } from "@/components/ui"  // ✅ CORRECT
+   ```
+
+3. **Installation Process**
+   ```bash
+   # ✅ CORRECT INSTALLATION
+   npx shadcn-ui@latest add component-name
+
+   # Then IMMEDIATELY add to src/components/ui/index.ts:
+   export { ComponentName } from './component-name'
+   ```
+
+### Import Organization
+
+1. **Group imports correctly**
+   ```typescript
+   // ✅ CORRECT ORDER
+   import * as React from 'react'
+   import { Button, Label, Input } from "@/components/ui"
+   import { someUtil } from "@/utils/helpers"
+   ```
+
+2. **Use destructured imports from central export**
+   ```typescript
+   // ❌ WRONG - Multiple imports from individual files
+   import { Button } from "@/components/ui/button"
+   import { Label } from "@/components/ui/label"
+
+   // ✅ CORRECT - Single import from central export
+   import { Button, Label } from "@/components/ui"
+   ```
+
+## Component Usage Guidelines
+
+### DO:
+- ✅ Use the central `@/components/ui` import
+- ✅ Add new components to `index.ts` immediately after installation
+- ✅ Check existing components before installing new ones
+- ✅ Use TypeScript props interfaces
+- ✅ Maintain consistent styling through Tailwind classes
+
+### DON'T:
+- ❌ Import directly from component files
+- ❌ Skip updating `index.ts`
+- ❌ Duplicate existing components
+- ❌ Modify component source unless absolutely necessary
+
+## Verification Steps
+
+Before implementing UI changes:
+1. Check `src/components/ui/index.ts` for existing components
+2. Verify the component isn't already available
+3. Install only if necessary
+4. Update central exports
+5. Use proper import syntax
+
+## Examples
+
+### ✅ CORRECT Implementation
+```typescript
+// In src/components/ui/index.ts
+export { Button } from './button'
+export { Label } from './label'
+export { Input } from './input'
+
+// In your component
+import { Button, Label, Input } from "@/components/ui"
+
+export const MyForm = () => {
+  return (
+    <form>
+      <Label htmlFor="name">Name</Label>
+      <Input id="name" />
+      <Button type="submit">Submit</Button>
+    </form>
+  )
+}
+```
+
+### ❌ INCORRECT Implementation
+```typescript
+// DON'T DO THIS
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+```
+
+## Related Documentation
+- Full development guidelines: See `DEVELOPMENT.md`
+- Style guide: See `STYLE-GUIDE.md`
+- Component catalog: See `src/components/ui/index.ts`
+
+## Consequences of Non-Compliance
+- Inconsistent component usage
+- Type errors in development
+- Maintenance overhead
+- Bundle size bloat
+
+---
+
+Remember: The goal is to maintain a consistent, maintainable, and type-safe component system. Always use the central export pattern and keep the `index.ts` file up to date.

@@ -1,3 +1,4 @@
+import React from "react";
 import { Header } from "@/components/header";
 import { HeroSection } from "@/components/hero-section";
 import { PropertyFeaturesBanner } from "@/components/property-features-banner";
@@ -10,7 +11,7 @@ import { IdealGuestsSection } from "@/components/ideal-guests-section";
 import { DiscoverSifnosSection } from "@/components/discover-sifnos-section";
 import { BookingSection } from "@/components/booking-section";
 import { LocationPlaceholder } from "@/components/location-placeholder";
-import Footer from "@/components/footer";
+import { Footer } from "@/components/footer";
 
 const Index = () => {
   return (

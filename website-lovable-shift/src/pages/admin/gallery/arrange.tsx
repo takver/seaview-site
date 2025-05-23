@@ -283,7 +283,7 @@ const ArrangePage: React.FC = () => {
     setLoadingAvailable(true);
     setAddDialogOpen(true);
     try {
-      const res = await fetch('/api/list-gallery-images');
+      const res = await fetch('/api/v1/admin/gallery/list-images');
       if (res.ok) {
         const allImages: string[] = await res.json();
         // Only show images not already in the gallery
@@ -382,6 +382,7 @@ const ArrangePage: React.FC = () => {
                         ...provided.draggableProps.style,
                       }}
                       className="rounded-md overflow-hidden cursor-move group"
+                      key={item.src}
                     >
                       <div className="relative w-full h-full bg-gray-700">
                         <span className="absolute top-2 left-2 z-10 bg-white bg-opacity-80 text-xs font-bold rounded px-2 py-0.5 shadow">

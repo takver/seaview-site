@@ -1,6 +1,6 @@
 ---
-description: 
-globs: false
+description: Use when editing js
+globs: 
 alwaysApply: false
 ---
 

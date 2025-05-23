@@ -1,7 +1,7 @@
 ---
 description: 
-globs: false
-alwaysApply: false
+globs: 
+alwaysApply: true
 ---
 
 Minimize client‑only code (useEffect/useState) where unnecessary.
