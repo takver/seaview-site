@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { 
   Collapsible, 
@@ -184,37 +184,37 @@ export const AmenitiesSection = () => {
                 </div>
               ))}
             </div>
+          </div>
             
-            {/* Single row of descriptions with smaller font */}
-            <div className="mt-6 flex flex-wrap justify-center">
-              <div className="flex flex-wrap justify-center gap-3 text-center max-w-5xl mx-auto">
-                <div className="flex-1 min-w-[200px]">
-                  <span className="text-xs text-[#6E59A5] font-medium">Premium Appliances</span>
-                  <p className="text-[11px] text-gray-600 font-light mt-1 h-8">
-                    Top-tier brands like Fisher & Paykel, Grohe, and Smeg ensure efficiency and luxury
-                  </p>
-                </div>
-                
-                <div className="flex-1 min-w-[200px]">
-                  <span className="text-xs text-[#6E59A5] font-medium">Smart Home Technology</span>
-                  <p className="text-[11px] text-gray-600 font-light mt-1 h-8">
-                    Integrated KNX systems provide intelligent climate control and energy management
-                  </p>
-                </div>
-                
-                <div className="flex-1 min-w-[200px]">
-                  <span className="text-xs text-[#6E59A5] font-medium">Sustainable Solutions</span>
-                  <p className="text-[11px] text-gray-600 font-light mt-1 h-8">
-                    Environmentally conscious systems for water recycling and energy conservation
-                  </p>
-                </div>
-                
-                <div className="flex-1 min-w-[200px]">
-                  <span className="text-xs text-[#6E59A5] font-medium">Luxury and Comfort</span>
-                  <p className="text-[11px] text-gray-600 font-light mt-1 h-8">
-                    Coco-mat natural sleep products and Varangis furniture for elegant living
-                  </p>
-                </div>
+          {/* Single row of descriptions with smaller font - moved outside the white box */}
+          <div className="mt-6 flex flex-wrap justify-center">
+            <div className="flex flex-wrap justify-center gap-3 text-center max-w-5xl mx-auto">
+              <div className="flex-1 min-w-[200px]">
+                <span className="text-xs text-[#6E59A5] font-medium">Premium Appliances</span>
+                <p className="text-[11px] text-gray-600 font-light mt-1">
+                  Top-tier brands like Fisher & Paykel, Grohe, and Smeg ensure efficiency and luxury
+                </p>
+              </div>
+              
+              <div className="flex-1 min-w-[200px]">
+                <span className="text-xs text-[#6E59A5] font-medium">Smart Home Technology</span>
+                <p className="text-[11px] text-gray-600 font-light mt-1">
+                  Integrated KNX systems provide intelligent climate control and energy management
+                </p>
+              </div>
+              
+              <div className="flex-1 min-w-[200px]">
+                <span className="text-xs text-[#6E59A5] font-medium">Sustainable Solutions</span>
+                <p className="text-[11px] text-gray-600 font-light mt-1">
+                  Environmentally conscious systems for water recycling and energy conservation
+                </p>
+              </div>
+              
+              <div className="flex-1 min-w-[200px]">
+                <span className="text-xs text-[#6E59A5] font-medium">Luxury and Comfort</span>
+                <p className="text-[11px] text-gray-600 font-light mt-1">
+                  Coco-mat natural sleep products and Varangis furniture for elegant living
+                </p>
               </div>
             </div>
           </div>

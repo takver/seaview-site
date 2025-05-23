@@ -1,7 +1,7 @@
-import React from "react";
 import { Header } from "@/components/header";
 import { HeroSection } from "@/components/hero-section";
 import { PropertyFeaturesBanner } from "@/components/property-features-banner";
+import { IntroSection } from "@/components/intro-section";
 import { LocationSection } from "@/components/location-section";
 import { PropertyHighlights } from "@/components/property-highlights";
 import { PropertyDetailsSection } from "@/components/property-details-section";
@@ -10,7 +10,6 @@ import { AmenitiesSection } from "@/components/amenities-section";
 import { IdealGuestsSection } from "@/components/ideal-guests-section";
 import { DiscoverSifnosSection } from "@/components/discover-sifnos-section";
 import { BookingSection } from "@/components/booking-section";
-import { LocationPlaceholder } from "@/components/location-placeholder";
 import { Footer } from "@/components/footer";
 
 const Index = () => {
@@ -21,8 +20,8 @@ const Index = () => {
         <HeroSection />
         <PropertyFeaturesBanner />
         <div className="px-[10%]">
-          {/* Cycladic home in Sifnos, Greece */}
-          <LocationSection />
+          {/* Intro - Cycladic home in Sifnos, Greece */}
+          <IntroSection />
           
           {/* What Sets This Place Apart */}
           <PropertyHighlights />
@@ -50,8 +49,10 @@ const Index = () => {
           {/* References (possibly part of BookingSection) */}
           
           {/* Our location (map) */}
-          <LocationPlaceholder />
         </div>
+        
+        {/* Location section outside of padding wrapper for full-width background */}
+        <LocationSection />
       </main>
       <Footer />
     </div>
