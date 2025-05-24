@@ -73,7 +73,7 @@ export const PropertyDetailsSection = () => {
                 <div>
                   <div className="text-gray-600 font-light leading-relaxed">
                     <h4 className="text-xl font-light text-[#6E59A5] mb-4">Breathtaking Views</h4>
-                    <div className="md:float-right md:ml-8 md:mb-4 rounded-lg overflow-hidden shadow-md mb-6 md:max-w-[300px] cursor-pointer hover:opacity-90 transition-opacity" onClick={() => openImage("/images/spring_sunrise_St_John.webp")}>
+                    <div className="md:float-right md:ml-8 md:mb-4 rounded-lg overflow-hidden shadow-md mb-6 md:max-w-[340px] cursor-pointer hover:opacity-90 transition-opacity" onClick={() => openImage("/images/spring_sunrise_St_John.webp")}>
                       <img
                         src="/images/spring_sunrise_St_John.webp"
                         alt="Sunrise view over St. John's church"
@@ -109,7 +109,7 @@ export const PropertyDetailsSection = () => {
                     <h4 className="text-xl font-light text-[#6E59A5] mb-4">Private Garden Sanctuary with Seasonal Harvests</h4>
                     
                     
-                    <div className="md:float-right md:ml-8 md:mb-4 rounded-lg overflow-hidden shadow-md mb-6 md:max-w-[190px] cursor-pointer hover:opacity-90 transition-opacity" onClick={() => openImage("/images/garden-figs-path-south.webp")}>
+                    <div className="md:float-right md:ml-8 md:mb-4 rounded-lg overflow-hidden shadow-md mb-6 md:max-w-[240px] cursor-pointer hover:opacity-90 transition-opacity" onClick={() => openImage("/images/garden-figs-path-south.webp")}>
                       <img
                         src="/images/garden-figs-path-south.webp"
                         alt="Garden path with fig trees and southern view"
@@ -123,7 +123,7 @@ export const PropertyDetailsSection = () => {
                     <p className="mb-4">
                       Our garden is an array of drought-resistant flora, including herbs like thyme, oregano, and sage, complemented by fragrant wild apple and pear trees. The presence of pistachio trees adds a unique touch, offering both shade and seasonal delights. Sifnian Rockrose and cypress trees further enhance the garden's diverse ecosystem.
                     </p>
-                    <div className="md:float-left md:mr-8 md:mb-4 rounded-lg overflow-hidden shadow-md mb-6 md:max-w-[110px] cursor-pointer hover:opacity-90 transition-opacity" onClick={() => openImage("/images/uploads/2025/03/almont_flowers.webp")}>
+                    <div className="md:float-left md:mr-8 md:mb-4 rounded-lg overflow-hidden shadow-md mb-6 md:max-w-[140px] cursor-pointer hover:opacity-90 transition-opacity" onClick={() => openImage("/images/uploads/2025/03/almont_flowers.webp")}>
                       <img
                         src="/images/uploads/2025/03/almont_flowers.webp"
                         alt="Almond flowers in the garden"
@@ -152,9 +152,6 @@ export const PropertyDetailsSection = () => {
                     <p className="mb-4">
                       Our home is a testament to sustainable luxury. Exceptional thermal insulation, waterproofing, and environmentally friendly paints ensure a minimal ecological footprint. We've used breathable materials with very low volatile organic compound emissions, free from solvents, to maintain indoor air quality.
                     </p>
-                    <p className="mb-4">
-                      This combination of super-insulation and high thermal mass of 60 cm thick stone walls effectively retains heat in winter and keeps the interior cool in summer, significantly reducing energy needs for climate control. At the heart of our eco-friendly approach is a 12KW air-to-water heat pump with an inverter for efficient cooling and heating.
-                    </p>
                     <div className="md:float-right md:ml-8 md:mb-4 rounded-lg overflow-hidden shadow-md mb-6 md:max-w-[340px] cursor-pointer hover:opacity-90 transition-opacity" onClick={() => openImage("/images/plan-greywater-system-diagram.webp")}>
                       <img
                         src="/images/plan-greywater-system-diagram.webp"
@@ -162,6 +159,10 @@ export const PropertyDetailsSection = () => {
                         className="w-full h-auto object-cover"
                       />
                     </div>
+                    <p className="mb-4">
+                      This combination of super-insulation and high thermal mass of 60 cm thick stone walls effectively retains heat in winter and keeps the interior cool in summer, significantly reducing energy needs for climate control. At the heart of our eco-friendly approach is a 12KW air-to-water heat pump with an inverter for efficient cooling and heating.
+                    </p>
+                    
                     <p className="mb-4">
                       We embrace water conservation through an advanced gray-water recycling system, repurposing shower water for garden irrigation. This is complemented by a rainwater capture system, with an underground cistern to store winter rain, which is then utilized for summer watering needs. Our garden is thoughtfully landscaped with drought-resistant plants, reducing the need for frequent watering and maintaining natural beauty with minimal environmental impact.
                     </p>

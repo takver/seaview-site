@@ -1,8 +1,4 @@
-/** @jsxRuntime classic */
-/** @jsx React.createElement */
-/** @jsxFrag React.Fragment */
-
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { CATEGORY_KEYWORDS } from '@/config/galleryConfig';
 import { loadMainGalleryConfig, getPreviewHomepageImages } from '@/utils/galleryConfigUtils';
 import GalleryPreview from './GalleryPreview';
@@ -24,7 +20,7 @@ const getCategoriesForImage = (filename: string, keywordsConfig: Record<string, 
   return cats;
 };
 
-const GallerySection: React.FC = () => {
+const GallerySection = () => {
   const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
   

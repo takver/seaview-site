@@ -64,6 +64,35 @@ This document outlines development practices and guidelines for the Sifnos Seavi
   3. Project utilities and types
   4. Styles and assets
 
+### React Imports and JSX Transform
+**Important:** This project uses React 17+ with the new JSX transform (`"jsx": "react-jsx"` in tsconfig.json).
+
+- **DO NOT** import React in files that only use JSX
+- **DO** import React only when using React APIs (useState, useEffect, etc.)
+- The new JSX transform automatically handles JSX without needing React in scope
+
+**Correct:**
+```typescript
+// No React import needed for JSX-only files
+export const MyComponent = () => {
+  return <div>Hello World</div>
+}
+```
+
+**Also Correct (when using React APIs):**
+```typescript
+import { useState } from 'react' // Named import, no default React import
+export const MyComponent = () => {
+  const [count, setCount] = useState(0)
+  return <div>{count}</div>
+}
+```
+
+**Incorrect (will cause linter errors):**
+```typescript
+import React from 'react' // Don't use default React import
+```
+
 ### Type Definitions
 - Prefer interfaces for object types
 - Use type aliases for unions and complex types
@@ -157,9 +186,11 @@ Always verify services are working after restart or build fixes:
    - Ensure consistent import patterns
    - Fix: `import { Component }` vs `import Component`
 
-2. **Missing React Imports**
-   - Add `import React from 'react'` to files with JSX
-   - TypeScript error: "Property 'div' does not exist"
+2. **JSX TypeScript Errors (Property 'div' does not exist)**
+   - This occurs when React is imported but shouldn't be
+   - Solution: Remove `import React from 'react'` from files
+   - Only import specific React hooks/utilities when needed
+   - The project uses the new JSX transform - React doesn't need to be in scope
 
 3. **Build Verification**
    ```bash
