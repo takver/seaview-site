@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Card, CardContent } from "../ui/card";
 
 const highlights = [

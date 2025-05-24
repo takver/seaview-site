@@ -1,4 +1,5 @@
-import React, { useState, useEffect, FC } from "react";
+import { useState, useEffect } from "react";
+import type { CSSProperties } from "react";
 import { Button } from "../ui/button";
 
 // Updated images array to match the order in the reference image
@@ -17,7 +18,7 @@ const images = [
   "/images/garden-curved-path-sunset.webp"
 ];
 
-export const HeroSection: FC = () => {
+export const HeroSection = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [nextImage, setNextImage] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
@@ -88,7 +89,7 @@ export const HeroSection: FC = () => {
                   '--pan-x': `${panDirection.x}%`,
                   '--pan-y': `${panDirection.y}%`,
                   transformOrigin: `center center`
-                } as React.CSSProperties}
+                } as CSSProperties}
               />
             </div>
           </div>

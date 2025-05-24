@@ -156,48 +156,144 @@ import React from 'react' // Don't use default React import
 
 ## Service Verification
 
-### After Service Restart
-Always verify services are working after restart or build fixes:
+Use the `service-verification-tests.sh` script to verify all services:
 
-1. **Run Automated Tests**
-   ```bash
-   # From project root
-   ./service-verification-tests.sh
-   
-   # With build verification
-   ./service-verification-tests.sh --build
-   ```
+```bash
+./service-verification-tests.sh
+```
 
-2. **Manual Verification Checklist**
-   - [ ] Main website loads at http://localhost:3000
-   - [ ] React components render (not just HTML template)
-   - [ ] Admin gallery at http://localhost:3000/admin/gallery/arrange
-   - [ ] iCal proxy health at http://localhost:3001/health
-   - [ ] Gallery APIs respond at /api/v1/admin/gallery/*
+This will test:
+- React development server (Port 3000)
+- Admin gallery page functionality
+- iCal proxy server (Port 3001)
 
-3. **Port Management**
-   - Main Website: Port 3000 (MUST NOT change)
-   - iCal Proxy: Port 3001 (MUST NOT change)
-   - See `.cursor/rules/Port Management.mdc` for details
+## React Import Checker
 
-### Common Build/Runtime Issues
-1. **Import/Export Mismatches**
-   - Check named vs default exports
-   - Ensure consistent import patterns
-   - Fix: `import { Component }` vs `import Component`
+The project includes an automated test to ensure React imports follow the correct pattern for React 17+ with the new JSX transform.
 
-2. **JSX TypeScript Errors (Property 'div' does not exist)**
-   - This occurs when React is imported but shouldn't be
-   - Solution: Remove `import React from 'react'` from files
-   - Only import specific React hooks/utilities when needed
-   - The project uses the new JSX transform - React doesn't need to be in scope
+### Running the Test
 
-3. **Build Verification**
-   ```bash
-   cd website-lovable-shift
-   npm run build
-   ```
-   Fix all TypeScript errors before assuming the site works
+```bash
+npm run check:react-imports
+```
+
+This test will:
+- Verify `tsconfig.app.json` has `"jsx": "react-jsx"` setting
+- Check all component and page files for incorrect React imports
+- Fail if it finds default React imports or FC type usage
+
+### What It Checks
+
+✅ **Correct patterns:**
+```typescript
+// No import needed for JSX-only files
+export const MyComponent = () => {
+  return <div>Hello</div>
+}
+
+// Named imports only when using React APIs
+import { useState, useEffect } from 'react';
+```
+
+❌ **Incorrect patterns:**
+```typescript
+// Default React import - NOT ALLOWED
+import React from 'react';
+
+// FC type annotation - NOT ALLOWED
+const MyComponent: React.FC = () => { ... }
+```
+
+### Automatic Checks
+
+This test runs automatically:
+- Before every build (`npm run build`)
+- Can be added to CI/CD pipelines
+- Executes quickly (< 1 second)
+
+### Fixing Issues
+
+If the test fails:
+1. Remove any `import React from 'react'` statements
+2. Remove `FC` or `React.FC` type annotations
+3. Use only named imports for React hooks and types
+
+## Text Change Detection
+
+The project includes an automated system to detect unintentional text changes on the website. This helps catch accidental content modifications during development.
+
+### How It Works
+
+1. **Text Extraction**: Uses Puppeteer to visit each page and extract all visible text content
+2. **Checkpoint System**: Saves a baseline of all text content for comparison
+3. **Change Detection**: Compares current site text against the checkpoint to identify changes
+
+### Creating a Checkpoint
+
+Before you can check for changes, you need to create a baseline checkpoint:
+
+```bash
+# Make sure the dev server is running first
+npm run dev
+
+# In another terminal, create the checkpoint
+npm run text:checkpoint
+```
+
+This creates a `text-checkpoint.json` file containing all text from:
+- Homepage (`/`)
+
+### Checking for Text Changes
+
+To verify no unintentional text changes have occurred:
+
+```bash
+npm run text:check
+```
+
+This command will:
+- Extract current text from all pages
+- Compare against the checkpoint
+- Report any additions or removals
+- Exit with error code 1 if changes are detected
+
+### Output Example
+
+When changes are detected:
+```
+❌ TEXT CHANGES DETECTED
+
+Page: /
+Removed text:
+  - "Original heading text"
+Added text:
+  + "New heading text"
+
+To update the checkpoint with these changes, run:
+npm run text:checkpoint
+```
+
+### Manual Text Extraction
+
+To extract text without creating a checkpoint:
+
+```bash
+npm run text:extract
+```
+
+This shows the current text content without saving it.
+
+### Integration with Build Process
+
+Consider adding text checking to your CI/CD pipeline or as a pre-commit hook to catch unintentional changes early.
+
+### Technical Details
+
+- Uses Puppeteer for browser automation
+- Extracts visible text only (ignores hidden elements)
+- Includes alt text from images
+- Excludes script and style tag content
+- Word-by-word comparison using the `diff` library
 
 ## Troubleshooting
 

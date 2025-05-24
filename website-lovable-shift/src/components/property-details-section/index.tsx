@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Home, Leaf, Globe2, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import type { MouseEvent } from "react";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 
 export const PropertyDetailsSection = () => {
@@ -178,12 +177,12 @@ export const PropertyDetailsSection = () => {
       {selectedImage && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80"
-          onClick={(e: React.MouseEvent<HTMLDivElement>) => closeImage()}
+          onClick={(e: MouseEvent<HTMLDivElement>) => closeImage()}
         >
           <div className="relative w-full h-full flex items-center justify-center">
             <button 
               className="absolute top-4 right-4 p-2 bg-white bg-opacity-40 rounded-full text-white hover:bg-opacity-60 transition-colors"
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => closeImage()}
+              onClick={(e: MouseEvent<HTMLButtonElement>) => closeImage()}
               aria-label="Close"
             >
               <X size={32} />
@@ -192,7 +191,7 @@ export const PropertyDetailsSection = () => {
               src={selectedImage}
               alt="Enlarged view"
               className="max-w-[90%] max-h-[90vh] object-contain"
-              onClick={(e: React.MouseEvent<HTMLImageElement>) => e.stopPropagation()}
+              onClick={(e: MouseEvent<HTMLImageElement>) => e.stopPropagation()}
             />
           </div>
         </div>

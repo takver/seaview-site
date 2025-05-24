@@ -1,7 +1,6 @@
-import { type FC } from 'react';
 import { Users, Bed, ShowerHead, Utensils, Sofa } from "lucide-react";
 
-export const PropertyFeaturesBanner: FC = () => {
+export const PropertyFeaturesBanner = () => {
   return (
     <div className="w-full bg-[#333333] text-white py-3">
       <div className="container mx-auto px-4 md:px-8">

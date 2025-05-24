@@ -6,8 +6,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { Toaster as Sonner } from '@/components/ui/sonner';
 
 const Index = React.lazy(() => import('./pages/Index'));
-const About = React.lazy(() => import('./pages/About'));
-const Admin = React.lazy(() => import('./pages/admin/index'));
+const Admin = React.lazy(() => import('./pages/admin'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 
 const queryClient = new QueryClient({
@@ -26,7 +25,6 @@ const App: React.FC = () => {
           <Suspense fallback={<div>Loading...</div>}>
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/about" element={<About />} />
               <Route path="/admin/*" element={<Admin />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

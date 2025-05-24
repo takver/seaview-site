@@ -1,5 +1,5 @@
-import type { FC, ReactElement } from "react";
-import React, { useEffect, useState } from "react";
+import type { ReactElement } from "react";
+import { useEffect, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Mail, Map, Phone, Copy } from "lucide-react";
@@ -20,7 +20,7 @@ type ContactItem = {
   target?: string;
 };
 
-export const Header: FC = () => {
+export const Header = () => {
   const isMobile = useIsMobile();
   const { pathname } = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -53,10 +53,10 @@ export const Header: FC = () => {
     setCopied(type);
   };
 
-  // Reserved for future nav links – suppress unused-var warning with underscore
-  const _navItems: { text: string; href: string }[] = [
-    { text: "Home", href: "/" },
-    { text: "About", href: "/about" },
+  const navLinks = [
+    { text: "Availability", href: "#availability-calendar" },
+    { text: "Location", href: "#location-section" },
+    { text: "Contact", href: "#contact-section" },
   ];
 
   const contactItems: ContactItem[] = [
